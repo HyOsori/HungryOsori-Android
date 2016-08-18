@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="android.webcrawler.osori.hungryosori">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/icon_osori"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+        <!-- 시작 Activity -->
+        <activity
+            android:name=".StartActivity"
+            android:noHistory="true"
+            android:theme="@android:style/Theme.NoTitleBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- 로그인 Activity -->
+        <activity
+            android:name=".LoginActivity"
+            android:screenOrientation="portrait"
+            android:noHistory="true"
+            />
+
+    </application>
+
+</manifest>
