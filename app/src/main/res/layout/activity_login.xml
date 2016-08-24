@@ -19,7 +19,7 @@
         >
 
         <EditText
-            android:id = "@+id/emailInputLogin"
+            android:id = "@+id/editText_email"
             android:inputType = "textEmailAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
             sl:scale_textsize = "5"
             />
         <EditText
-            android:id = "@+id/pwInputLogin"
+            android:id = "@+id/editText_password"
             android:inputType = "textWebPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
             />
 
         <Button
-            android:id="@+id/loginSubmitBtn"
+            android:id="@+id/button_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/btn_mint"
@@ -63,7 +63,7 @@
             />
 
         <TextView
-            android:id="@+id/login2JoinBtn"
+            android:id="@+id/textView_join"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAlignment="center"

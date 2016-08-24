@@ -6,7 +6,9 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.webcrawler.osori.hungryosori.common.Constant;
 import android.webcrawler.osori.hungryosori.common.Lib;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -27,20 +29,21 @@ public class LoginActivity extends FragmentActivity {
         setContentView(R.layout.activity_login);
 
         /** 객체 설정 */
-        editText_mail       = (EditText) findViewById(R.id.emailInputLogin);
-        editText_password   = (EditText) findViewById(R.id.pwInputLogin);
+        editText_mail       = (EditText) findViewById(R.id.editText_email);
+        editText_password   = (EditText) findViewById(R.id.editText_password);
 
         /** 폰트 설정 */
         Typeface fontArial = Typeface.createFromAsset(getAssets(), "fonts/arial.ttf");
         editText_mail.setTypeface(fontArial);
         editText_password.setTypeface(fontArial);
-
+        ((TextView)findViewById(R.id.textView_join)).setTypeface(fontArial);
+        ((Button)findViewById(R.id.button_login)).setTypeface(fontArial);
     }
 
     public void onClick(View v) {
 
         switch (v.getId()) {
-            case R.id.loginSubmitBtn:
+            case R.id.button_login:
                 email = editText_mail.getText().toString().trim();
                 password = editText_password.getText().toString().trim();
 
@@ -58,7 +61,7 @@ public class LoginActivity extends FragmentActivity {
                     break;
                 }
                 break;
-            case R.id.login2JoinBtn:
+            case R.id.textView_join:
                 // Intent intent = new Intent(this,JoinActivity.class);
                 // startActivity(intent);
                 break;
