@@ -28,6 +28,14 @@
             android:theme="@android:style/Theme.NoTitleBar"
             />
 
+        <!-- 회원가입 Activity -->
+        <activity
+            android:name=".JoinActivity"
+            android:screenOrientation="portrait"
+            android:noHistory="true"
+            android:theme="@android:style/Theme.NoTitleBar"
+            />
+
     </application>
 
 </manifest>

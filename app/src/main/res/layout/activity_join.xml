@@ -19,7 +19,7 @@
         >
 
         <EditText
-            android:id = "@+id/login_editText_email"
+            android:id = "@+id/join_editText_email"
             android:inputType = "textEmailAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
             sl:scale_textsize = "5"
             />
         <EditText
-            android:id = "@+id/login_editText_password"
+            android:id = "@+id/join_editText_password"
             android:inputType = "textWebPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -47,38 +47,35 @@
             sl:scale_textsize = "5"
             />
 
+        <EditText
+            android:id = "@+id/join_editText_repassword"
+            android:inputType = "textWebPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint = "비밀번호 확인"
+            android:paddingLeft="10dp"
+            android:background="@drawable/edittext_white"
+            sl:scale_left = "25"
+            sl:scale_top = "55"
+            sl:scale_width = "50"
+            sl:scale_height = "10"
+            sl:scale_textsize = "5"
+            />
+
         <Button
-            android:id="@+id/login_button_login"
+            android:id="@+id/join_button_submit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/btn_mint"
-            android:text = "로그인"
+            android:text = "가입"
             android:onClick = "onClick"
             android:textColor = "@color/white"
             sl:scale_left = "40"
-            sl:scale_top = "55"
+            sl:scale_top = "75"
             sl:scale_width = "20"
             sl:scale_height = "10"
             sl:scale_textsize= "4"
             />
 
-        <Button
-            android:id="@+id/login_button_join"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/btn_mint"
-            android:textAlignment="center"
-            android:text = "회원이 아니신가요? \n 지금 가입하세요!"
-            android:textColor="@color/white"
-            android:gravity="center"
-            android:onClick = "onClick"
-            sl:scale_width="50"
-            sl:scale_height= "20"
-            sl:scale_left = "25"
-            sl:scale_top = "75"
-            sl:scale_textsize="5"
-            />
-
     </com.ssomai.android.scalablelayout.ScalableLayout>
-
 </LinearLayout>
