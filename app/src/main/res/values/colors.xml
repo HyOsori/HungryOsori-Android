@@ -5,7 +5,8 @@
     <color name="colorAccent">#FF4081</color>
 
     <!-- 배경 색상 값 -->
-    <color name="basicBackgroundColor">#FFFFFF</color>
+    <color name="backGroundColorBasic">#FFFFFF</color>
+    <color name="backGroundColorGray"> #EDEDED</color>
 
     <!-- 기본 색상 -->
     <color name="orangeLight">#FFF1D6</color>

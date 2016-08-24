@@ -4,14 +4,14 @@
     xmlns:sl="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/basicBackgroundColor"
+    android:background="@color/backGroundColorBasic"
     android:gravity="center"
     tools:context="android.webcrawler.osori.hungryosori.StartActivity">
 
     <com.ssomai.android.scalablelayout.ScalableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/basicBackgroundColor"
+        android:background="@color/backGroundColorBasic"
         android:layout_above="@+id/main_textview"
         sl:scale_base_width="300"
         sl:scale_base_height="100">

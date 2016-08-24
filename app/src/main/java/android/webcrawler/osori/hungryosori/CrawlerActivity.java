@@ -45,6 +45,18 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
         // ViewPager 어댑터 설정
         viewPager.setAdapter(viewPagerAdapter);
         viewPager.setOnPageChangeListener(this);
+
+        getCrawlerInfo();
+    }
+
+    private void getCrawlerInfo(){
+        CrawlerInfo info1 = new CrawlerInfo("wf42i", "DCinside",
+                "디시 힛겔 크롤러", "http://wstatic.dcinside.com/main/main2011/dcmain/logo_swf/top_logo_160718.png", false);
+        CrawlerInfo info2 = new CrawlerInfo("xvio31", "steam",
+                "스팀 할인 정보 크롤러", "http://steamcommunity-a.akamaihd.net/public/shared/images/header/globalheader_logo.png", false);
+
+        crawlerInfosAll.add(info1);
+        crawlerInfosAll.add(info2);
     }
 
     /* view pager 페이지가 바뀌면 호출된다 */

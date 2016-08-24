@@ -2,13 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:sl="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/backGroundColorGray"
     android:padding="10dp"
     android:layout_height="match_parent">
 
     <com.ssomai.android.scalablelayout.ScalableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/image_box"
+        android:background="@color/backGroundColorBasic"
         sl:scale_base_width="400"
         sl:scale_base_height="100"
         >
@@ -53,6 +54,7 @@
             android:background="@drawable/togglebtn_mint_square"
             android:textOff= "구독"
             android:textOn = "구독 해제"
+            android:textColor="@color/white"
             sl:scale_left = "310"
             sl:scale_top = "10"
             sl:scale_width = "80"

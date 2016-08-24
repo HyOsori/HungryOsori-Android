@@ -62,6 +62,10 @@ public class CrawlerListAdapter extends ArrayAdapter<CrawlerInfo> implements Vie
         }
         viewHolder.toggleButton_subscription.setTag(position);
 
+        viewHolder.textView_title.setText(getItem(position).getTitle());
+        viewHolder.textView_description.setText(getItem(position).getDescription());
+        viewHolder.toggleButton_subscription.setChecked(getItem(position).getSubscription());
+
         return itemLayout;
     }
 

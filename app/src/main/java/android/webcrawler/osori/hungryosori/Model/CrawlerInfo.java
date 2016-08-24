@@ -8,28 +8,34 @@ public class CrawlerInfo {
     private String title;
     private String description;
     private String url;
+    private boolean subscription;
 
-    public CrawlerInfo(String id, String title, String description, String url)
+    public CrawlerInfo(String id, String title, String description, String url, boolean subscription)
     {
+        this.id             = id;
         this.title          = title;
         this.description    = description;
         this.url            = url;
+        this.subscription   = subscription;
     }
 
     public String getId(){
-        return id;
+        return this.id;
     }
 
     public String getTitle(){
-        return title;
+        return this.title;
     }
 
     public String getDescription(){
-        return description;
+        return this.description;
     }
 
     public String getUrl(){
-        return url;
+        return this.url;
     }
 
+    public boolean getSubscription(){
+        return this.subscription;
+    }
 }
