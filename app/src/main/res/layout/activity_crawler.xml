@@ -12,24 +12,26 @@
         sl:scale_base_height="100"
         >
 
-        <Button
+        <ToggleButton
             android:id="@+id/crawler_button_my"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/btn_mint_square"
-            android:text="MY"
+            android:background="@drawable/togglebtn_mint_square"
+            android:textOff="MY"
+            android:textOn ="MY"
             sl:scale_left = "0"
             sl:scale_top = "0"
             sl:scale_width = "250"
             sl:scale_height = "100"
             sl:scale_textsize = "50"/>
 
-        <Button
+        <ToggleButton
             android:id="@+id/crawler_button_all"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/btn_mint_square"
-            android:text="ALL"
+            android:background="@drawable/togglebtn_mint_square"
+            android:textOff="ALL"
+            android:textOn ="ALL"
             sl:scale_left = "250"
             sl:scale_top = "0"
             sl:scale_width = "250"

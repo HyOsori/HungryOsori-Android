@@ -50,10 +50,14 @@
             android:id="@+id/list_crawler_button_subscription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/togglebtn_mint_square"
+            android:textOff= "구독"
+            android:textOn = "구독 해제"
             sl:scale_left = "310"
             sl:scale_top = "10"
             sl:scale_width = "80"
             sl:scale_height = "80"
+            sl:scale_textsize = "15"
             />
 
     </com.ssomai.android.scalablelayout.ScalableLayout>

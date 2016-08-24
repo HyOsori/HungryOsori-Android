@@ -3,6 +3,7 @@ package android.webcrawler.osori.hungryosori.Adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.webcrawler.osori.hungryosori.Fragment.CrawlerFragment;
 
 
 /**
@@ -18,13 +19,8 @@ public class CrawlerViewPagerAdapter extends FragmentPagerAdapter {
     }
 
     public Fragment getItem(int i){
-        if(i == 0){
-            /** MY인 경우 */
-        }
-        else if(i == 1){
-            /** ALL인 경우 */
-        }
-        return null;
+        CrawlerFragment fragment = CrawlerFragment.newInstance(i);
+        return fragment;
     }
 
     public int getCount() {

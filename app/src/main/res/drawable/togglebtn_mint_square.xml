@@ -1,21 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- When pressed -->
-    <item android:state_pressed="true">
+    <item android:state_checked="false">
         <shape>
             <solid android:color="@color/darkBlue"/>
         </shape>
     </item>
 
-    <!-- When focused -->
-    <item android:state_focused="true">
+    <item android:state_checked="true">
         <shape>
             <solid android:color="@color/mint"/>
         </shape>
     </item>
 
-    <!-- When not selected  -->
     <item>
         <shape>
             <solid android:color="@color/blue"/>

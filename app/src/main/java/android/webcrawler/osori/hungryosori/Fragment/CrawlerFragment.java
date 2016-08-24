@@ -1,20 +1,14 @@
 package android.webcrawler.osori.hungryosori.Fragment;
 
-import android.app.Fragment;
-import android.content.Intent;
-import android.graphics.Bitmap;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webcrawler.osori.hungryosori.Adapter.CrawlerListAdapter;
+import android.webcrawler.osori.hungryosori.CrawlerActivity;
 import android.webcrawler.osori.hungryosori.R;
-import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.ToggleButton;
-
-import java.util.ArrayList;
 
 /**
  * Created by kunju on 2016-08-25.
@@ -44,9 +38,9 @@ public class CrawlerFragment extends Fragment{
         }
 
         if(page == 0) {
-            listAdapter = new CrawlerListAdapter(getActivity(), R.layout.list_crawler, R.id.list_crawler_textView_title, null);
+            listAdapter = new CrawlerListAdapter(getActivity(), R.layout.list_crawler, R.id.list_crawler_textView_title, CrawlerActivity.crawlerInfosMy);
         }else if(page == 1){
-            listAdapter = new CrawlerListAdapter(getActivity(), R.layout.list_crawler, R.id.list_crawler_textView_title, null);
+            listAdapter = new CrawlerListAdapter(getActivity(), R.layout.list_crawler, R.id.list_crawler_textView_title, CrawlerActivity.crawlerInfosAll);
         }
     }
 
