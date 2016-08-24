@@ -2,12 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/basicBackgroundColor"
     xmlns:sl="http://schemas.android.com/apk/res-auto">
 
     <com.ssomai.android.scalablelayout.ScalableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/image_box"
         sl:scale_base_width="500"
         sl:scale_base_height="100"
         >
@@ -42,6 +42,7 @@
 
     <android.support.v4.view.ViewPager
         android:id="@+id/crawler_viewPager"
+        android:background="@color/basicBackgroundColor"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

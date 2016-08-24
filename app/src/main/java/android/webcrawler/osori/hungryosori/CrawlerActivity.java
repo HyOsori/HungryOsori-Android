@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.webcrawler.osori.hungryosori.Adapter.CrawlerViewPagerAdapter;
 import android.webcrawler.osori.hungryosori.Model.CrawlerInfo;
+import android.webcrawler.osori.hungryosori.common.Constant;
 import android.widget.ToggleButton;
 
 import java.util.ArrayList;
@@ -48,10 +49,10 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
 
     /* view pager 페이지가 바뀌면 호출된다 */
     public void onPageSelected(int position) {
-        if(position == 0){
+        if(position == Constant.PAGE_MY){
             button_my.setChecked(true);
             button_all.setChecked(false);
-        }else if(position == 1){
+        }else if(position == Constant.PAGE_ALL){
             button_my.setChecked(false);
             button_all.setChecked(true);
         }

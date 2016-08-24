@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.webcrawler.osori.hungryosori.Adapter.CrawlerListAdapter;
 import android.webcrawler.osori.hungryosori.CrawlerActivity;
 import android.webcrawler.osori.hungryosori.R;
+import android.webcrawler.osori.hungryosori.common.Constant;
 import android.widget.ListView;
 
 /**
@@ -37,9 +38,9 @@ public class CrawlerFragment extends Fragment{
             page      = args.getInt("PAGE");
         }
 
-        if(page == 0) {
+        if(page == Constant.PAGE_MY) {
             listAdapter = new CrawlerListAdapter(getActivity(), R.layout.list_crawler, R.id.list_crawler_textView_title, CrawlerActivity.crawlerInfosMy);
-        }else if(page == 1){
+        }else if(page == Constant.PAGE_ALL){
             listAdapter = new CrawlerListAdapter(getActivity(), R.layout.list_crawler, R.id.list_crawler_textView_title, CrawlerActivity.crawlerInfosAll);
         }
     }
