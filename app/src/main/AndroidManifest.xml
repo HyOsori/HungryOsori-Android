@@ -36,6 +36,14 @@
             android:theme="@android:style/Theme.NoTitleBar"
             />
 
+        <!-- Crawler Activity -->
+        <activity
+            android:name=".CrawlerActivity"
+            android:screenOrientation="portrait"
+            android:noHistory="true"
+            android:theme="@android:style/Theme.NoTitleBar"
+            />
+
     </application>
 
 </manifest>

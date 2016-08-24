@@ -40,7 +40,7 @@ public class LoginActivity extends FragmentActivity {
     }
 
     public void onClick(View v) {
-
+        Intent intent;
         switch (v.getId()) {
             case R.id.login_button_login:
                 email = editText_mail.getText().toString().trim();
@@ -60,11 +60,12 @@ public class LoginActivity extends FragmentActivity {
                     break;
                 }
                 /** 서버 연동 */
-
+               intent = new Intent(this,CrawlerActivity.class);
+                startActivity(intent);
                 break;
 
             case R.id.login_button_join:
-                Intent intent = new Intent(this,JoinActivity.class);
+                intent = new Intent(this,JoinActivity.class);
                 startActivity(intent);
                 break;
         }
