@@ -38,4 +38,8 @@ public class CrawlerInfo {
     public boolean getSubscription(){
         return this.subscription;
     }
+
+    public void setSubscription(boolean subscription){
+        this.subscription = subscription;
+    }
 }

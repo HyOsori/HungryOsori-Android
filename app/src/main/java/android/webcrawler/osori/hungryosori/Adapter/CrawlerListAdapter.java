@@ -4,8 +4,10 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webcrawler.osori.hungryosori.CrawlerActivity;
 import android.webcrawler.osori.hungryosori.Model.CrawlerInfo;
 import android.webcrawler.osori.hungryosori.R;
+import android.webcrawler.osori.hungryosori.common.Constant;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -74,13 +76,32 @@ public class CrawlerListAdapter extends ArrayAdapter<CrawlerInfo> implements Vie
         switch (v.getId()){
             case R.id.list_crawler_button_subscription: {
                 int position = (Integer)v.getTag();
+                String id    = getItem(position).getId();
+
                 if(((ToggleButton)v).isChecked() == true)
                 {
+                    CrawlerInfo crawlerInfo = new CrawlerInfo(id, getItem(position).getTitle(),
+                            getItem(position).getDescription(), getItem(position).getUrl(), true);
                     // 구독
+                    CrawlerActivity.crawlerInfosMy.add(crawlerInfo);
+                    CrawlerActivity.crawlerInfosAll.get(position).setSubscription(true);
                 }else
                 {
                     // 구독 해제
+                    for(int i=0; i< CrawlerActivity.crawlerInfosMy.size(); ++i){
+                        if(CrawlerActivity.crawlerInfosMy.get(i).getId().equals(id)){
+                            CrawlerActivity.crawlerInfosMy.remove(i);
+                        }
+                    }
+
+                    for(CrawlerInfo crawlerInfo : CrawlerActivity.crawlerInfosAll){
+                        if(crawlerInfo.getId().equals(id)){
+                            crawlerInfo.setSubscription(false);
+                        }
+                    }
                 }
+                CrawlerViewPagerAdapter.fragmentALL.listAdapter.notifyDataSetChanged();
+                CrawlerViewPagerAdapter.fragmentMy.listAdapter.notifyDataSetChanged();
                 break;
             }
         }

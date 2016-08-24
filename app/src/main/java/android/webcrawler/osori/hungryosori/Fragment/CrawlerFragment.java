@@ -18,7 +18,7 @@ public class CrawlerFragment extends Fragment{
 
     private int page;
     private ListView listView;
-    private CrawlerListAdapter listAdapter;
+    public CrawlerListAdapter listAdapter;
 
     public static CrawlerFragment newInstance(int pagePosition){
         CrawlerFragment fragment = new CrawlerFragment();

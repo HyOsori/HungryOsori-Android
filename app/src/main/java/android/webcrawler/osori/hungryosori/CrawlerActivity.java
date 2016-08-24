@@ -3,6 +3,7 @@ package android.webcrawler.osori.hungryosori;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.view.View;
 import android.webcrawler.osori.hungryosori.Adapter.CrawlerViewPagerAdapter;
 import android.webcrawler.osori.hungryosori.Model.CrawlerInfo;
 import android.webcrawler.osori.hungryosori.common.Constant;
@@ -16,6 +17,8 @@ import java.util.ArrayList;
 public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPageChangeListener{
     public static ArrayList<CrawlerInfo> crawlerInfosAll;
     public static ArrayList<CrawlerInfo> crawlerInfosMy;
+
+    private ArrayList<String> myCrawlerIDs;
 
     private ViewPager viewPager;
     private CrawlerViewPagerAdapter viewPagerAdapter;
@@ -34,6 +37,7 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
 
         crawlerInfosAll = new ArrayList<>();
         crawlerInfosMy  = new ArrayList<>();
+        myCrawlerIDs = new ArrayList<>();
 
         /** Toggle 버튼 초기값 설정 */
         button_my.setChecked(true);
@@ -49,14 +53,39 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
         getCrawlerInfo();
     }
 
-    private void getCrawlerInfo(){
+    private void getCrawlerInfo() {
+        getEntireList();
+        getSubscriptionList();
+
+        addToList();
+    }
+
+    private void getEntireList(){
         CrawlerInfo info1 = new CrawlerInfo("wf42i", "DCinside",
                 "디시 힛겔 크롤러", "http://wstatic.dcinside.com/main/main2011/dcmain/logo_swf/top_logo_160718.png", false);
         CrawlerInfo info2 = new CrawlerInfo("xvio31", "steam",
                 "스팀 할인 정보 크롤러", "http://steamcommunity-a.akamaihd.net/public/shared/images/header/globalheader_logo.png", false);
-
         crawlerInfosAll.add(info1);
         crawlerInfosAll.add(info2);
+    }
+
+    private void getSubscriptionList(){
+        myCrawlerIDs.add("wf42i");
+    }
+
+    private void addToList()
+    {
+        for(String id : myCrawlerIDs){
+            for(CrawlerInfo crawlerInfo : crawlerInfosAll)
+            {
+                if(crawlerInfo.getId().equals(id))
+                {
+                    crawlerInfo.setSubscription(true);
+                    crawlerInfosMy.add(crawlerInfo);
+                    break;
+                }
+            }
+        }
     }
 
     /* view pager 페이지가 바뀌면 호출된다 */
@@ -78,6 +107,17 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
     @Override
     public void onPageScrolled(int arg0, float arg1, int arg2) {
         // TODO Auto-generated method stub
+    }
+
+    public void onClick(View v){
+        switch (v.getId()){
+            case R.id.crawler_button_my:
+                viewPager.setCurrentItem(Constant.PAGE_MY);
+                break;
+            case R.id.crawler_button_all:
+                viewPager.setCurrentItem(Constant.PAGE_ALL);
+                break;
+        }
     }
 
 }
