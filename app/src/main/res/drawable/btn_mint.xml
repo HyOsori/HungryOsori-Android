@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- When pressed -->
+    <item android:state_pressed="true">
+        <shape>
+            <solid android:color="@color/mint"/>
+            <corners
+                android:radius="@dimen/button_radius" />
+        </shape>
+    </item>
+
+    <!-- When focused -->
+    <item android:state_focused="true">
+        <shape>
+            <solid android:color="@color/mint"/>
+            <corners
+                android:radius="@dimen/button_radius" />
+        </shape>
+    </item>
+
+    <!-- When not selected  -->
+    <item>
+        <shape>
+            <solid android:color="@color/mint"/>
+            <corners
+                android:radius="@dimen/button_radius" />
+        </shape>
+    </item>
+
+</selector>

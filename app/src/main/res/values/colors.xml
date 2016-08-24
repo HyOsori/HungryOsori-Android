@@ -7,4 +7,8 @@
     <!-- 배경 색상 값 -->
     <color name="basicBackgroundColor">#FFFFFF</color>
 
+    <!-- 기본 색상 -->
+    <color name="orangeLight">#FFF1D6</color>
+    <color name="white">#FFFFFF</color>
+    <color name="mint">#9bfc83</color>
 </resources>
