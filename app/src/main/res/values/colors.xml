@@ -3,12 +3,16 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    
+
     <!-- 배경 색상 값 -->
     <color name="basicBackgroundColor">#FFFFFF</color>
 
     <!-- 기본 색상 -->
     <color name="orangeLight">#FFF1D6</color>
+    <color name="blue">#008e8e</color>
+    <color name="darkBlue">#008e8e</color>
     <color name="white">#FFFFFF</color>
     <color name="mint">#9bfc83</color>
+    <color name="gray">#bfbfbf</color>
+
 </resources>

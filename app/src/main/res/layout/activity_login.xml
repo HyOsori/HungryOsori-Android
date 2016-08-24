@@ -1,8 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:sl="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:gravity="center"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    >
+
+    <com.ssomai.android.scalablelayout.ScalableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/image_box"
+        sl:scale_base_width="100"
+        sl:scale_base_height="100"
+        >
+
+        <EditText
+            android:id = "@+id/emailInputLogin"
+            android:inputType = "textEmailAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edittext_white"
+            android:hint= "이메일"
+            android:paddingLeft="10dp"
+            sl:scale_left = "25"
+            sl:scale_top = "25"
+            sl:scale_width = "50"
+            sl:scale_height = "10"
+            sl:scale_textsize = "5"
+            />
+        <EditText
+            android:id = "@+id/pwInputLogin"
+            android:inputType = "textWebPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint = "비밀번호"
+            android:paddingLeft="10dp"
+            android:background="@drawable/edittext_white"
+            sl:scale_left = "25"
+            sl:scale_top = "40"
+            sl:scale_width = "50"
+            sl:scale_height = "10"
+            sl:scale_textsize = "5"
+            />
+
+        <Button
+            android:id="@+id/loginSubmitBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_mint"
+            android:text = "로그인"
+            android:onClick = "onClick"
+            android:textColor = "@color/white"
+            sl:scale_left = "40"
+            sl:scale_top = "55"
+            sl:scale_width = "20"
+            sl:scale_height = "10"
+            sl:scale_textsize= "4"
+            />
+
+        <TextView
+            android:id="@+id/login2JoinBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text = "회원이 아니신가요? \n 지금 가입하세요!"
+            android:onClick = "onClick"
+            sl:scale_width="50"
+            sl:scale_height= "30"
+            sl:scale_left = "25"
+            sl:scale_top = "75"
+            sl:scale_textsize="5"
+            />
+
+    </com.ssomai.android.scalablelayout.ScalableLayout>
 
 </LinearLayout>

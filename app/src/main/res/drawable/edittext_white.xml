@@ -4,18 +4,26 @@
     <!-- When pressed -->
     <item android:state_pressed="true">
         <shape>
-            <solid android:color="@color/orangeLight"/>
+            <solid android:color="@color/white"/>
             <corners
                 android:radius="@dimen/editText_radius" />
+            <stroke
+                android:color="@color/gray"
+                android:width="3dp"
+                />
         </shape>
     </item>
 
     <!-- When focused -->
     <item android:state_focused="true">
         <shape>
-            <solid android:color="@color/orangeLight"/>
+            <solid android:color="@color/gray"/>
             <corners
                 android:radius="@dimen/editText_radius" />
+            <stroke
+                android:color="@color/gray"
+                android:width="3dp"
+                />
         </shape>
     </item>
 
@@ -25,6 +33,10 @@
             <solid android:color="@color/white"/>
             <corners
                 android:radius="@dimen/editText_radius" />
+            <stroke
+                android:color="@color/gray"
+                android:width="3dp"
+                />
         </shape>
     </item>
 

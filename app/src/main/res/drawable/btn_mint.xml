@@ -4,7 +4,7 @@
     <!-- When pressed -->
     <item android:state_pressed="true">
         <shape>
-            <solid android:color="@color/mint"/>
+            <solid android:color="@color/darkBlue"/>
             <corners
                 android:radius="@dimen/button_radius" />
         </shape>
@@ -22,7 +22,7 @@
     <!-- When not selected  -->
     <item>
         <shape>
-            <solid android:color="@color/mint"/>
+            <solid android:color="@color/blue"/>
             <corners
                 android:radius="@dimen/button_radius" />
         </shape>
