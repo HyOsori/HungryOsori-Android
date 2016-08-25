@@ -34,7 +34,7 @@ public class Http {
         }
     }
 
-    public static final int METHOD_POST = 1;
+    public static final  int METHOD_POST = 1;
     private static final int DEFAULT_METHOD = METHOD_POST;
 
     private static final int CONNECTION_TIME_OUT_MILLIS = 6000;
@@ -52,11 +52,6 @@ public class Http {
         this.encoding = encoding;
     }
 
-    public void setMethod(int method) {
-        this.method = method;
-    }
-
-    /* overload stuff */
     public String send(ParamModel paramModel) {
         return send(paramModel, method);
     }

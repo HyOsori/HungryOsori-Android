@@ -90,7 +90,7 @@ public class JoinActivity extends FragmentActivity {
         new TryJoinTask(this).execute(params);
     }
 
-    // 로그인을 시도하는 AsyncTask
+    // 회원가입 시도하는 AsyncTask
     private class TryJoinTask extends AsyncTask<Http.ParamModel, Void, Boolean> {
         Context mContext;
 
@@ -123,10 +123,10 @@ public class JoinActivity extends FragmentActivity {
         protected void onPostExecute(Boolean success) {
             // TODO Auto-generated method stub
             if(success) {
-                // 로그인 성공
+                // 회원가입 성공
                 finish();
             }else{
-                // 로그인 실패
+                // 회원가입 실패
             }
         }
     }
