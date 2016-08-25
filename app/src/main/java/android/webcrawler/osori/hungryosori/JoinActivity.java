@@ -73,13 +73,13 @@ public class JoinActivity extends FragmentActivity {
                     break;
                 }
                 /** 서버 연동 */
-
+                tryJoin();
                 break;
         }
     }
 
     // 로그인 시도
-    private void tryLogin(){
+    private void tryJoin(){
         String url = Constant.SERVER_URL;
         String paramStr = "";
 
@@ -87,14 +87,14 @@ public class JoinActivity extends FragmentActivity {
         params.setUrl(url);
         params.setParamStr(paramStr);
 
-        new GetSubCategoryTask(this).execute(params);
+        new TryJoinTask(this).execute(params);
     }
 
     // 로그인을 시도하는 AsyncTask
-    private class GetSubCategoryTask extends AsyncTask<Http.ParamModel, Void, Boolean> {
+    private class TryJoinTask extends AsyncTask<Http.ParamModel, Void, Boolean> {
         Context mContext;
 
-        public GetSubCategoryTask(Context mContext){
+        public TryJoinTask(Context mContext){
             this.mContext = mContext;
         }
 
@@ -124,8 +124,7 @@ public class JoinActivity extends FragmentActivity {
             // TODO Auto-generated method stub
             if(success) {
                 // 로그인 성공
-                Intent intent = new Intent(mContext, CrawlerActivity.class);
-                startActivity(intent);
+                finish();
             }else{
                 // 로그인 실패
             }

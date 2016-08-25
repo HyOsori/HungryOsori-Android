@@ -6,8 +6,6 @@ import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
 import android.webcrawler.osori.hungryosori.common.Constant;
 import android.webcrawler.osori.hungryosori.common.Http;
@@ -17,10 +15,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
  * Created by 고건주&김규민 on 2016-08-18.
@@ -88,14 +82,15 @@ public class LoginActivity extends FragmentActivity {
         params.setUrl(url);
         params.setParamStr(paramStr);
 
-        new GetSubCategoryTask(this).execute(params);
+        new TryLoginTask(this).execute(params);
     }
 
     // 로그인을 시도하는 AsyncTask
-    private class GetSubCategoryTask extends AsyncTask<Http.ParamModel, Void, Boolean> {
+    private class TryLoginTask extends AsyncTask<Http.ParamModel, Void, Boolean> {
         private Context mContext;
-        private String  userKey;
-        public GetSubCategoryTask(Context mContext){
+        private String  userKey  = null;
+
+        public TryLoginTask(Context mContext){
             this.mContext = mContext;
         }
 
@@ -126,7 +121,10 @@ public class LoginActivity extends FragmentActivity {
             if(success) {
                 // 로그인 성공
                 Pref.setKeepLogin(mContext, true);
-                Pref.setUserKey(mContext, userKey);
+                if(userKey != null) {
+                    Pref.setUserKey(mContext, userKey);
+                }
+
                 Intent intent = new Intent(mContext, CrawlerActivity.class);
                 startActivity(intent);
             }else{
