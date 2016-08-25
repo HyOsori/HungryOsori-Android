@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.webcrawler.osori.hungryosori.common.Constant;
+import android.webcrawler.osori.hungryosori.common.Pref;
 
 /**
  * Created by 고건주 on 2016-08-18.
@@ -11,19 +13,36 @@ import android.os.Bundle;
  */
 public class StartActivity extends FragmentActivity {
     private final int DELAY_TIME = 1000;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 
-        /** 로그인 되지 않은 경우에 로그인 페이지로 이동한다 */
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = new Intent(StartActivity.this, LoginActivity.class);
-                startActivity(intent);
-            }
-        }, DELAY_TIME);
+        /** Preference 값 */
+        Constant.keepLogin = Pref.getKeepLogin(this);
+        Constant.userKey   = Pref.getUserKey(this);
+
+        if(Constant.keepLogin && Constant.userKey != null) {
+            /** 로그인에 성공한 경우 */
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(StartActivity.this, CrawlerActivity.class);
+                    startActivity(intent);
+                }
+            }, DELAY_TIME);
+        }else{
+            /** 로그인 되지 않은 경우에 로그인 페이지로 이동한다 */
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(StartActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                }
+            }, DELAY_TIME);
+        }
     }
 }

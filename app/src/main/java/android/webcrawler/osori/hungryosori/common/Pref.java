@@ -8,6 +8,7 @@ import android.content.Context;
 
 /**
  * Created by 건주 on 2016-08-25.
+ * Shared Preference 설정
  */
 public class Pref {
 

@@ -22,6 +22,7 @@ import android.widget.Toast;
  */
 
 public class LoginActivity extends FragmentActivity {
+
     private static String email;
     private static String password;
     private EditText editText_mail, editText_password;
