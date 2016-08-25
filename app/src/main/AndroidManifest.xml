@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="android.webcrawler.osori.hungryosori">
 
+    <!-- Include following permission if you load images from Internet -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Include following permission if you want to cache images on SD card -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/icon_osori"

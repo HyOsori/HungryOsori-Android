@@ -9,6 +9,7 @@ import android.view.View;
 import android.webcrawler.osori.hungryosori.common.Constant;
 import android.webcrawler.osori.hungryosori.common.Http;
 import android.webcrawler.osori.hungryosori.common.Lib;
+import android.webcrawler.osori.hungryosori.common.Pref;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -80,12 +81,10 @@ public class JoinActivity extends FragmentActivity {
 
     // 로그인 시도
     private void tryJoin(){
-        String url = Constant.SERVER_URL;
-        String paramStr = "";
+        String url = Constant.SERVER_URL + "/join";
 
         Http.ParamModel params = new Http.ParamModel();
         params.setUrl(url);
-        params.setParamStr(paramStr);
 
         new TryJoinTask(this).execute(params);
     }

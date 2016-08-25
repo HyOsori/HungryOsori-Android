@@ -16,6 +16,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONObject;
+
 /**
  * Created by 고건주&김규민 on 2016-08-18.
  * 로그인 페이지 액티비티
@@ -76,23 +78,29 @@ public class LoginActivity extends FragmentActivity {
 
     // 로그인 시도
     private void tryLogin(){
-        String url = Constant.SERVER_URL;
-        String paramStr = "";
+        String url = Constant.SERVER_URL + "/req_login";
 
         Http.ParamModel params = new Http.ParamModel();
-        params.setUrl(url);
-        params.setParamStr(paramStr);
 
-        new TryLoginTask(this).execute(params);
+        params.setUrl(url);
+        params.setParamStr("user_id", email);
+        params.setParamStr("user_pw", password);
+        if(Pref.getUserKey(this) != Pref.DEFAULT_STRING_VALUE) {
+            params.setParamStr("user_key", Pref.getUserKey(this));
+        }
+
+        new TryLoginTask(this, email).execute(params);
     }
 
     // 로그인을 시도하는 AsyncTask
     private class TryLoginTask extends AsyncTask<Http.ParamModel, Void, Boolean> {
         private Context mContext;
-        private String  userKey  = Pref.DEFAULT_USER_KEY_VALUE;
+        private String  userKey  = Pref.DEFAULT_STRING_VALUE;
+        private String  email;
 
-        public TryLoginTask(Context mContext){
+        public TryLoginTask(Context mContext, String email){
             this.mContext = mContext;
+            this.email    = email;
         }
 
         @Override
@@ -111,9 +119,19 @@ public class LoginActivity extends FragmentActivity {
             if(result == null){
                 return false;
             }else{
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
 
+                    String message = jsonObject.getString(Constant.MESSAGE);
+                    if(message.equals(Constant.MESSAGE_SUCCESS)){
+                        userKey = jsonObject.getString("user_key");
+                        return true;
+                    }
+                }catch(Exception e){
+
+                }
             }
-            return true;
+            return false;
         }
 
         @Override
@@ -121,10 +139,10 @@ public class LoginActivity extends FragmentActivity {
             // TODO Auto-generated method stub
             if(success) {
                 // 로그인 성공
-                if(userKey != Pref.DEFAULT_USER_KEY_VALUE) {
+                if(userKey != Pref.DEFAULT_STRING_VALUE) {
                     Pref.setUserKey(mContext, userKey);
+                    Pref.setUserEmail(mContext, email);
                     Pref.setKeepLogin(mContext, true);
-
                     Intent intent = new Intent(mContext, CrawlerActivity.class);
                     startActivity(intent);
                 }

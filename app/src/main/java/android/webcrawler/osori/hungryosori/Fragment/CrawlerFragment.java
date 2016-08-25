@@ -1,5 +1,6 @@
 package android.webcrawler.osori.hungryosori.Fragment;
 
+import android.graphics.Bitmap;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,6 +12,9 @@ import android.webcrawler.osori.hungryosori.R;
 import android.webcrawler.osori.hungryosori.common.Constant;
 import android.widget.ListView;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.process.BitmapProcessor;
+
 /**
  * Created by kunju on 2016-08-25.
  */
@@ -18,6 +22,7 @@ public class CrawlerFragment extends Fragment{
 
     private int page;
     private ListView listView;
+    private DisplayImageOptions options;
     public CrawlerListAdapter listAdapter = null;
 
     public static CrawlerFragment newInstance(int pagePosition){
@@ -38,10 +43,27 @@ public class CrawlerFragment extends Fragment{
             page      = args.getInt("PAGE");
         }
 
+        options  = new DisplayImageOptions.Builder()
+                .showImageOnLoading(R.color.white)          // 이미지 로딩 중 나타나는 이미지
+                .showImageForEmptyUri(R.color.white)        // 값이 없을 경우
+                .showImageOnFail(R.color.white)             // 에러가 났을 경우
+                .cacheInMemory(true)                        // In memory 캐시에 저장
+                .cacheOnDisk(true)                          // Disk Cache 저장
+                .considerExifParams(true)
+                .postProcessor(new BitmapProcessor() {      // 이미지 후 처리
+                    @Override
+                    public Bitmap process(Bitmap bmp) {
+                        return Bitmap.createScaledBitmap(bmp, 250, 250, false);
+                    }
+                })
+                .build();
+
         if(page == Constant.PAGE_MY) {
-            listAdapter = new CrawlerListAdapter(getActivity(), R.layout.list_crawler, R.id.list_crawler_textView_title, CrawlerActivity.crawlerInfosMy);
+            listAdapter = new CrawlerListAdapter(getActivity(), R.layout.list_crawler, R.id.list_crawler_textView_title,
+                    CrawlerActivity.crawlerInfosMy, options);
         }else if(page == Constant.PAGE_ALL){
-            listAdapter = new CrawlerListAdapter(getActivity(), R.layout.list_crawler, R.id.list_crawler_textView_title, CrawlerActivity.crawlerInfosAll);
+            listAdapter = new CrawlerListAdapter(getActivity(), R.layout.list_crawler, R.id.list_crawler_textView_title,
+                    CrawlerActivity.crawlerInfosAll, options);
         }
     }
 

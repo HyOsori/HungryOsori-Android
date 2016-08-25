@@ -1,5 +1,7 @@
 package android.webcrawler.osori.hungryosori.common;
 
+import android.webcrawler.osori.hungryosori.Model.NameValuePair;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -7,18 +9,22 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+
 
 /**
- * Created by kunju on 2016-08-25.
+ * Created by 고건주 on 2016-08-25.
  */
 public class Http {
 
     public static class ParamModel {
         private String url;
-        private String paramStr;
+        ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
 
         private String getUrl() {
             return url;
@@ -26,49 +32,50 @@ public class Http {
         public void setUrl(String url) {
             this.url = url;
         }
+
         private String getParamStr() {
-            return paramStr;
+            return getQuery();
         }
-        public void setParamStr(String paramStr) {
-            this.paramStr = paramStr;
+
+        public void setParamStr(String key, String value) {
+            params.add(new NameValuePair(key, value));
+        }
+
+        private String getQuery(){
+            StringBuilder result = new StringBuilder();
+            boolean first = true;
+
+            for (NameValuePair pair : params)
+            {
+                if (first)
+                    first = false;
+                else
+                    result.append("&");
+
+                try {
+                    result.append(URLEncoder.encode(pair.getKey(), DEFAULT_ENCODING));
+                    result.append("=");
+                    result.append(URLEncoder.encode(pair.getValue(), DEFAULT_ENCODING));
+                }catch (UnsupportedEncodingException e){
+
+                }
+            }
+
+            return result.toString();
         }
     }
 
-    public static final  int METHOD_POST = 1;
-    private static final int DEFAULT_METHOD = METHOD_POST;
-
-    private static final int CONNECTION_TIME_OUT_MILLIS = 6000;
+    private static final int TIME_OUT_MILLIS = 2000;
     private static final String DEFAULT_ENCODING = "UTF-8";
 
-    private String encoding;
-    private int method;
-
-    public Http() {
-        encoding = DEFAULT_ENCODING;
-        method = DEFAULT_METHOD;
-    }
-
-    public void setEncoding(String encoding) {
-        this.encoding = encoding;
-    }
-
     public String send(ParamModel paramModel) {
-        return send(paramModel, method);
-    }
-
-    public String send(ParamModel paramModel, int method) {
-        if ((method != METHOD_POST)) {
-            return null;
-        }
 
         String result = null;
+
         try {
             final URL url = new URL(paramModel.getUrl());
 
             String paramStr = paramModel.getParamStr();
-            if (paramStr == null) {
-                paramStr = "";
-            }
 
             HttpURLConnection urlConnection = null;
             OutputStream out = null;
@@ -80,17 +87,20 @@ public class Http {
 
                 urlConnection.setDoOutput(true);
                 urlConnection.setDoInput(true);
-                urlConnection.setConnectTimeout(CONNECTION_TIME_OUT_MILLIS);
+                urlConnection.setConnectTimeout(TIME_OUT_MILLIS);
+                urlConnection.setReadTimeout(TIME_OUT_MILLIS);
                 urlConnection.setRequestMethod("POST");
-                urlConnection.setChunkedStreamingMode(0);
 
                 out = new BufferedOutputStream(urlConnection.getOutputStream());
 
-                out.write(paramStr.getBytes(encoding));
+                out.write(paramStr.getBytes(DEFAULT_ENCODING));
+                out.flush();
+
+                urlConnection.connect();
 
                 in = new BufferedInputStream(urlConnection.getInputStream());
 
-                bReader = new BufferedReader(new InputStreamReader(in, encoding));
+                bReader = new BufferedReader(new InputStreamReader(in, DEFAULT_ENCODING));
                 StringBuilder strBuilder = new StringBuilder();
 
                 String line;

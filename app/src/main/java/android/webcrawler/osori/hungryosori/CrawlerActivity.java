@@ -1,6 +1,9 @@
 package android.webcrawler.osori.hungryosori;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
@@ -8,7 +11,12 @@ import android.view.View;
 import android.webcrawler.osori.hungryosori.Adapter.CrawlerViewPagerAdapter;
 import android.webcrawler.osori.hungryosori.Model.CrawlerInfo;
 import android.webcrawler.osori.hungryosori.common.Constant;
+import android.webcrawler.osori.hungryosori.common.Http;
+import android.webcrawler.osori.hungryosori.common.Pref;
 import android.widget.ToggleButton;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -60,9 +68,72 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
     }
 
     private void getEntireList(){
+        String url = Constant.SERVER_URL + "/req_entire_list";
 
+        Http.ParamModel params = new Http.ParamModel();
+
+        params.setUrl(url);
+        params.setParamStr("user_id", Pref.getUserEmail(this));
+        params.setParamStr("user_key", Pref.getUserKey(this));
+
+        new getEntireListTask().execute(params);
     }
 
+    private class getEntireListTask extends AsyncTask<Http.ParamModel, Void, Boolean> {
+
+        @Override
+        protected void onPreExecute() {
+            // TODO Auto-generated method stub
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Boolean doInBackground(Http.ParamModel... params) {
+            // TODO Auto-generated method stub
+            Http http = new Http();
+
+            String result = http.send(params[0]);
+
+            if(result == null){
+                return false;
+            }else{
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
+
+                    String message = jsonObject.getString(Constant.MESSAGE);
+                    if(message.equals(Constant.MESSAGE_SUCCESS)){
+                        JSONArray jsonArray = jsonObject.getJSONArray("crawlers");
+
+                        for(int i=0; i<jsonArray.length(); ++i){
+                            JSONObject object = jsonArray.getJSONObject(i);
+
+                            String id = object.getString("crawler_id");
+                            String url = object.getString("thumbnail_url");
+                            String description = object.getString("description");
+                            String title = object.getString("title");
+
+                            crawlerInfosAll.add(new CrawlerInfo(id, url, description, title, false));
+                        }
+                        return true;
+                    }
+                }catch(Exception e){
+
+                }
+            }
+            return false;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean success) {
+            // TODO Auto-generated method stub
+            if(success) {
+                // 성공
+
+            }else{
+                // 실패
+            }
+        }
+    }
     private void getSubscriptionList(){
 
     }

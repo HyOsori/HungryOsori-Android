@@ -14,12 +14,13 @@ public class Pref {
 
     /** 공통 상수값 */
     private static final String SHARED_PREF_NAME = "hungryOsori.sharedPref";
-    public static final boolean DEFAULT_BOOLEAN_VALUE  = false;
-    public static final String  DEFAULT_USER_KEY_VALUE = null;
+    public static final boolean DEFAULT_BOOLEAN_VALUE   = false;
+    public static final String DEFAULT_STRING_VALUE     = null;
 
     /** 로그인 관련 상수 */
     private static final String PREF_KEY_KEEP_LOGIN = "keepLogin";
     private static final String PREF_KEY_USER_KEY   = "userKey";
+    private static final String PREF_KEY_USER_EMAIL = "userID";
 
     /** 로그인 관련 Shared Preference 함수들 */
     public static void setKeepLogin(Context context, boolean isChecked){
@@ -52,7 +53,24 @@ public class Pref {
             return null;
         }
         String userKey = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE).
-                getString(PREF_KEY_USER_KEY, DEFAULT_USER_KEY_VALUE);
+                getString(PREF_KEY_USER_KEY, DEFAULT_STRING_VALUE);
+        return userKey;
+    }
+
+    public static void setUserEmail(Context context, String userEmail){
+        if(context == null){
+            return;
+        }
+        context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
+                .edit().putString(PREF_KEY_USER_EMAIL, userEmail).apply();
+    }
+
+    public static String getUserEmail(Context context) {
+        if(context == null){
+            return null;
+        }
+        String userKey = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE).
+                getString(PREF_KEY_USER_EMAIL, DEFAULT_STRING_VALUE);
         return userKey;
     }
 

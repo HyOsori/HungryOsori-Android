@@ -14,6 +14,9 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+
 import java.util.List;
 
 /**
@@ -22,11 +25,13 @@ import java.util.List;
 public class CrawlerListAdapter extends ArrayAdapter<CrawlerInfo> implements View.OnClickListener{
 
     private Typeface fontArial;
+    private DisplayImageOptions options;        // 이미지 로더 옵션
 
-    public CrawlerListAdapter(Context context, int resource, int textViewResourceId, List<CrawlerInfo> data){
+    public CrawlerListAdapter(Context context, int resource, int textViewResourceId, List<CrawlerInfo> data, DisplayImageOptions options){
         super(context, resource, textViewResourceId, data);
 
         fontArial           = Typeface.createFromAsset(context.getAssets(), "fonts/arial.ttf");
+        this.options        = options;
     }
 
     class ViewHolder
@@ -66,7 +71,7 @@ public class CrawlerListAdapter extends ArrayAdapter<CrawlerInfo> implements Vie
         viewHolder.textView_title.setText(getItem(position).getTitle());
         viewHolder.textView_description.setText(getItem(position).getDescription());
         viewHolder.toggleButton_subscription.setChecked(getItem(position).getSubscription());
-
+        ImageLoader.getInstance().displayImage(getItem(position).getUrl(), viewHolder.imageView, options);
         return itemLayout;
     }
 
