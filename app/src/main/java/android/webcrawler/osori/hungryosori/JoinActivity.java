@@ -1,7 +1,6 @@
 package android.webcrawler.osori.hungryosori;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -21,11 +20,12 @@ import android.widget.Toast;
  */
 
 public class JoinActivity extends FragmentActivity {
+
     private static String email;
     private static String password;
     private static String rePassword;
 
-    private EditText editText_mail, editText_password, editText_repassword;
+    private EditText editText_mail, editText_password, editText_rePassword;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,13 +34,13 @@ public class JoinActivity extends FragmentActivity {
         /** 객체 설정 */
         editText_mail = (EditText) findViewById(R.id.join_editText_email);
         editText_password = (EditText) findViewById(R.id.join_editText_password);
-        editText_repassword = (EditText) findViewById(R.id.join_editText_repassword);
+        editText_rePassword = (EditText) findViewById(R.id.join_editText_repassword);
 
         /** 폰트 설정 */
         Typeface fontArial = Typeface.createFromAsset(getAssets(), "fonts/arial.ttf");
         editText_mail.setTypeface(fontArial);
         editText_password.setTypeface(fontArial);
-        editText_repassword.setTypeface(fontArial);
+        editText_rePassword.setTypeface(fontArial);
         ((Button)findViewById(R.id.join_button_submit)).setTypeface(fontArial);
     }
 
@@ -51,7 +51,7 @@ public class JoinActivity extends FragmentActivity {
             case R.id.join_button_submit:
                 email = editText_mail.getText().toString().trim();
                 password = editText_password.getText().toString().trim();
-                rePassword = editText_repassword.getText().toString().trim();
+                rePassword = editText_rePassword.getText().toString().trim();
 
                 /** 아이디가 올바른 이메일 형식인지 검사 */
                 if (!Lib.isValidEmail(email)) {
@@ -116,7 +116,7 @@ public class JoinActivity extends FragmentActivity {
             }else{
 
             }
-            return false;
+            return true;
         }
 
         @Override

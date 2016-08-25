@@ -113,7 +113,7 @@ public class LoginActivity extends FragmentActivity {
             }else{
 
             }
-            return false;
+            return true;
         }
 
         @Override
