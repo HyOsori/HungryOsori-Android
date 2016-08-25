@@ -14,19 +14,19 @@ public class CrawlerViewPagerAdapter extends FragmentPagerAdapter {
 
     private int count = 2;          // viewPager의 수
 
-    public static CrawlerFragment fragmentMy;
-    public static CrawlerFragment fragmentALL;
+    public static CrawlerFragment fragmentMy    = null;
+    public static CrawlerFragment fragmentALL   = null;
 
     public CrawlerViewPagerAdapter(FragmentManager fm){
         super(fm);
-        fragmentMy = CrawlerFragment.newInstance(Constant.PAGE_MY);
+        fragmentMy  = CrawlerFragment.newInstance(Constant.PAGE_MY);
         fragmentALL = CrawlerFragment.newInstance(Constant.PAGE_ALL);
     }
 
     public Fragment getItem(int i){
-        if(i == Constant.PAGE_MY){
+        if(i == Constant.PAGE_MY && fragmentMy != null){
             return fragmentMy;
-        }else if(i == Constant.PAGE_ALL){
+        }else if(i == Constant.PAGE_ALL && fragmentALL != null){
             return fragmentALL;
         }
         return null;

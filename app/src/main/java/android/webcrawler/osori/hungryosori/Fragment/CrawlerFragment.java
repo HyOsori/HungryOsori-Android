@@ -18,7 +18,7 @@ public class CrawlerFragment extends Fragment{
 
     private int page;
     private ListView listView;
-    public CrawlerListAdapter listAdapter;
+    public CrawlerListAdapter listAdapter = null;
 
     public static CrawlerFragment newInstance(int pagePosition){
         CrawlerFragment fragment = new CrawlerFragment();
@@ -50,7 +50,9 @@ public class CrawlerFragment extends Fragment{
         View view = inflater.inflate(R.layout.fragment_crawler, container, false);
 
         listView = (ListView)view.findViewById(R.id.fragment_crawler_listView);
-        listView.setAdapter(listAdapter);                       // 어댑터 설정
+        if(listAdapter != null) {
+            listView.setAdapter(listAdapter);                       // 어댑터 설정
+        }
 
         return view;
     }

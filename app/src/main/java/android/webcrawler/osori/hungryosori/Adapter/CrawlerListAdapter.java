@@ -20,13 +20,12 @@ import java.util.List;
  * Created by kunju on 2016-08-25.
  */
 public class CrawlerListAdapter extends ArrayAdapter<CrawlerInfo> implements View.OnClickListener{
+
     private Typeface fontArial;
-    private Typeface fontNanumBarunGothic;
 
     public CrawlerListAdapter(Context context, int resource, int textViewResourceId, List<CrawlerInfo> data){
         super(context, resource, textViewResourceId, data);
 
-        fontNanumBarunGothic= Typeface.createFromAsset(context.getAssets(), "fonts/NanumBarunGothic.ttf");
         fontArial           = Typeface.createFromAsset(context.getAssets(), "fonts/arial.ttf");
     }
 

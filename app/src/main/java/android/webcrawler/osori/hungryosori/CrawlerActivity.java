@@ -1,5 +1,6 @@
 package android.webcrawler.osori.hungryosori;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
  * Created by 고건주 on 2016-08-25.
  */
 public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPageChangeListener{
+
     public static ArrayList<CrawlerInfo> crawlerInfosAll;
     public static ArrayList<CrawlerInfo> crawlerInfosMy;
 
@@ -35,45 +37,37 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
         button_all  = (ToggleButton)findViewById(R.id.crawler_button_all);
         button_my   = (ToggleButton)findViewById(R.id.crawler_button_my);
 
+        /** 폰트 설정 */
+        Typeface fontArial = Typeface.createFromAsset(getAssets(), "fonts/arial.ttf");
+        button_all.setTypeface(fontArial);
+        button_my.setTypeface(fontArial);
+
         crawlerInfosAll = new ArrayList<>();
         crawlerInfosMy  = new ArrayList<>();
         myCrawlerIDs = new ArrayList<>();
+        getCrawlerInfo();
 
         /** Toggle 버튼 초기값 설정 */
         button_my.setChecked(true);
         button_all.setChecked(false);
-
-        // ViewPager 어댑터 생성
-        viewPagerAdapter = new CrawlerViewPagerAdapter(getSupportFragmentManager());
-
-        // ViewPager 어댑터 설정
-        viewPager.setAdapter(viewPagerAdapter);
-        viewPager.setOnPageChangeListener(this);
-
-        getCrawlerInfo();
     }
 
     private void getCrawlerInfo() {
-        getEntireList();
-        getSubscriptionList();
+       getEntireList();
+       getSubscriptionList();
 
-        addToList();
+       setViewPagerAdapter();
     }
 
     private void getEntireList(){
-        CrawlerInfo info1 = new CrawlerInfo("wf42i", "DCinside",
-                "디시 힛겔 크롤러", "http://wstatic.dcinside.com/main/main2011/dcmain/logo_swf/top_logo_160718.png", false);
-        CrawlerInfo info2 = new CrawlerInfo("xvio31", "steam",
-                "스팀 할인 정보 크롤러", "http://steamcommunity-a.akamaihd.net/public/shared/images/header/globalheader_logo.png", false);
-        crawlerInfosAll.add(info1);
-        crawlerInfosAll.add(info2);
+
     }
 
     private void getSubscriptionList(){
-        myCrawlerIDs.add("wf42i");
+
     }
 
-    private void addToList()
+    private void setViewPagerAdapter()
     {
         for(String id : myCrawlerIDs){
             for(CrawlerInfo crawlerInfo : crawlerInfosAll)
@@ -86,6 +80,12 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
                 }
             }
         }
+        // ViewPager 어댑터 생성
+        viewPagerAdapter = new CrawlerViewPagerAdapter(getSupportFragmentManager());
+
+        // ViewPager 어댑터 설정
+        viewPager.setAdapter(viewPagerAdapter);
+        viewPager.setOnPageChangeListener(this);
     }
 
     /* view pager 페이지가 바뀌면 호출된다 */
