@@ -15,8 +15,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import org.json.JSONObject;
+
 
 /**
  * Created by 고건주&김규민 on 2016-08-18.
@@ -66,7 +66,7 @@ public class LoginActivity extends FragmentActivity {
                     editText_password.requestFocus();
                     break;
                 }
-                tryLogin();
+               //tryLogin();
                 break;
 
             case R.id.login_button_join:

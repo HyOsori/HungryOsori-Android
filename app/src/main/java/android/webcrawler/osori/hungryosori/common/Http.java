@@ -24,7 +24,7 @@ public class Http {
 
     public static class ParamModel {
         private String url;
-        ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
+        ArrayList<NameValuePair> params = new ArrayList<>();
 
         private String getUrl() {
             return url;

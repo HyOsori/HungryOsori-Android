@@ -1,7 +1,6 @@
 package android.webcrawler.osori.hungryosori;
 
-import android.content.Context;
-import android.content.Intent;
+
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -14,10 +13,8 @@ import android.webcrawler.osori.hungryosori.common.Constant;
 import android.webcrawler.osori.hungryosori.common.Http;
 import android.webcrawler.osori.hungryosori.common.Pref;
 import android.widget.ToggleButton;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 
 /**
