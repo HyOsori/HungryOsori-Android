@@ -23,7 +23,7 @@ public class StartActivity extends FragmentActivity {
         Constant.keepLogin = Pref.getKeepLogin(this);
         Constant.userKey   = Pref.getUserKey(this);
 
-        if(Constant.keepLogin && Constant.userKey != null) {
+        if(Constant.keepLogin && Constant.userKey != Pref.DEFAULT_USER_KEY_VALUE) {
             /** 로그인에 성공한 경우 */
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {

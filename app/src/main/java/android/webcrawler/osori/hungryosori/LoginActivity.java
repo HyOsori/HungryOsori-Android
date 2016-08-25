@@ -89,7 +89,7 @@ public class LoginActivity extends FragmentActivity {
     // 로그인을 시도하는 AsyncTask
     private class TryLoginTask extends AsyncTask<Http.ParamModel, Void, Boolean> {
         private Context mContext;
-        private String  userKey  = null;
+        private String  userKey  = Pref.DEFAULT_USER_KEY_VALUE;
 
         public TryLoginTask(Context mContext){
             this.mContext = mContext;
@@ -121,13 +121,13 @@ public class LoginActivity extends FragmentActivity {
             // TODO Auto-generated method stub
             if(success) {
                 // 로그인 성공
-                Pref.setKeepLogin(mContext, true);
-                if(userKey != null) {
+                if(userKey != Pref.DEFAULT_USER_KEY_VALUE) {
                     Pref.setUserKey(mContext, userKey);
-                }
+                    Pref.setKeepLogin(mContext, true);
 
-                Intent intent = new Intent(mContext, CrawlerActivity.class);
-                startActivity(intent);
+                    Intent intent = new Intent(mContext, CrawlerActivity.class);
+                    startActivity(intent);
+                }
             }else{
                 // 로그인 실패
             }

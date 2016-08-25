@@ -12,7 +12,7 @@ import android.widget.ToggleButton;
 import java.util.ArrayList;
 
 /**
- * Created by kunju on 2016-08-25.
+ * Created by 고건주 on 2016-08-25.
  */
 public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPageChangeListener{
     public static ArrayList<CrawlerInfo> crawlerInfosAll;

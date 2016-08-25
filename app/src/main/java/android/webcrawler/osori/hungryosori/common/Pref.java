@@ -7,14 +7,15 @@ package android.webcrawler.osori.hungryosori.common;
 import android.content.Context;
 
 /**
- * Created by 건주 on 2016-08-25.
+ * Created by 고건주 on 2016-08-25.
  * Shared Preference 설정
  */
 public class Pref {
 
     /** 공통 상수값 */
     private static final String SHARED_PREF_NAME = "hungryOsori.sharedPref";
-    private static final boolean DEFAULT_BOOLEAN_VALUE = false;
+    public static final boolean DEFAULT_BOOLEAN_VALUE  = false;
+    public static final String  DEFAULT_USER_KEY_VALUE = null;
 
     /** 로그인 관련 상수 */
     private static final String PREF_KEY_KEEP_LOGIN = "keepLogin";
@@ -51,7 +52,7 @@ public class Pref {
             return null;
         }
         String userKey = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE).
-                getString(PREF_KEY_USER_KEY, null);
+                getString(PREF_KEY_USER_KEY, DEFAULT_USER_KEY_VALUE);
         return userKey;
     }
 
