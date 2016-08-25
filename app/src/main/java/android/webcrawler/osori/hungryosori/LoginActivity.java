@@ -1,16 +1,25 @@
 package android.webcrawler.osori.hungryosori;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.webcrawler.osori.hungryosori.common.Constant;
+import android.webcrawler.osori.hungryosori.common.Http;
 import android.webcrawler.osori.hungryosori.common.Lib;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by 고건주&김규민 on 2016-08-18.
@@ -59,9 +68,7 @@ public class LoginActivity extends FragmentActivity {
                     editText_password.requestFocus();
                     break;
                 }
-                /** 서버 연동 */
-               intent = new Intent(this,CrawlerActivity.class);
-                startActivity(intent);
+                tryLogin();
                 break;
 
             case R.id.login_button_join:
@@ -70,4 +77,59 @@ public class LoginActivity extends FragmentActivity {
                 break;
         }
     }
+
+    // 로그인 시도
+    private void tryLogin(){
+        String url = Constant.SERVER_URL;
+        String paramStr = "";
+
+        Http.ParamModel params = new Http.ParamModel();
+        params.setUrl(url);
+        params.setParamStr(paramStr);
+
+        new GetSubCategoryTask(this).execute(params);
+    }
+
+    // 로그인을 시도하는 AsyncTask
+    private class GetSubCategoryTask extends AsyncTask<Http.ParamModel, Void, Boolean> {
+        Context mContext;
+
+        public GetSubCategoryTask(Context mContext){
+            this.mContext = mContext;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            // TODO Auto-generated method stub
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Boolean doInBackground(Http.ParamModel... params) {
+            // TODO Auto-generated method stub
+            Http http = new Http();
+
+            String result = http.send(params[0]);
+
+            if(result == null){
+                return false;
+            }else{
+
+            }
+            return false;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean success) {
+            // TODO Auto-generated method stub
+            if(success) {
+                // 로그인 성공
+                Intent intent = new Intent(mContext, CrawlerActivity.class);
+                startActivity(intent);
+            }else{
+                // 로그인 실패
+            }
+        }
+    }
+
 }

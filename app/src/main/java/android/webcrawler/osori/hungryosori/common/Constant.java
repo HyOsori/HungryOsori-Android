@@ -9,4 +9,6 @@ public class Constant {
     public static final int PAGE_MY  = 0;    // My page
     public static final int PAGE_ALL = 1;    // All page
 
+    public static final String SERVER_URL = "";
+
 }
