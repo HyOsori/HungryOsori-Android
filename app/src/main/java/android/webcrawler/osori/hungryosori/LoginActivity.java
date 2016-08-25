@@ -12,6 +12,7 @@ import android.view.View;
 import android.webcrawler.osori.hungryosori.common.Constant;
 import android.webcrawler.osori.hungryosori.common.Http;
 import android.webcrawler.osori.hungryosori.common.Lib;
+import android.webcrawler.osori.hungryosori.common.Pref;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -92,8 +93,8 @@ public class LoginActivity extends FragmentActivity {
 
     // 로그인을 시도하는 AsyncTask
     private class GetSubCategoryTask extends AsyncTask<Http.ParamModel, Void, Boolean> {
-        Context mContext;
-
+        private Context mContext;
+        private String  userKey;
         public GetSubCategoryTask(Context mContext){
             this.mContext = mContext;
         }
@@ -124,6 +125,8 @@ public class LoginActivity extends FragmentActivity {
             // TODO Auto-generated method stub
             if(success) {
                 // 로그인 성공
+                Pref.setKeepLogin(mContext, true);
+                Pref.setUserKey(mContext, userKey);
                 Intent intent = new Intent(mContext, CrawlerActivity.class);
                 startActivity(intent);
             }else{
