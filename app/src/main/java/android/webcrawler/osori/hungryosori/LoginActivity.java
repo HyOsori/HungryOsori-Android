@@ -142,7 +142,7 @@ public class LoginActivity extends FragmentActivity {
                 // 로그인 성공
                 if(userKey != Pref.DEFAULT_STRING_VALUE) {
                     Pref.setUserKey(mContext, userKey);
-                    Pref.setUserEmail(mContext, email);
+                    Pref.setUserID(mContext, email);
                     Pref.setKeepLogin(mContext, true);
                     Intent intent = new Intent(mContext, CrawlerActivity.class);
                     startActivity(intent);

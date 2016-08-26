@@ -71,7 +71,7 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
         ParamModel params = new ParamModel();
 
         params.setUrl(url);
-        params.setParamStr("user_id", Pref.getUserEmail(this));
+        params.setParamStr("user_id", Pref.getUserID(this));
         params.setParamStr("user_key", Pref.getUserKey(this));
 
         new getEntireListTask(this).execute(params);

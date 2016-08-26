@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.webcrawler.osori.hungryosori.common.Constant;
 import android.webcrawler.osori.hungryosori.common.Pref;
-
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -16,6 +15,8 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 /**
  * Created by 고건주 on 2016-08-18.
  * 어플리케이션 시작 시 처음으로 보여지는 화면으로 DELAY_TIME 동안 실행됨
+ * Shared preference 에 저장된 값들을 Constant 변수에 저장한다.
+ * ImageLoader 를 초기화 한다.
  */
 public class StartActivity extends FragmentActivity {
     private final int DELAY_TIME = 1000;
@@ -25,16 +26,18 @@ public class StartActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 
-        /** Preference 값 */
-        Constant.keepLogin = Pref.getKeepLogin(this);
-        Constant.userKey   = Pref.getUserKey(this);
-        Constant.cookie    = Pref.getCookie(this);
+        /** Preference 값을 저장 */
+        Constant.keepLogin      = Pref.getKeepLogin(this);
+        Constant.userKey        = Pref.getUserKey(this);
+        Constant.cookie         = Pref.getCookie(this);
+        Constant.userID         = Pref.getUserID(this);
+        Constant.userPassword   = Pref.getUserPassword(this);
 
         /** 이미지 로더 등록 */
         initImageLoader(this);
 
-        if(Constant.keepLogin && Constant.userKey.equals(Pref.DEFAULT_STRING_VALUE) == false) {
-            /** 로그인에 성공한 경우 */
+        if(Constant.keepLogin) {
+            /** 이미 로그인 된 경우 */
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override

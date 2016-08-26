@@ -13,6 +13,8 @@ public class Constant {
     /** 로그인 관련 값 */
     public static String    userKey;          // 사용자 Key
     public static boolean   keepLogin;
+    public static String    userID;
+    public static String    userPassword;
     public static String    cookie;
 
     /** Http 관련 상수 */
