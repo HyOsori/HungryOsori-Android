@@ -1,7 +1,7 @@
 package android.webcrawler.osori.hungryosori.common;
 
 /**
- * Created by kunju on 2016-08-25.
+ * Created by 고건주 on 2016-08-25.
  * 상수 값을 저장하는 클래스
  */
 public class Constant {

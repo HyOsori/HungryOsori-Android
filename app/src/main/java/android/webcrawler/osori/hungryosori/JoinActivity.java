@@ -10,7 +10,6 @@ import android.webcrawler.osori.hungryosori.Model.ParamModel;
 import android.webcrawler.osori.hungryosori.common.Constant;
 import android.webcrawler.osori.hungryosori.common.Http;
 import android.webcrawler.osori.hungryosori.common.Lib;
-import android.webcrawler.osori.hungryosori.common.Pref;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
