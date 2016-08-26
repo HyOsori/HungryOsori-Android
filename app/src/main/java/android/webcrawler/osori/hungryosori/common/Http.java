@@ -1,5 +1,6 @@
 package android.webcrawler.osori.hungryosori.common;
 
+import android.content.Context;
 import android.webcrawler.osori.hungryosori.Model.NameValuePair;
 
 import java.io.BufferedInputStream;
@@ -15,6 +16,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Map;
 
 
 /**
@@ -65,8 +69,15 @@ public class Http {
         }
     }
 
+    public Http(Context context){
+        this.mContext = context;
+        cookie = Pref.getCookie(context);
+    }
+
     private static final int TIME_OUT_MILLIS = 2000;
     private static final String DEFAULT_ENCODING = "UTF-8";
+    private Context mContext;
+    private String cookie;                  // Cookie 정보
 
     public String send(ParamModel paramModel) {
 
@@ -91,12 +102,30 @@ public class Http {
                 urlConnection.setReadTimeout(TIME_OUT_MILLIS);
                 urlConnection.setRequestMethod("POST");
 
+                if(cookie.equals(Pref.DEFAULT_STRING_VALUE)) {
+                    urlConnection.setInstanceFollowRedirects(false);
+                }else{
+                    urlConnection.setRequestProperty("cookie", cookie);
+                }
+
                 out = new BufferedOutputStream(urlConnection.getOutputStream());
 
                 out.write(paramStr.getBytes(DEFAULT_ENCODING));
                 out.flush();
 
                 urlConnection.connect();
+
+                if(cookie.equals(Pref.DEFAULT_STRING_VALUE)) {
+
+                    Map map = urlConnection.getHeaderFields();
+                    if (map.containsKey("Set-Cookie")) {
+                        Collection c = (Collection) map.get("Set-Cookie");
+                        for (Iterator i = c.iterator(); i.hasNext(); ) {
+                            cookie += (String) i.next() + ", ";
+                        }
+                    }
+                    Pref.setCookie(mContext, cookie);
+                }
 
                 in = new BufferedInputStream(urlConnection.getInputStream());
 

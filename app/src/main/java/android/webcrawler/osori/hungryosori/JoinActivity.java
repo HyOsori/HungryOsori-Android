@@ -106,7 +106,7 @@ public class JoinActivity extends FragmentActivity {
         @Override
         protected Boolean doInBackground(Http.ParamModel... params) {
             // TODO Auto-generated method stub
-            Http http = new Http();
+            Http http = new Http(mContext);
 
             String result = http.send(params[0]);
 

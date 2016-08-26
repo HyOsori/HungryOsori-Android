@@ -15,12 +15,13 @@ public class Pref {
     /** 공통 상수값 */
     private static final String SHARED_PREF_NAME = "hungryOsori.sharedPref";
     public static final boolean DEFAULT_BOOLEAN_VALUE   = false;
-    public static final String DEFAULT_STRING_VALUE     = null;
+    public static final String DEFAULT_STRING_VALUE     = "";
 
     /** 로그인 관련 상수 */
     private static final String PREF_KEY_KEEP_LOGIN = "keepLogin";
     private static final String PREF_KEY_USER_KEY   = "userKey";
     private static final String PREF_KEY_USER_EMAIL = "userID";
+    private static final String PREF_KEY_COOKIE     = "cookie";
 
     /** 로그인 관련 Shared Preference 함수들 */
     public static void setKeepLogin(Context context, boolean isChecked){
@@ -74,4 +75,22 @@ public class Pref {
         return userKey;
     }
 
+    public static String getCookie(Context context)
+    {
+        if(context == null){
+            return null;
+        }
+        String cookie =  context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE).
+                getString(PREF_KEY_COOKIE, DEFAULT_STRING_VALUE);
+        return cookie;
+    }
+
+    public static void setCookie(Context context, String cookie)
+    {
+        if(context == null){
+            return;
+        }
+        context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
+                .edit().putString(PREF_KEY_COOKIE, cookie).apply();
+    }
 }

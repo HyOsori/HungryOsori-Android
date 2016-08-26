@@ -1,6 +1,7 @@
 package android.webcrawler.osori.hungryosori;
 
 
+import android.content.Context;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -58,10 +59,9 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
     }
 
     private void getCrawlerInfo() {
-       getEntireList();
-       getSubscriptionList();
-
-       setViewPagerAdapter();
+        setViewPagerAdapter();
+        getEntireList();
+        getSubscriptionList();
     }
 
     private void getEntireList(){
@@ -73,11 +73,16 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
         params.setParamStr("user_id", Pref.getUserEmail(this));
         params.setParamStr("user_key", Pref.getUserKey(this));
 
-        new getEntireListTask().execute(params);
+        new getEntireListTask(this).execute(params);
     }
 
     private class getEntireListTask extends AsyncTask<Http.ParamModel, Void, Boolean> {
 
+        private Context mContext;
+
+        public getEntireListTask(Context context){
+            mContext = context;
+        }
         @Override
         protected void onPreExecute() {
             // TODO Auto-generated method stub
@@ -87,7 +92,7 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
         @Override
         protected Boolean doInBackground(Http.ParamModel... params) {
             // TODO Auto-generated method stub
-            Http http = new Http();
+            Http http = new Http(mContext);
 
             String result = http.send(params[0]);
 
@@ -109,7 +114,7 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
                             String description = object.getString("description");
                             String title = object.getString("title");
 
-                            crawlerInfosAll.add(new CrawlerInfo(id, url, description, title, false));
+                            crawlerInfosAll.add(new CrawlerInfo(id, title, description, url, false));
                         }
                         return true;
                     }
@@ -125,7 +130,7 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
             // TODO Auto-generated method stub
             if(success) {
                 // 성공
-
+                CrawlerViewPagerAdapter.fragmentALL.listAdapter.notifyDataSetChanged();
             }else{
                 // 실패
             }

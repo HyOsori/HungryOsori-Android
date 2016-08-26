@@ -53,7 +53,7 @@ public class CrawlerFragment extends Fragment{
                 .postProcessor(new BitmapProcessor() {      // 이미지 후 처리
                     @Override
                     public Bitmap process(Bitmap bmp) {
-                        return Bitmap.createScaledBitmap(bmp, 250, 250, false);
+                        return Bitmap.createScaledBitmap(bmp, 150, 150, false);
                     }
                 })
                 .build();

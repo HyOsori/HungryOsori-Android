@@ -12,7 +12,7 @@ public class Constant {
     public static final int PAGE_MY  = 0;    // My page
     public static final int PAGE_ALL = 1;    // All page
 
-    public static final String SERVER_URL = "http://192.168.0.7:8000";
+    public static final String SERVER_URL = "http://172.30.1.4:8000";
 
     public static String    userKey;          // 사용자 Key
     public static boolean   keepLogin;

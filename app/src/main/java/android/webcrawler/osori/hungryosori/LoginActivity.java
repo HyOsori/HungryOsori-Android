@@ -66,7 +66,7 @@ public class LoginActivity extends FragmentActivity {
                     editText_password.requestFocus();
                     break;
                 }
-               //tryLogin();
+                tryLogin();
                 break;
 
             case R.id.login_button_join:
@@ -112,7 +112,7 @@ public class LoginActivity extends FragmentActivity {
         @Override
         protected Boolean doInBackground(Http.ParamModel... params) {
             // TODO Auto-generated method stub
-            Http http = new Http();
+            Http http = new Http(mContext);
 
             String result = http.send(params[0]);
 
