@@ -21,8 +21,8 @@ public class Constant {
     public static final int     TIME_OUT_MILLIS = 2000;
     public static final String  DEFAULT_ENCODING = "UTF-8";
 
-    public static final String MESSAGE          = "message";
-    public static final String MESSAGE_SUCCESS  = "Success";
-    public static final String SERVER_URL = "http://172.30.1.4:8000";
+    public static final String MESSAGE           = "message";
+    public static final String MESSAGE_SUCCESS   = "Success";
+    public static final String SERVER_URL        = "http://172.30.1.4:8000";
 
 }

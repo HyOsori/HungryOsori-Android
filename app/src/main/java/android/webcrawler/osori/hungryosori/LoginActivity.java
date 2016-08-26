@@ -26,8 +26,8 @@ import org.json.JSONObject;
 
 public class LoginActivity extends FragmentActivity {
 
-    private static String email;
-    private static String password;
+    public static String email;
+    public static String password;
     private EditText editText_mail, editText_password;
 
     @Override
@@ -51,8 +51,8 @@ public class LoginActivity extends FragmentActivity {
         Intent intent;
         switch (v.getId()) {
             case R.id.login_button_login:
-                email = editText_mail.getText().toString().trim();
-                password = editText_password.getText().toString().trim();
+                email       = editText_mail.getText().toString().trim();
+                password    = editText_password.getText().toString().trim();
 
                 /** 아이디가 올바른 이메일 형식인지 검사 */
                 if (!Lib.isValidEmail(email)) {
@@ -86,22 +86,17 @@ public class LoginActivity extends FragmentActivity {
         params.setUrl(url);
         params.setParamStr("user_id", email);
         params.setParamStr("user_pw", password);
-        if(Pref.getUserKey(this) != Pref.DEFAULT_STRING_VALUE) {
-            params.setParamStr("user_key", Pref.getUserKey(this));
-        }
 
-        new TryLoginTask(this, email).execute(params);
+        new TryLoginTask(this).execute(params);
     }
 
     // 로그인을 시도하는 AsyncTask
     private class TryLoginTask extends AsyncTask<ParamModel, Void, Boolean> {
         private Context mContext;
         private String  userKey  = Pref.DEFAULT_STRING_VALUE;
-        private String  email;
 
-        public TryLoginTask(Context mContext, String email){
+        public TryLoginTask(Context mContext){
             this.mContext = mContext;
-            this.email    = email;
         }
 
         @Override
@@ -142,13 +137,16 @@ public class LoginActivity extends FragmentActivity {
                 // 로그인 성공
                 if(userKey != Pref.DEFAULT_STRING_VALUE) {
                     Pref.setUserKey(mContext, userKey);
-                    Pref.setUserID(mContext, email);
+                    Pref.setUserID(mContext, LoginActivity.email);
+                    Pref.setUserPassword(mContext, LoginActivity.password);
+
                     Pref.setKeepLogin(mContext, true);
                     Intent intent = new Intent(mContext, CrawlerActivity.class);
                     startActivity(intent);
                 }
             }else{
                 // 로그인 실패
+                Toast.makeText(mContext, "로그인 실패", Toast.LENGTH_SHORT).show();
             }
         }
     }

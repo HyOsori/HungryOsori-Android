@@ -8,7 +8,7 @@ import android.content.Context;
 
 /**
  * Created by 고건주 on 2016-08-25.
- * Shared Preference 설정
+ * Shared Preference 관련 함수들
  */
 public class Pref {
 
@@ -17,7 +17,7 @@ public class Pref {
     public static final boolean DEFAULT_BOOLEAN_VALUE   = false;
     public static final String  DEFAULT_STRING_VALUE    = null;
 
-    /** 로그인 관련 상수 */
+    /** Shared Preference 키 값들 */
     private static final String PREF_KEY_KEEP_LOGIN     = "keepLogin";
     private static final String PREF_KEY_USER_KEY       = "userKey";
     private static final String PREF_KEY_USER_ID        = "userID";
@@ -25,12 +25,13 @@ public class Pref {
     private static final String PREF_KEY_COOKIE         = "cookie";
 
     /** 로그인 관련 Shared Preference 함수들 */
-    public static void setKeepLogin(Context context, boolean isChecked){
+    public static void setKeepLogin(Context context, boolean keepLogin){
         if(context == null){
             return;
         }
         context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
-                .edit().putBoolean(PREF_KEY_KEEP_LOGIN, isChecked).apply();
+                .edit().putBoolean(PREF_KEY_KEEP_LOGIN, keepLogin).apply();
+        Constant.keepLogin = keepLogin;
     }
 
     public static boolean getKeepLogin(Context context){
@@ -48,6 +49,7 @@ public class Pref {
         }
         context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
                 .edit().putString(PREF_KEY_USER_KEY, userKey).apply();
+        Constant.userKey = userKey;
     }
 
     public static String getUserKey(Context context) {
@@ -59,12 +61,13 @@ public class Pref {
         return userKey;
     }
 
-    public static void setUserID(Context context, String userEmail){
+    public static void setUserID(Context context, String userID){
         if(context == null){
             return;
         }
         context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
-                .edit().putString(PREF_KEY_USER_ID, userEmail).apply();
+                .edit().putString(PREF_KEY_USER_ID, userID).apply();
+        Constant.userID = userID;
     }
 
     public static String getUserID(Context context) {
@@ -76,12 +79,13 @@ public class Pref {
         return userKey;
     }
 
-    public static void setUserPassword(Context context, String userEmail){
+    public static void setUserPassword(Context context, String userPassword){
         if(context == null){
             return;
         }
         context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
-                .edit().putString(PREF_KEY_USER_PASSWORD, userEmail).apply();
+                .edit().putString(PREF_KEY_USER_PASSWORD, userPassword).apply();
+        Constant.userPassword = userPassword;
     }
 
     public static String getUserPassword(Context context) {
@@ -110,5 +114,6 @@ public class Pref {
         }
         context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
                 .edit().putString(PREF_KEY_COOKIE, cookie).apply();
+        Constant.cookie = cookie;
     }
 }
