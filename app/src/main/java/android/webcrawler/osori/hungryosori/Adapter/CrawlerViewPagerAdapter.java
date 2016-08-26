@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.webcrawler.osori.hungryosori.Fragment.CrawlerFragment;
-import android.webcrawler.osori.hungryosori.common.Constant;
+import android.webcrawler.osori.hungryosori.Common.Constant;
 
 
 /**

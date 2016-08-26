@@ -1,4 +1,4 @@
-package android.webcrawler.osori.hungryosori.common;
+package android.webcrawler.osori.hungryosori.Common;
 
 /**
  * Created by 고건주 on 2016-08-25.

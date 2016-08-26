@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.webcrawler.osori.hungryosori.Adapter.CrawlerListAdapter;
 import android.webcrawler.osori.hungryosori.CrawlerActivity;
 import android.webcrawler.osori.hungryosori.R;
-import android.webcrawler.osori.hungryosori.common.Constant;
+import android.webcrawler.osori.hungryosori.Common.Constant;
 import android.widget.ListView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;

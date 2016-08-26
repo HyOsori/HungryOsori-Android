@@ -1,6 +1,6 @@
 package android.webcrawler.osori.hungryosori.Model;
 
-import android.webcrawler.osori.hungryosori.common.Constant;
+import android.webcrawler.osori.hungryosori.Common.Constant;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;

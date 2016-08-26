@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.webcrawler.osori.hungryosori.CrawlerActivity;
 import android.webcrawler.osori.hungryosori.Model.CrawlerInfo;
 import android.webcrawler.osori.hungryosori.R;
-import android.webcrawler.osori.hungryosori.common.Constant;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;

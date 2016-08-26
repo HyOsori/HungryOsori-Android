@@ -1,4 +1,4 @@
-package android.webcrawler.osori.hungryosori.common;
+package android.webcrawler.osori.hungryosori.Common;
 
 import android.text.TextUtils;
 

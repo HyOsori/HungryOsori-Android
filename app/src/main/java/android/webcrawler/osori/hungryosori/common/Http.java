@@ -1,4 +1,4 @@
-package android.webcrawler.osori.hungryosori.common;
+package android.webcrawler.osori.hungryosori.Common;
 
 import android.content.Context;
 import android.webcrawler.osori.hungryosori.Model.ParamModel;
