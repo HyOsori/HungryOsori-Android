@@ -95,7 +95,7 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
             // TODO Auto-generated method stub
             Http http = new Http(mContext);
 
-            String result = http.send(params[0]);
+            String result = http.send(params[0], false);
 
             if(result == null){
                 return false;

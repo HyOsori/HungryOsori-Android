@@ -28,6 +28,7 @@ public class StartActivity extends FragmentActivity {
         /** Preference 값 */
         Constant.keepLogin = Pref.getKeepLogin(this);
         Constant.userKey   = Pref.getUserKey(this);
+        Constant.cookie    = Pref.getCookie(this);
 
         /** 이미지 로더 등록 */
         initImageLoader(this);
