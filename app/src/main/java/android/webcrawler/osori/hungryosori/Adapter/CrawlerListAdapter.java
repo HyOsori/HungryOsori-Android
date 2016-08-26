@@ -86,18 +86,18 @@ public class CrawlerListAdapter extends ArrayAdapter<CrawlerInfo> implements Vie
                     CrawlerInfo crawlerInfo = new CrawlerInfo(id, getItem(position).getTitle(),
                             getItem(position).getDescription(), getItem(position).getUrl(), true);
                     // 구독
-                    CrawlerActivity.crawlerInfosMy.add(crawlerInfo);
-                    CrawlerActivity.crawlerInfosAll.get(position).setSubscription(true);
+                    CrawlerActivity.myCrawlerInfoList.add(crawlerInfo);
+                    CrawlerActivity.allCrawlerInfoList.get(position).setSubscription(true);
                 }else
                 {
                     // 구독 해제
-                    for(int i=0; i< CrawlerActivity.crawlerInfosMy.size(); ++i){
-                        if(CrawlerActivity.crawlerInfosMy.get(i).getId().equals(id)){
-                            CrawlerActivity.crawlerInfosMy.remove(i);
+                    for(int i=0; i< CrawlerActivity.myCrawlerInfoList.size(); ++i){
+                        if(CrawlerActivity.myCrawlerInfoList.get(i).getId().equals(id)){
+                            CrawlerActivity.myCrawlerInfoList.remove(i);
                         }
                     }
 
-                    for(CrawlerInfo crawlerInfo : CrawlerActivity.crawlerInfosAll){
+                    for(CrawlerInfo crawlerInfo : CrawlerActivity.allCrawlerInfoList){
                         if(crawlerInfo.getId().equals(id)){
                             crawlerInfo.setSubscription(false);
                         }

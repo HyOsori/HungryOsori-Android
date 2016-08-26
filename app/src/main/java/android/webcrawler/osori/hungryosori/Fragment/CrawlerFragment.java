@@ -60,10 +60,10 @@ public class CrawlerFragment extends Fragment{
 
         if(page == Constant.PAGE_MY) {
             listAdapter = new CrawlerListAdapter(getActivity(), R.layout.list_crawler, R.id.list_crawler_textView_title,
-                    CrawlerActivity.crawlerInfosMy, options);
+                    CrawlerActivity.myCrawlerInfoList, options);
         }else if(page == Constant.PAGE_ALL){
             listAdapter = new CrawlerListAdapter(getActivity(), R.layout.list_crawler, R.id.list_crawler_textView_title,
-                    CrawlerActivity.crawlerInfosAll, options);
+                    CrawlerActivity.allCrawlerInfoList, options);
         }
     }
 
