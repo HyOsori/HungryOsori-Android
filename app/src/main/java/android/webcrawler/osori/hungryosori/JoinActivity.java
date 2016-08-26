@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
+import android.webcrawler.osori.hungryosori.Model.ParamModel;
 import android.webcrawler.osori.hungryosori.common.Constant;
 import android.webcrawler.osori.hungryosori.common.Http;
 import android.webcrawler.osori.hungryosori.common.Lib;
@@ -83,14 +84,14 @@ public class JoinActivity extends FragmentActivity {
     private void tryJoin(){
         String url = Constant.SERVER_URL + "/join";
 
-        Http.ParamModel params = new Http.ParamModel();
+        ParamModel params = new ParamModel();
         params.setUrl(url);
 
         new TryJoinTask(this).execute(params);
     }
 
     // 회원가입 시도하는 AsyncTask
-    private class TryJoinTask extends AsyncTask<Http.ParamModel, Void, Boolean> {
+    private class TryJoinTask extends AsyncTask<ParamModel, Void, Boolean> {
         Context mContext;
 
         public TryJoinTask(Context mContext){
@@ -104,7 +105,7 @@ public class JoinActivity extends FragmentActivity {
         }
 
         @Override
-        protected Boolean doInBackground(Http.ParamModel... params) {
+        protected Boolean doInBackground(ParamModel... params) {
             // TODO Auto-generated method stub
             Http http = new Http(mContext);
 

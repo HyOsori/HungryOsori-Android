@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
+import android.webcrawler.osori.hungryosori.Model.ParamModel;
 import android.webcrawler.osori.hungryosori.common.Constant;
 import android.webcrawler.osori.hungryosori.common.Http;
 import android.webcrawler.osori.hungryosori.common.Lib;
@@ -80,7 +81,7 @@ public class LoginActivity extends FragmentActivity {
     private void tryLogin(){
         String url = Constant.SERVER_URL + "/req_login";
 
-        Http.ParamModel params = new Http.ParamModel();
+        ParamModel params = new ParamModel();
 
         params.setUrl(url);
         params.setParamStr("user_id", email);
@@ -93,7 +94,7 @@ public class LoginActivity extends FragmentActivity {
     }
 
     // 로그인을 시도하는 AsyncTask
-    private class TryLoginTask extends AsyncTask<Http.ParamModel, Void, Boolean> {
+    private class TryLoginTask extends AsyncTask<ParamModel, Void, Boolean> {
         private Context mContext;
         private String  userKey  = Pref.DEFAULT_STRING_VALUE;
         private String  email;
@@ -110,7 +111,7 @@ public class LoginActivity extends FragmentActivity {
         }
 
         @Override
-        protected Boolean doInBackground(Http.ParamModel... params) {
+        protected Boolean doInBackground(ParamModel... params) {
             // TODO Auto-generated method stub
             Http http = new Http(mContext);
 

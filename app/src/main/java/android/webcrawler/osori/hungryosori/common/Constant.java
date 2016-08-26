@@ -14,8 +14,12 @@ public class Constant {
 
     public static final String SERVER_URL = "http://172.30.1.4:8000";
 
+    /** 로그인 관련 값 */
     public static String    userKey;          // 사용자 Key
     public static boolean   keepLogin;
 
+    /** Http 관련 상수 */
+    public static final int     TIME_OUT_MILLIS = 2000;
+    public static final String  DEFAULT_ENCODING = "UTF-8";
 
 }

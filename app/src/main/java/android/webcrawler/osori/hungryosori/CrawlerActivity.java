@@ -10,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.webcrawler.osori.hungryosori.Adapter.CrawlerViewPagerAdapter;
 import android.webcrawler.osori.hungryosori.Model.CrawlerInfo;
+import android.webcrawler.osori.hungryosori.Model.ParamModel;
 import android.webcrawler.osori.hungryosori.common.Constant;
 import android.webcrawler.osori.hungryosori.common.Http;
 import android.webcrawler.osori.hungryosori.common.Pref;
@@ -67,7 +68,7 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
     private void getEntireList(){
         String url = Constant.SERVER_URL + "/req_entire_list";
 
-        Http.ParamModel params = new Http.ParamModel();
+        ParamModel params = new ParamModel();
 
         params.setUrl(url);
         params.setParamStr("user_id", Pref.getUserEmail(this));
@@ -76,7 +77,7 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
         new getEntireListTask(this).execute(params);
     }
 
-    private class getEntireListTask extends AsyncTask<Http.ParamModel, Void, Boolean> {
+    private class getEntireListTask extends AsyncTask<ParamModel, Void, Boolean> {
 
         private Context mContext;
 
@@ -90,7 +91,7 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
         }
 
         @Override
-        protected Boolean doInBackground(Http.ParamModel... params) {
+        protected Boolean doInBackground(ParamModel... params) {
             // TODO Auto-generated method stub
             Http http = new Http(mContext);
 

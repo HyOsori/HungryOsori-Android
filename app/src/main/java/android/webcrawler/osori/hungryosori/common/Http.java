@@ -2,6 +2,7 @@ package android.webcrawler.osori.hungryosori.common;
 
 import android.content.Context;
 import android.webcrawler.osori.hungryosori.Model.NameValuePair;
+import android.webcrawler.osori.hungryosori.Model.ParamModel;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -26,56 +27,11 @@ import java.util.Map;
  */
 public class Http {
 
-    public static class ParamModel {
-        private String url;
-        ArrayList<NameValuePair> params = new ArrayList<>();
-
-        private String getUrl() {
-            return url;
-        }
-        public void setUrl(String url) {
-            this.url = url;
-        }
-
-        private String getParamStr() {
-            return getQuery();
-        }
-
-        public void setParamStr(String key, String value) {
-            params.add(new NameValuePair(key, value));
-        }
-
-        private String getQuery(){
-            StringBuilder result = new StringBuilder();
-            boolean first = true;
-
-            for (NameValuePair pair : params)
-            {
-                if (first)
-                    first = false;
-                else
-                    result.append("&");
-
-                try {
-                    result.append(URLEncoder.encode(pair.getKey(), DEFAULT_ENCODING));
-                    result.append("=");
-                    result.append(URLEncoder.encode(pair.getValue(), DEFAULT_ENCODING));
-                }catch (UnsupportedEncodingException e){
-
-                }
-            }
-
-            return result.toString();
-        }
-    }
-
     public Http(Context context){
         this.mContext = context;
         cookie = Pref.getCookie(context);
     }
 
-    private static final int TIME_OUT_MILLIS = 2000;
-    private static final String DEFAULT_ENCODING = "UTF-8";
     private Context mContext;
     private String cookie;                  // Cookie 정보
 
@@ -98,8 +54,8 @@ public class Http {
 
                 urlConnection.setDoOutput(true);
                 urlConnection.setDoInput(true);
-                urlConnection.setConnectTimeout(TIME_OUT_MILLIS);
-                urlConnection.setReadTimeout(TIME_OUT_MILLIS);
+                urlConnection.setConnectTimeout(Constant.TIME_OUT_MILLIS);
+                urlConnection.setReadTimeout(Constant.TIME_OUT_MILLIS);
                 urlConnection.setRequestMethod("POST");
 
                 if(cookie.equals(Pref.DEFAULT_STRING_VALUE)) {
@@ -110,7 +66,7 @@ public class Http {
 
                 out = new BufferedOutputStream(urlConnection.getOutputStream());
 
-                out.write(paramStr.getBytes(DEFAULT_ENCODING));
+                out.write(paramStr.getBytes(Constant.DEFAULT_ENCODING));
                 out.flush();
 
                 urlConnection.connect();
@@ -129,7 +85,7 @@ public class Http {
 
                 in = new BufferedInputStream(urlConnection.getInputStream());
 
-                bReader = new BufferedReader(new InputStreamReader(in, DEFAULT_ENCODING));
+                bReader = new BufferedReader(new InputStreamReader(in, Constant.DEFAULT_ENCODING));
                 StringBuilder strBuilder = new StringBuilder();
 
                 String line;
