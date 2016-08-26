@@ -1,7 +1,7 @@
 package android.webcrawler.osori.hungryosori.Model;
 
 /**
- * Created by kunju on 2016-08-25.
+ * Created by 고건주 on 2016-08-25.
  */
 public class NameValuePair {
     private String key;

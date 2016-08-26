@@ -7,7 +7,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 
 /**
- * Created by kunju on 2016-08-26.
+ * Created by 고건주 on 2016-08-26.
  */
 public  class ParamModel {
     private String url;
@@ -23,7 +23,6 @@ public  class ParamModel {
     public String getParamStr() {
         return getQuery();
     }
-
     public void setParamStr(String key, String value) {
         params.add(new NameValuePair(key, value));
     }
