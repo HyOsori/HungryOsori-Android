@@ -130,7 +130,7 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
             // TODO Auto-generated method stub
             if(success) {
                 // 성공
-                CrawlerViewPagerAdapter.fragmentALL.listAdapter.notifyDataSetChanged();
+                CrawlerViewPagerAdapter.notifyAllCrawlerInfoListChanged();
             }else{
                 // 실패
             }
@@ -210,7 +210,8 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
                         }
                     }
                 }
-                CrawlerViewPagerAdapter.fragmentMy.listAdapter.notifyDataSetChanged();
+                CrawlerViewPagerAdapter.notifyMyCrawlerInfoListChanged();
+                CrawlerViewPagerAdapter.notifyAllCrawlerInfoListChanged();
             }else{
                 // 실패
             }

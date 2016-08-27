@@ -2,10 +2,14 @@ package android.webcrawler.osori.hungryosori.Adapter;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webcrawler.osori.hungryosori.Common.Constant;
+import android.webcrawler.osori.hungryosori.Common.Http;
 import android.webcrawler.osori.hungryosori.CrawlerActivity;
 import android.webcrawler.osori.hungryosori.Model.CrawlerInfo;
+import android.webcrawler.osori.hungryosori.Model.ParamModel;
 import android.webcrawler.osori.hungryosori.R;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -15,6 +19,9 @@ import android.widget.ToggleButton;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -79,34 +86,180 @@ public class CrawlerListAdapter extends ArrayAdapter<CrawlerInfo> implements Vie
         switch (v.getId()){
             case R.id.list_crawler_button_subscription: {
                 int position = (Integer)v.getTag();
-                String id    = getItem(position).getId();
 
                 if(((ToggleButton)v).isChecked() == true)
                 {
-                    CrawlerInfo crawlerInfo = new CrawlerInfo(id, getItem(position).getTitle(),
-                            getItem(position).getDescription(), getItem(position).getUrl(), true);
-                    // 구독
-                    CrawlerActivity.myCrawlerInfoList.add(crawlerInfo);
-                    CrawlerActivity.allCrawlerInfoList.get(position).setSubscription(true);
+                    /** 구독 */
+                    subscribeCrawler(position, v);
                 }else
                 {
-                    // 구독 해제
-                    for(int i=0; i< CrawlerActivity.myCrawlerInfoList.size(); ++i){
-                        if(CrawlerActivity.myCrawlerInfoList.get(i).getId().equals(id)){
-                            CrawlerActivity.myCrawlerInfoList.remove(i);
-                        }
-                    }
-
-                    for(CrawlerInfo crawlerInfo : CrawlerActivity.allCrawlerInfoList){
-                        if(crawlerInfo.getId().equals(id)){
-                            crawlerInfo.setSubscription(false);
-                        }
-                    }
+                    /** 구독 해제 */
+                    unSubscribeCrawler(position, v);
                 }
-                CrawlerViewPagerAdapter.fragmentALL.listAdapter.notifyDataSetChanged();
-                CrawlerViewPagerAdapter.fragmentMy.listAdapter.notifyDataSetChanged();
                 break;
             }
         }
     }
+
+    private void subscribeCrawler(int position, View view)
+    {
+        String crawlerID = getItem(position).getId();
+
+        String url = Constant.SERVER_URL + "/req_subscribe_crawler";
+
+        ParamModel params = new ParamModel();
+
+        params.setUrl(url);
+        params.setParamStr("user_id", Constant.userID);
+        params.setParamStr("user_key", Constant.userKey);
+        params.setParamStr("crawler_id", crawlerID);
+
+        new subscribeCrawlerTask(getContext(), position, view).execute(params);
+    }
+
+    private class subscribeCrawlerTask extends AsyncTask<ParamModel, Void, Boolean> {
+
+        private Context mContext;
+        private int position;
+        private View view;
+
+        public subscribeCrawlerTask(Context context, int position, View view){
+            this.mContext = context;
+            this.position = position;
+            this.view     = view;
+        }
+        @Override
+        protected void onPreExecute() {
+            // TODO Auto-generated method stub
+            super.onPreExecute();
+            view.setClickable(false);
+        }
+
+        @Override
+        protected Boolean doInBackground(ParamModel... params) {
+            // TODO Auto-generated method stub
+            Http http = new Http(mContext);
+
+            String result = http.send(params[0], false);
+
+            if(result == null){
+                return false;
+            }else{
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
+
+                    String message = jsonObject.getString(Constant.MESSAGE);
+                    if(message.equals(Constant.MESSAGE_SUCCESS)){
+                        return true;
+                    }
+                }catch(Exception e){
+
+                }
+            }
+            return false;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean success) {
+            // TODO Auto-generated method stub
+            if(success) {
+                // 성공
+                CrawlerInfo crawlerInfo = new CrawlerInfo(getItem(position).getId(), getItem(position).getTitle(),
+                        getItem(position).getDescription(), getItem(position).getUrl(), true);
+                // 구독
+                CrawlerActivity.myCrawlerInfoList.add(crawlerInfo);
+                CrawlerActivity.allCrawlerInfoList.get(position).setSubscription(true);
+
+                CrawlerViewPagerAdapter.notifyMyCrawlerInfoListChanged();
+                CrawlerViewPagerAdapter.notifyAllCrawlerInfoListChanged();
+            }
+            view.setClickable(true);
+        }
+    }
+
+    private void unSubscribeCrawler(int position, View view)
+    {
+        String crawlerID = getItem(position).getId();
+
+        String url = Constant.SERVER_URL + "/req_unsubscribe_crawler";
+
+        ParamModel params = new ParamModel();
+
+        params.setUrl(url);
+        params.setParamStr("user_id", Constant.userID);
+        params.setParamStr("user_key", Constant.userKey);
+        params.setParamStr("crawler_id", crawlerID);
+
+        new unSubscribeCrawlerTask(getContext(), position, view).execute(params);
+    }
+
+    private class unSubscribeCrawlerTask extends AsyncTask<ParamModel, Void, Boolean> {
+
+        private Context mContext;
+        private int position;
+        private View view;
+
+        public unSubscribeCrawlerTask(Context context, int position, View view){
+            this.mContext = context;
+            this.position = position;
+            this.view     = view;
+        }
+        @Override
+        protected void onPreExecute() {
+            // TODO Auto-generated method stub
+            super.onPreExecute();
+            view.setClickable(false);
+        }
+
+        @Override
+        protected Boolean doInBackground(ParamModel... params) {
+            // TODO Auto-generated method stub
+            Http http = new Http(mContext);
+
+            String result = http.send(params[0], false);
+
+            if(result == null){
+                return false;
+            }else{
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
+
+                    String message = jsonObject.getString(Constant.MESSAGE);
+                    if(message.equals(Constant.MESSAGE_SUCCESS)){
+                        return true;
+                    }
+                }catch(Exception e){
+
+                }
+            }
+            return false;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean success) {
+            // TODO Auto-generated method stub
+            if(success) {
+                // 성공
+                String id = getItem(position).getId();
+
+                // 구독 해제
+                for(int i=0; i< CrawlerActivity.myCrawlerInfoList.size(); ++i){
+                    if(CrawlerActivity.myCrawlerInfoList.get(i).getId().equals(id)){
+                        CrawlerActivity.myCrawlerInfoList.remove(i);
+                    }
+                }
+
+                for(CrawlerInfo crawlerInfo : CrawlerActivity.allCrawlerInfoList){
+                    if(crawlerInfo.getId().equals(id)){
+                        crawlerInfo.setSubscription(false);
+                    }
+                }
+
+                CrawlerViewPagerAdapter.notifyMyCrawlerInfoListChanged();
+                CrawlerViewPagerAdapter.notifyAllCrawlerInfoListChanged();
+            }
+            view.setClickable(true);
+        }
+    }
+
 }

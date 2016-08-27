@@ -8,15 +8,16 @@
     <com.ssomai.android.scalablelayout.ScalableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/backGroundColorGray"
         sl:scale_base_width="500"
-        sl:scale_base_height="100"
+        sl:scale_base_height="120"
         >
 
         <ToggleButton
             android:id="@+id/crawler_button_my"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/togglebtn_mint_square"
+            android:background="@drawable/togglebtn_orange_square"
             android:textOff="MY"
             android:textOn ="MY"
             android:onClick="onClick"
@@ -24,14 +25,14 @@
             sl:scale_left = "0"
             sl:scale_top = "0"
             sl:scale_width = "250"
-            sl:scale_height = "100"
-            sl:scale_textsize = "50"/>
+            sl:scale_height = "120"
+            sl:scale_textsize = "30"/>
 
         <ToggleButton
             android:id="@+id/crawler_button_all"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/togglebtn_mint_square"
+            android:background="@drawable/togglebtn_orange_square"
             android:textOff="ALL"
             android:textOn ="ALL"
             android:onClick="onClick"
@@ -39,8 +40,8 @@
             sl:scale_left = "250"
             sl:scale_top = "0"
             sl:scale_width = "250"
-            sl:scale_height = "100"
-            sl:scale_textsize = "50"/>
+            sl:scale_height = "120"
+            sl:scale_textsize = "30"/>
 
     </com.ssomai.android.scalablelayout.ScalableLayout>
 
