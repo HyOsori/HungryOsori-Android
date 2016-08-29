@@ -9,7 +9,7 @@
                 android:radius="@dimen/editText_radius" />
             <stroke
                 android:color="@color/gray"
-                android:width="3dp"
+                android:width="1.5dp"
                 />
         </shape>
     </item>
@@ -17,12 +17,12 @@
     <!-- When focused -->
     <item android:state_focused="true">
         <shape>
-            <solid android:color="@color/gray"/>
+            <solid android:color="@color/white"/>
             <corners
                 android:radius="@dimen/editText_radius" />
             <stroke
-                android:color="@color/gray"
-                android:width="3dp"
+                android:color="@color/blue"
+                android:width="1.5dp"
                 />
         </shape>
     </item>
@@ -35,7 +35,7 @@
                 android:radius="@dimen/editText_radius" />
             <stroke
                 android:color="@color/gray"
-                android:width="3dp"
+                android:width="1.5dp"
                 />
         </shape>
     </item>
