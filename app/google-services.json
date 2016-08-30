@@ -1,0 +1,73 @@
+{
+  "project_info": {
+    "project_number": "111376519243",
+    "firebase_url": "https://osori-push-b6e95.firebaseio.com",
+    "project_id": "osori-push-b6e95",
+    "storage_bucket": "osori-push-b6e95.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:111376519243:android:844d092fb66a0ae5",
+        "android_client_info": {
+          "package_name": "com.example.doomsheart.osori_push"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "111376519243-7qmj6bi63asimha4f5m8nlf0tmlt458f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBvoKv1ivD91AOEUT_5GWye94tgH0KNgR0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:111376519243:android:f2d55b5c3d77d54a",
+        "android_client_info": {
+          "package_name": "android.webcrawler.osori.hungryosori"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "111376519243-7qmj6bi63asimha4f5m8nlf0tmlt458f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBvoKv1ivD91AOEUT_5GWye94tgH0KNgR0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
