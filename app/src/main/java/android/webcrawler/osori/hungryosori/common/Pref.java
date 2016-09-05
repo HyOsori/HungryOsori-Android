@@ -116,4 +116,27 @@ public class Pref {
                 .edit().putString(PREF_KEY_COOKIE, cookie).apply();
         Constant.cookie = cookie;
     }
+    public static boolean resetLogin(Context context){
+        if(context == null){
+            return false;
+        }
+        context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
+                .edit().putString(PREF_KEY_COOKIE, DEFAULT_STRING_VALUE).apply();
+        context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
+                .edit().putBoolean(PREF_KEY_KEEP_LOGIN, DEFAULT_BOOLEAN_VALUE).apply();
+        context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
+                .edit().putString(PREF_KEY_USER_ID, DEFAULT_STRING_VALUE).apply();
+        context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
+                .edit().putString(PREF_KEY_USER_KEY, DEFAULT_STRING_VALUE).apply();
+        context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
+                .edit().putString(PREF_KEY_USER_PASSWORD, DEFAULT_STRING_VALUE).apply();
+
+        Constant.keepLogin      = Pref.getKeepLogin(context);
+        Constant.userKey        = Pref.getUserKey(context);
+        Constant.cookie         = Pref.getCookie(context);
+        Constant.userID         = Pref.getUserID(context);
+        Constant.userPassword   = Pref.getUserPassword(context);
+
+        return true;
+    }
 }

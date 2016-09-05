@@ -141,6 +141,7 @@ public class LoginActivity extends FragmentActivity {
                     Pref.setUserPassword(mContext, LoginActivity.password);
                     Pref.setKeepLogin(mContext, true);
                     Intent intent = new Intent(mContext, CrawlerActivity.class);
+                    intent.addFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY);
                     startActivity(intent);
                 }
             }else{

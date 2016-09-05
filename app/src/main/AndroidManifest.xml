@@ -29,22 +29,22 @@
         <!-- 로그인 Activity -->
         <activity
             android:name=".LoginActivity"
-            android:noHistory="true"
-            android:screenOrientation="portrait"
+           android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" />
 
         <!-- 회원가입 Activity -->
         <activity
             android:name=".JoinActivity"
-            android:noHistory="true"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" />
 
         <!-- Crawler Activity -->
         <activity
             android:name=".CrawlerActivity"
-            android:noHistory="true"
             android:screenOrientation="portrait"
+            />
+
+        <activity android:name=".ChangePwActivity"
             android:theme="@android:style/Theme.NoTitleBar" />
 
         <service android:name=".MyFirebaseMessagingService">
@@ -58,8 +58,6 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".ChangePwActivity"
-            android:theme="@android:style/Theme.NoTitleBar" />
 
         <!-- ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->

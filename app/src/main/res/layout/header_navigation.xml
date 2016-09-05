@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:sl="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- 프로필 부분 뷰 그룹 -->
+            <com.ssomai.android.scalablelayout.ScalableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                sl:scale_base_height="1300"
+                sl:scale_base_width="1100">
+
+
+                <!-- 프로필 이미지 -->
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/icon_osori"
+                    sl:scale_height="550"
+                    sl:scale_left="275"
+                    sl:scale_top="130"
+                    sl:scale_width="550"
+                    />
+
+                <!-- 이름 텍스트 -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:gravity="center"
+                    android:text="OSORI"
+                    sl:scale_height="80"
+                    sl:scale_left="0"
+                    sl:scale_top="750"
+                    sl:scale_width="1100"
+                    sl:scale_textsize = "70"
+                    />
+
+                <!-- 이메일 텍스트 -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:gravity="center"
+                    sl:scale_height="60"
+                    sl:scale_left="0"
+                    sl:scale_top="870"
+                    sl:scale_width="1100"
+                    sl:scale_textsize = "50"
+                    />
+
+                <!-- 비밀번호 변경 텍스트 -->
+                <TextView
+                    android:id="@+id/header_navigation_textView_change_password"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:gravity="center"
+                    android:text="Change Password"
+                    android:clickable="true"
+                    android:onClick="onClick"
+                    sl:scale_height="80"
+                    sl:scale_left="0"
+                    sl:scale_top="1000"
+                    sl:scale_width="1100"
+                    sl:scale_textsize = "70"
+                    />
+
+                <!-- 로그아웃 텍스트 -->
+                <TextView
+                    android:id="@+id/header_navigation_textView_logout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:gravity="center"
+                    android:text="LOG OUT"
+                    android:clickable="true"
+                    android:onClick="onClick"
+                    sl:scale_height="80"
+                    sl:scale_left="0"
+                    sl:scale_top="1100"
+                    sl:scale_width="1100"
+                    sl:scale_textsize = "70"
+                    />
+
+            </com.ssomai.android.scalablelayout.ScalableLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
