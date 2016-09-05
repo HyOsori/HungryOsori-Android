@@ -1,79 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:sl="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_crawler_drawerLayout"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backGroundColorGray"
-    xmlns:sl="http://schemas.android.com/apk/res-auto">
+    android:orientation="vertical">
 
-    <com.ssomai.android.scalablelayout.ScalableLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@color/backGroundColorGray"
-        sl:scale_base_width="500"
-        sl:scale_base_height="120"
-        >
+        android:orientation="vertical">
 
-        <ToggleButton
-            android:id="@+id/crawler_button_my"
-            android:layout_width="wrap_content"
+        <com.ssomai.android.scalablelayout.ScalableLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/togglebtn_mint_square"
-            android:textOff="구독"
-            android:textOn ="구독"
-            android:textColor = "@color/white"
-            android:onClick="onClick"
-            android:checked="true"
-            sl:scale_left = "0"
-            sl:scale_top = "0"
-            sl:scale_width = "250"
-            sl:scale_height = "120"
-            sl:scale_textsize = "30"/>
+            android:background="@color/backGroundColorGray"
+            sl:scale_base_height="120"
+            sl:scale_base_width="500">
 
-        <ToggleButton
-            android:id="@+id/crawler_button_all"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/togglebtn_mint_square"
-            android:textOff="전체"
-            android:textOn ="전체"
-            android:textColor = "@color/white"
-            android:onClick="onClick"
-            android:checked="false"
-            sl:scale_left = "250"
-            sl:scale_top = "0"
-            sl:scale_width = "200"
-            sl:scale_height = "120"
-            sl:scale_textsize = "30"/>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text = "임시비번변경"
-            android:id = "@+id/temppw"
-            android:onClick = "onClick"
-            sl:scale_left = "450"
-            sl:scale_top = "0"
-            sl:scale_width = "50"
-            sl:scale_height = "60"
-            sl:scale_textsize = "4"
-            />
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text = "임시로그아웃"
-            android:id = "@+id/templogout"
-            android:onClick = "onClick"
-            sl:scale_left = "450"
-            sl:scale_top = "60"
-            sl:scale_width = "50"
-            sl:scale_height = "60"
-            sl:scale_textsize = "4"
-            />
-    </com.ssomai.android.scalablelayout.ScalableLayout>
+            <ToggleButton
+                android:id="@+id/crawler_button_my"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/togglebtn_orange_square"
+                android:checked="true"
+                android:onClick="onClick"
+                android:textOff="MY"
+                android:textOn="MY"
+                sl:scale_height="120"
+                sl:scale_left="0"
+                sl:scale_textsize="30"
+                sl:scale_top="0"
+                sl:scale_width="250" />
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/crawler_viewPager"
-        android:background="@color/backGroundColorBasic"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+            <ToggleButton
+                android:id="@+id/crawler_button_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/togglebtn_orange_square"
+                android:checked="false"
+                android:onClick="onClick"
+                android:textOff="ALL"
+                android:textOn="ALL"
+                sl:scale_height="120"
+                sl:scale_left="250"
+                sl:scale_textsize="30"
+                sl:scale_top="0"
+                sl:scale_width="250" />
 
-</LinearLayout>
+        </com.ssomai.android.scalablelayout.ScalableLayout>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/crawler_viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/backGroundColorBasic" />
+
+    </LinearLayout>
+
+    <!-- 드로어 부분 -->
+    <android.support.design.widget.NavigationView
+        android:id="@+id/activity_crawler_navigationView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@color/white"
+        android:fitsSystemWindows="true" />
+
+</android.support.v4.widget.DrawerLayout>

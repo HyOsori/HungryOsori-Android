@@ -45,13 +45,6 @@ public class JoinActivity extends FragmentActivity {
         editText_rePassword.setTypeface(fontArial);
         ((Button)findViewById(R.id.join_button_submit)).setTypeface(fontArial);
     }
-    @Override
-    public void onBackPressed() {
-        Toast.makeText(this, "로그인 창으로 이동합니다.", Toast.LENGTH_SHORT).show();
-        super.onBackPressed();
-        Intent intent = new Intent(JoinActivity.this,LoginActivity.class);
-        startActivity(intent);
-    }
 
     public void onClick(View v) {
 
