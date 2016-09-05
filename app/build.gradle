@@ -1,6 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.google.gms.google-services'
-
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
@@ -28,4 +26,6 @@ dependencies {
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     compile 'com.google.firebase:firebase-core:9.4.0'
     compile 'com.google.firebase:firebase-messaging:9.4.0'
+    compile 'com.google.android.gms:play-services-appindexing:9.4.0'
 }
+apply plugin: 'com.google.gms.google-services'

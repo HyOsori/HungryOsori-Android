@@ -41,10 +41,33 @@
             android:checked="false"
             sl:scale_left = "250"
             sl:scale_top = "0"
-            sl:scale_width = "250"
+            sl:scale_width = "200"
             sl:scale_height = "120"
             sl:scale_textsize = "30"/>
-
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text = "임시비번변경"
+            android:id = "@+id/temppw"
+            android:onClick = "onClick"
+            sl:scale_left = "450"
+            sl:scale_top = "0"
+            sl:scale_width = "50"
+            sl:scale_height = "60"
+            sl:scale_textsize = "4"
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text = "임시로그아웃"
+            android:id = "@+id/templogout"
+            android:onClick = "onClick"
+            sl:scale_left = "450"
+            sl:scale_top = "60"
+            sl:scale_width = "50"
+            sl:scale_height = "60"
+            sl:scale_textsize = "4"
+            />
     </com.ssomai.android.scalablelayout.ScalableLayout>
 
     <android.support.v4.view.ViewPager

@@ -21,6 +21,7 @@
             android:theme="@android:style/Theme.NoTitleBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -28,39 +29,43 @@
         <!-- 로그인 Activity -->
         <activity
             android:name=".LoginActivity"
-            android:screenOrientation="portrait"
             android:noHistory="true"
-            android:theme="@android:style/Theme.NoTitleBar"
-            />
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" />
 
         <!-- 회원가입 Activity -->
         <activity
             android:name=".JoinActivity"
-            android:screenOrientation="portrait"
             android:noHistory="true"
-            android:theme="@android:style/Theme.NoTitleBar"
-            />
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" />
 
         <!-- Crawler Activity -->
         <activity
             android:name=".CrawlerActivity"
-            android:screenOrientation="portrait"
             android:noHistory="true"
-            android:theme="@android:style/Theme.NoTitleBar"
-            />
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" />
 
         <service android:name=".MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
         <service android:name=".MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
 
+        <activity android:name=".ChangePwActivity"
+            android:theme="@android:style/Theme.NoTitleBar" />
+
+        <!-- ATTENTION: This was auto-generated to add Google Play services to your project for
+     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
     </application>
 
 </manifest>

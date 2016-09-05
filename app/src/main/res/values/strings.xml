@@ -6,4 +6,9 @@
     <string name="passwordchk">패스워드 확인</string>
     <string name="joinreq">가입</string>
     <string name="loginreq">로그인</string>
+    <string name="returntologin">취소</string>
+    <string name="passwordold">기존 패스워드</string>
+    <string name="passwordnew">새 패스워드</string>
+    <string name="passwordnewchk">새 패스워드 확인</string>
+    <string name="resetreq">확인</string>
 </resources>
