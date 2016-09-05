@@ -85,7 +85,7 @@ public class LoginActivity extends FragmentActivity {
 
         params.setUrl(url);
         params.setParamStr("user_id", email);
-        params.setParamStr("user_pw", password);
+        params.setParamStr("password", password);
 
         new TryLoginTask(this).execute(params);
     }
@@ -139,7 +139,6 @@ public class LoginActivity extends FragmentActivity {
                     Pref.setUserKey(mContext, userKey);
                     Pref.setUserID(mContext, LoginActivity.email);
                     Pref.setUserPassword(mContext, LoginActivity.password);
-
                     Pref.setKeepLogin(mContext, true);
                     Intent intent = new Intent(mContext, CrawlerActivity.class);
                     startActivity(intent);
