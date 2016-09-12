@@ -13,11 +13,25 @@
     <com.ssomai.android.scalablelayout.ScalableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/image_box"
         sl:scale_base_width="100"
-        sl:scale_base_height="100"
+        sl:scale_base_height="130"
         >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text = "회원가입"
+        android:textColor = "@color/darkBlue"
+        android:textAlignment = "center"
+        sl:scale_top = "10"
+        sl:scale_textsize="11"
+        />
+    <com.ssomai.android.scalablelayout.ScalableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/image_box"
+        sl:scale_top = "30"
 
+        >
         <EditText
             android:id = "@+id/join_editText_email"
             android:inputType = "textEmailAddress"
@@ -80,5 +94,6 @@
             sl:scale_textsize= "4"
             />
 
+    </com.ssomai.android.scalablelayout.ScalableLayout>
     </com.ssomai.android.scalablelayout.ScalableLayout>
 </LinearLayout>

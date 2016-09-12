@@ -50,6 +50,9 @@ public class LoginActivity extends FragmentActivity {
     public void onClick(View v) {
         Intent intent;
         switch (v.getId()) {
+            case R.id.login_button_find:
+                intent = new Intent(LoginActivity.this,FindPwActivity.class);
+                startActivity(intent);
             case R.id.login_button_login:
                 email       = editText_mail.getText().toString().trim();
                 password    = editText_password.getText().toString().trim();
@@ -117,7 +120,6 @@ public class LoginActivity extends FragmentActivity {
             }else{
                 try {
                     JSONObject jsonObject = new JSONObject(result);
-
                     String message = jsonObject.getString(Constant.MESSAGE);
                     if(message.equals(Constant.MESSAGE_SUCCESS)){
                         userKey = jsonObject.getString("user_key");

@@ -15,6 +15,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.json.JSONObject;
+
 
 /**
  * Created by 고건주&김규민 on 2016-08-18.
@@ -95,7 +97,7 @@ public class JoinActivity extends FragmentActivity {
     // 회원가입 시도하는 AsyncTask
     private class TryJoinTask extends AsyncTask<ParamModel, Void, Boolean> {
         Context mContext;
-
+        private int error;
         public TryJoinTask(Context mContext){
             this.mContext = mContext;
         }
@@ -112,13 +114,30 @@ public class JoinActivity extends FragmentActivity {
             Http http = new Http(mContext);
 
             String result = http.send(params[0], false);
-
             if(result == null){
                 return false;
             }else{
+                try{
+                    JSONObject jsonObject = new JSONObject(result);
+                    String message = jsonObject.getString(Constant.MESSAGE);
+                    error = jsonObject.getInt("error");
+                    if(message.equals(Constant.MESSAGE_SUCCESS)){
+                        return true;
+                    }
+                    else if(error == -1) {
+                        return false;
+                    }
+                    else if(error == -100){
+                        return false;
+                    }
+                    else if(error == -200){
+                        return false;
+                    }
+                }catch(Exception e){
+                }
 
             }
-            return true;
+            return false;
         }
 
         @Override
@@ -130,8 +149,17 @@ public class JoinActivity extends FragmentActivity {
                 Intent intent = new Intent(mContext, LoginActivity.class);
                 startActivity(intent);
             }else{
-                Toast.makeText(JoinActivity.this, "가입 실패: 재시도 요망", Toast.LENGTH_SHORT).show();
-                // 회원가입 실패
+                switch(error){
+                    case -1:
+                        Toast.makeText(JoinActivity.this,"가입 오류: 부적절한 입력 데이터",Toast.LENGTH_SHORT).show();
+                        break;
+                    case -100:
+                        Toast.makeText(JoinActivity.this,"가입 오류: 이미 존재하는 계정",Toast.LENGTH_SHORT).show();
+                        break;
+                    case -200:
+                        Toast.makeText(JoinActivity.this,"가입 오류: osori@hanynag.ac.kr 형태로 입력하십시오.",Toast.LENGTH_SHORT).show();
+                        break;
+                }
             }
         }
     }

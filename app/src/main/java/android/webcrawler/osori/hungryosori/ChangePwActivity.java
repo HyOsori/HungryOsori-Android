@@ -19,8 +19,8 @@ import org.json.JSONObject;
 
 
 /**
- * Created by 고건주&김규민 on 2016-08-18.
- * 회원가입 페이지 액티비티
+ * Created by 김규민 on 2016-09-01.
+ * 비밀번호 변경 페이지 액티비티
  */
 
 public class ChangePwActivity extends FragmentActivity {

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.webcrawler.osori.hungryosori.Adapter.CrawlerViewPagerAdapter;
@@ -266,6 +267,7 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
 
 
     public void onClick(View v) {
+        Context mContext = getApplicationContext();
         switch (v.getId()) {
             case R.id.crawler_button_my:
                 viewPager.setCurrentItem(Constant.PAGE_MY);
@@ -287,6 +289,75 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
                 Intent intent2 = new Intent(CrawlerActivity.this,ChangePwActivity.class);
                 startActivity(intent2);
                 break;
+
+            case R.id.header_navigation_textView_setToken:
+                String token = Pref.getPushtoken(mContext);
+                Toast.makeText(this,token,Toast.LENGTH_SHORT).show();
+                Log.d("MyFirebaseIIDService","Refreshed Token: "+ token );
+                tryRegPush();
+                break;
+        }
+    }
+
+    private void tryRegPush(){
+        String url = Constant.SERVER_URL + "/register_push_token";
+
+        ParamModel params = new ParamModel();
+        String pushToken = Pref.getPushtoken(this);
+        params.setUrl(url);
+        params.setParamStr("user_id", Constant.userID);
+        params.setParamStr("user_key", Constant.userKey);
+        params.setParamStr("token",pushToken);
+        new tryRegPushTask(this).execute(params);
+    }
+
+    private class tryRegPushTask extends AsyncTask<ParamModel, Void, Boolean> {
+
+        private Context mContext;
+
+        public tryRegPushTask(Context context) {
+            this.mContext = context;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            // TODO Auto-generated method stub
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Boolean doInBackground(ParamModel... params) {
+            // TODO Auto-generated method stub
+            Http http = new Http(mContext);
+            String result = http.send(params[0], false);
+            if (result == null) {
+                return false;
+            } else {
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
+                    String message = jsonObject.getString(Constant.MESSAGE);
+                    int error = jsonObject.getInt("error");
+
+                    if (message.equals(Constant.MESSAGE_SUCCESS)) {
+                        return true;
+                    }
+                    else if(error == -1){
+                        return false;
+                    }
+                } catch (Exception e) {
+                }
+                return false;
+            }
+        }
+        @Override
+        protected void onPostExecute(Boolean success) {
+            // TODO Auto-generated method stub
+            if (success) {
+                Toast.makeText(mContext,"토큰 갱신 완료",Toast.LENGTH_SHORT).show();
+                // 성공
+            } else {
+                Toast.makeText(mContext,"토큰 갱신 실패",Toast.LENGTH_SHORT).show();// 실패
+            }
         }
     }
 
