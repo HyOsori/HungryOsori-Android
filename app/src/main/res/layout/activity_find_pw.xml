@@ -13,11 +13,24 @@
     <com.ssomai.android.scalablelayout.ScalableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/image_box"
         sl:scale_base_width="100"
-        sl:scale_base_height="100"
+        sl:scale_base_height="130"
         >
-
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text = "패스워드 찾기"
+        android:textColor = "@color/darkBlue"
+        android:textAlignment = "center"
+        sl:scale_top = "10"
+        sl:scale_textsize="11"
+        />
+    <com.ssomai.android.scalablelayout.ScalableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/image_box"
+        sl:scale_top = "30"
+        >
         <EditText
             android:id = "@+id/find_editText_email"
             android:inputType = "textEmailAddress"
@@ -32,6 +45,38 @@
             sl:scale_width = "50"
             sl:scale_height = "10"
             sl:scale_textsize = "5"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text= "@string/findpwsulmyeong"
+            android:textAlignment="center"
+            sl:scale_top = "45"
+            sl:scale_left="15"
+            sl:scale_width = "70"
+            sl:scale_height = "30"
+            sl:scale_textsize = "4"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id = "@+id/find_new_password"
+            android:clickable="true"
+            sl:scale_top = "45"
+            sl:scale_left="15"
+            sl:scale_width = "60"
+            sl:scale_height = "10"
+            sl:scale_textsize = "4"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            sl:scale_top = "45"
+            sl:scale_left="15"
+            sl:scale_width = "65"
+            sl:scale_height = "10"
+            sl:scale_textsize = "4"
             />
 
         <Button
@@ -49,5 +94,6 @@
             sl:scale_textsize= "4"
             />
 
+    </com.ssomai.android.scalablelayout.ScalableLayout>
     </com.ssomai.android.scalablelayout.ScalableLayout>
 </LinearLayout>

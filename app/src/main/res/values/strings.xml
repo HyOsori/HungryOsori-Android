@@ -12,5 +12,5 @@
     <string name="passwordnewchk">새 패스워드 확인</string>
     <string name="resetreq">확인</string>
     <string name="findpw">비밀번호를 찾으려면 <u>여기</u>로</string>
-
+    <string name="findpwsulmyeong">가입한 <b>이메일</b>을 입력해 주세요.\n 이메일로 초기화 URL을 보내드립니다.</string>
 </resources>

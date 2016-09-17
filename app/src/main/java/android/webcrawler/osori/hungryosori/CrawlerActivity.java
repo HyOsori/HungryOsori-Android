@@ -314,7 +314,7 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
     private class tryRegPushTask extends AsyncTask<ParamModel, Void, Boolean> {
 
         private Context mContext;
-
+        private int error;
         public tryRegPushTask(Context context) {
             this.mContext = context;
         }
@@ -336,13 +336,16 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
                 try {
                     JSONObject jsonObject = new JSONObject(result);
                     String message = jsonObject.getString(Constant.MESSAGE);
-                    int error = jsonObject.getInt("error");
+                    error = jsonObject.getInt("error");
 
                     if (message.equals(Constant.MESSAGE_SUCCESS)) {
                         return true;
                     }
-                    else if(error == -1){
-                        return false;
+                    else{
+                        switch(error) {
+                            case -1:
+                                return false;
+                        }
                     }
                 } catch (Exception e) {
                 }
@@ -355,9 +358,14 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
             if (success) {
                 Toast.makeText(mContext,"토큰 갱신 완료",Toast.LENGTH_SHORT).show();
                 // 성공
-            } else {
-                Toast.makeText(mContext,"토큰 갱신 실패",Toast.LENGTH_SHORT).show();// 실패
+            } else{
+                switch(error){
+                    case -1:
+                        Toast.makeText(mContext,"토큰 갱신 실패",Toast.LENGTH_SHORT).show();// 실패
+                        break;
+                }
             }
+
         }
     }
 

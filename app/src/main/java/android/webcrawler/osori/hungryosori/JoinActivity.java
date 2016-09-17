@@ -163,6 +163,4 @@ public class JoinActivity extends FragmentActivity {
             }
         }
     }
-
-
 }

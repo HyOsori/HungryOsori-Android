@@ -11,6 +11,8 @@ import android.support.v4.app.NotificationCompat;
 
 import com.google.firebase.messaging.RemoteMessage;
 
+import org.json.JSONObject;
+
 /**
  * Created by kkm on 2016-08-29.
  */
@@ -20,7 +22,6 @@ public class MyFirebaseMessagingService extends com.google.firebase.messaging.Fi
     // [START receive_message]
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-
         //추가한것
         sendNotification(remoteMessage.getData().get("message"));
     }
