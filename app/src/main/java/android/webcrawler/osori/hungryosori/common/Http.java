@@ -59,13 +59,15 @@ public class Http {
                 urlConnection.setConnectTimeout(Constant.TIME_OUT_MILLIS);
                 urlConnection.setReadTimeout(Constant.TIME_OUT_MILLIS);
                 urlConnection.setRequestMethod("POST");
-                urlConnection.setRequestProperty("cookie", Constant.cookie);
+                if(Constant.cookie != null) {
+                    urlConnection.setRequestProperty("cookie", Constant.cookie);
+                }
 
-
-                out = new BufferedOutputStream(urlConnection.getOutputStream());
-
-                out.write(paramStr.getBytes(Constant.DEFAULT_ENCODING));
-                out.flush();
+                if(paramStr.length() > 0) {
+                    out = new BufferedOutputStream(urlConnection.getOutputStream());
+                    out.write(paramStr.getBytes(Constant.DEFAULT_ENCODING));
+                    out.flush();
+                }
 
                 urlConnection.connect();
 
@@ -103,6 +105,61 @@ public class Http {
         }
         return result;
     }
+
+    public String sendGetMethod(ParamModel paramModel) {
+
+        String result = null;
+
+        try {
+            final URL url = new URL(paramModel.getUrl());
+
+            HttpURLConnection urlConnection = null;
+            InputStream in = null;
+            BufferedReader bReader = null;
+
+            try {
+                urlConnection = (HttpURLConnection) url.openConnection();
+
+                urlConnection.setRequestMethod("GET");
+
+                if(Constant.cookie != null) {
+                    urlConnection.setRequestProperty("cookie", Constant.cookie);
+                }
+
+                in = new BufferedInputStream(urlConnection.getInputStream());
+
+                bReader = new BufferedReader(new InputStreamReader(in, Constant.DEFAULT_ENCODING));
+                StringBuilder strBuilder = new StringBuilder();
+
+                String line;
+                while ((line = bReader.readLine()) != null) {
+                    strBuilder.append(line);
+                }
+
+                result = strBuilder.toString();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } finally {
+                try {
+                    bReader.close();
+                    in.close();
+                    urlConnection.disconnect();
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                } catch (NullPointerException e2) {
+                    // TODO: handle exception
+                    e2.printStackTrace();
+                }
+            }
+        } catch (MalformedURLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return result;
+    }
+
 
     private String sendLogin(ParamModel paramModel) {
 
@@ -147,7 +204,6 @@ public class Http {
 
                 /** 쿠키 정보 저장 */
                 Pref.setCookie(mContext, cookie);
-                Constant.cookie = cookie;
 
                 in = new BufferedInputStream(urlConnection.getInputStream());
 

@@ -79,14 +79,14 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
      * Crawler 전체 정보를 가져오는 함수
      */
     private void getEntireList() {
-        String url = Constant.SERVER_URL + "/req_entire_list";
-
+//        String url = Constant.SERVER_URL + "/req_entire_list";
+        String url = Constant.SERVER_URL + "/crawlers/";
         ParamModel params = new ParamModel();
 
         params.setUrl(url);
-        params.setParamStr("user_id", Constant.userID);
+/*      params.setParamStr("user_id", Constant.userID);
         params.setParamStr("user_key", Constant.userKey);
-
+*/
         new getEntireListTask(this).execute(params);
     }
 
@@ -110,7 +110,7 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
             // TODO Auto-generated method stub
             Http http = new Http(mContext);
 
-            String result = http.send(params[0], false);
+            String result = http.sendGetMethod(params[0]);
 
             if (result == null) {
                 return false;
@@ -118,19 +118,20 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
                 try {
                     JSONObject jsonObject = new JSONObject(result);
 
-                    String message = jsonObject.getString(Constant.MESSAGE);
-                    if (message.equals(Constant.MESSAGE_SUCCESS)) {
+//                  String message = jsonObject.getString(Constant.MESSAGE);
+                    int error = jsonObject.getInt("ErrorCode");
+                    if (error==0) {
                         JSONArray jsonArray = jsonObject.getJSONArray("crawlers");
 
                         for (int i = 0; i < jsonArray.length(); ++i) {
                             JSONObject object = jsonArray.getJSONObject(i);
 
                             String id = object.getString("crawler_id");
-                            String url = object.getString("thumbnail_url");
-                            String description = object.getString("description");
-                            String title = object.getString("title");
+//                          String url = object.getString("thumbnail_url");
+                            String description = object.getString("created");
+                            String title = object.getString("crawler_name");
 
-                            allCrawlerInfoList.add(new CrawlerInfo(id, title, description, url, false));
+                            allCrawlerInfoList.add(new CrawlerInfo(id, title, description, "url", false));
                         }
                         return true;
                     }
@@ -157,8 +158,8 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
      * 사용자가 구독 중인 CrawlerID를 가져오는 함수
      */
     private void getSubscriptionList() {
-        String url = Constant.SERVER_URL + "/req_subscription_list";
-
+//        String url = Constant.SERVER_URL + "/req_subscription_list";
+        String url = Constant.SERVER_URL + "/subscriptions/item/";
         ParamModel params = new ParamModel();
 
         params.setUrl(url);
@@ -195,12 +196,15 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
                 try {
                     JSONObject jsonObject = new JSONObject(result);
 
-                    String message = jsonObject.getString(Constant.MESSAGE);
-                    if (message.equals(Constant.MESSAGE_SUCCESS)) {
+//                    String message = jsonObject.getString(Constant.MESSAGE);
+                    int error = jsonObject.getInt("ErrorCode");
+                    if (error == 0) {
                         JSONArray jsonArray = jsonObject.getJSONArray("subscriptions");
 
                         for (int i = 0; i < jsonArray.length(); ++i) {
-                            String subscriptionsID = jsonArray.getString(i);
+                            JSONObject object = jsonArray.getJSONObject(i);
+
+                            String subscriptionsID = object.getString("crawler_id");
                             subscriptionIDs.add(subscriptionsID);
                         }
 
@@ -290,16 +294,17 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
                 startActivity(intent2);
                 break;
 
-            case R.id.header_navigation_textView_setToken:
+       /*     case R.id.header_navigation_textView_setToken:
                 String token = Pref.getPushtoken(mContext);
                 Toast.makeText(this,token,Toast.LENGTH_SHORT).show();
                 Log.d("MyFirebaseIIDService","Refreshed Token: "+ token );
                 tryRegPush();
                 break;
+                */
         }
     }
 
-    private void tryRegPush(){
+/*    private void tryRegPush(){
         String url = Constant.SERVER_URL + "/register_push_token";
 
         ParamModel params = new ParamModel();
@@ -367,6 +372,5 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
             }
 
         }
-    }
-
+    }*/
 }

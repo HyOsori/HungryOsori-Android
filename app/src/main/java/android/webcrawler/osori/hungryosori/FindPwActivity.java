@@ -20,9 +20,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
 
 import org.json.JSONObject;
 
@@ -39,11 +36,6 @@ public class FindPwActivity extends FragmentActivity {
     private static String passwordNew;
 
     private EditText editText_email;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,10 +49,7 @@ public class FindPwActivity extends FragmentActivity {
         editText_email.setTypeface(fontArial);
 
         ((Button) findViewById(R.id.find_button_submit)).setTypeface(fontArial);
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
-    }
+     }
 
     public void onClick(View v) {
 
@@ -68,7 +57,6 @@ public class FindPwActivity extends FragmentActivity {
             case R.id.find_button_submit:
 
                 email = editText_email.getText().toString().trim();
-
                 /** 서버 연동 */
                 tryFind();
                 break;
@@ -77,51 +65,11 @@ public class FindPwActivity extends FragmentActivity {
 
     // 로그인 시도
     private void tryFind() {
-        String url = Constant.SERVER_URL + "/req_find_password";
+        String url = Constant.SERVER_URL + "/send_temp_password/";
         ParamModel params = new ParamModel();
         params.setUrl(url);
         params.setParamStr("user_id", email);
         new TryFindTask(this).execute(params);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client.connect();
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "FindPw Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app URL is correct.
-                Uri.parse("android-app://android.webcrawler.osori.hungryosori/http/host/path")
-        );
-        AppIndex.AppIndexApi.start(client, viewAction);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "FindPw Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app URL is correct.
-                Uri.parse("android-app://android.webcrawler.osori.hungryosori/http/host/path")
-        );
-        AppIndex.AppIndexApi.end(client, viewAction);
-        client.disconnect();
     }
 
     // 회원가입 시도하는 AsyncTask
@@ -151,16 +99,12 @@ public class FindPwActivity extends FragmentActivity {
             } else {
                 try {
                     JSONObject jsonObject = new JSONObject(result);
-
-                    String message = jsonObject.getString(Constant.MESSAGE);
-                    error = jsonObject.getInt("error");
-                    passwordNew = jsonObject.getString("new_password");
-                    if (message.equals(Constant.MESSAGE_SUCCESS)) {
-                        Log.d("New password","New password:" + passwordNew);
+                    error = jsonObject.getInt("ErrorCode");
+          //          passwordNew = jsonObject.getString("new_password");
+                    if (error == 0) {
+            //            Log.d("New password","New password:" + passwordNew);
                         return true;
                     } else if (error == -1) {
-                        return false;
-                    } else if (error == -100) {
                         return false;
                     }
                 } catch (Exception e) {
@@ -182,9 +126,6 @@ public class FindPwActivity extends FragmentActivity {
                 switch (error) {
                     case -1:
                         Toast.makeText(FindPwActivity.this, "변경 실패", Toast.LENGTH_SHORT).show();
-                        break;
-                    case -100:
-                        Toast.makeText(FindPwActivity.this, "존재하지 않는 사용자", Toast.LENGTH_SHORT).show();
                         break;
                 }
 

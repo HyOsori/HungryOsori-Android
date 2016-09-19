@@ -83,14 +83,14 @@ public class JoinActivity extends FragmentActivity {
 
     // 로그인 시도
     private void tryJoin(){
-        String url = Constant.SERVER_URL + "/req_signup";
+        String url = Constant.SERVER_URL + "/users/";
 
         ParamModel params = new ParamModel();
         params.setUrl(url);
         //조인 추가
         params.setParamStr("user_id", email);
         params.setParamStr("password", password);
-
+        params.setParamStr("name", "Gunju");
         new TryJoinTask(this).execute(params);
     }
 
@@ -119,9 +119,8 @@ public class JoinActivity extends FragmentActivity {
             }else{
                 try{
                     JSONObject jsonObject = new JSONObject(result);
-                    String message = jsonObject.getString(Constant.MESSAGE);
-                    error = jsonObject.getInt("error");
-                    if(message.equals(Constant.MESSAGE_SUCCESS)){
+                    error = jsonObject.getInt("ErrorCode");
+                    if(error == 0){
                         return true;
                     }
                     else if(error == -1) {
@@ -146,8 +145,7 @@ public class JoinActivity extends FragmentActivity {
             if(success) {
                 // 회원가입 성공
                 Toast.makeText(JoinActivity.this,"가입 성공. 로그인창으로 이동합니다",Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(mContext, LoginActivity.class);
-                startActivity(intent);
+                finish();
             }else{
                 switch(error){
                     case -1:
