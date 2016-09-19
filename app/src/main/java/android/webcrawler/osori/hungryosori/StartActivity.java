@@ -29,7 +29,7 @@ public class StartActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
 
         FirebaseMessaging.getInstance().subscribeToTopic("test");
-        FirebaseInstanceId.getInstance().getToken();
+ //       FirebaseInstanceId.getInstance().getToken();
 
         setContentView(R.layout.activity_start);
 
