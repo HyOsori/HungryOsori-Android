@@ -29,7 +29,7 @@
         <!-- 로그인 Activity -->
         <activity
             android:name=".LoginActivity"
-           android:screenOrientation="portrait"
+            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" />
 
         <!-- 회원가입 Activity -->
@@ -41,10 +41,11 @@
         <!-- Crawler Activity -->
         <activity
             android:name=".CrawlerActivity"
-            android:screenOrientation="portrait"
-            />
-
-        <activity android:name=".ChangePwActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ChangePwActivity"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity android:name=".FindPwActivity"
             android:theme="@android:style/Theme.NoTitleBar" />
 
         <service android:name=".MyFirebaseMessagingService">
@@ -58,12 +59,15 @@
             </intent-filter>
         </service>
 
-
-        <!-- ATTENTION: This was auto-generated to add Google Play services to your project for
-     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
+        <!--
+     ATTENTION: This was auto-generated to add Google Play services to your project for
+     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
+        -->
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
+
     </application>
 
 </manifest>

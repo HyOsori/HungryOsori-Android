@@ -19,7 +19,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text = "패스워드 변경"
+        android:text = "패스워드 찾기"
         android:textColor = "@color/darkBlue"
         android:textAlignment = "center"
         sl:scale_top = "10"
@@ -30,57 +30,57 @@
         android:layout_height="wrap_content"
         android:background="@drawable/image_box"
         sl:scale_top = "30"
-
         >
-         <EditText
-            android:id = "@+id/cng_editText_password"
-            android:inputType = "textWebPassword"
+        <EditText
+            android:id = "@+id/find_editText_email"
+            android:inputType = "textEmailAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint = "@string/passwordold"
+            android:background="@drawable/edittext_white"
+            android:hint= "@string/email"
             android:paddingStart="10dp"
             android:paddingLeft="10dp"
-            android:background="@drawable/edittext_white"
             sl:scale_left = "25"
             sl:scale_top = "25"
             sl:scale_width = "50"
             sl:scale_height = "10"
             sl:scale_textsize = "5"
             />
-
-        <EditText
-            android:id = "@+id/cng_editText_passwordnew"
-            android:inputType = "textWebPassword"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint = "@string/passwordnew"
-            android:paddingStart="10dp"
-            android:paddingLeft="10dp"
-            android:background="@drawable/edittext_white"
-            sl:scale_left = "25"
-            sl:scale_top = "40"
-            sl:scale_width = "50"
-            sl:scale_height = "10"
-            sl:scale_textsize = "5"
+            android:text= "@string/findpwsulmyeong"
+            android:textAlignment="center"
+            sl:scale_top = "45"
+            sl:scale_left="15"
+            sl:scale_width = "70"
+            sl:scale_height = "30"
+            sl:scale_textsize = "4"
             />
-
-        <EditText
-            android:id = "@+id/cng_editText_passwordnewchk"
-            android:inputType = "textWebPassword"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint = "@string/passwordnewchk"
-            android:paddingStart="10dp"
-            android:paddingLeft="10dp"
-            android:background="@drawable/edittext_white"
-            sl:scale_left = "25"
-            sl:scale_top = "55"
-            sl:scale_width = "50"
+            android:id = "@+id/find_new_password"
+            android:clickable="true"
+            sl:scale_top = "45"
+            sl:scale_left="15"
+            sl:scale_width = "60"
             sl:scale_height = "10"
-            sl:scale_textsize = "5"
+            sl:scale_textsize = "4"
             />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            sl:scale_top = "45"
+            sl:scale_left="15"
+            sl:scale_width = "65"
+            sl:scale_height = "10"
+            sl:scale_textsize = "4"
+            />
+
         <Button
-            android:id="@+id/cng_button_submit"
+            android:id="@+id/find_button_submit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/btn_mint"
@@ -95,6 +95,5 @@
             />
 
     </com.ssomai.android.scalablelayout.ScalableLayout>
-
     </com.ssomai.android.scalablelayout.ScalableLayout>
 </LinearLayout>

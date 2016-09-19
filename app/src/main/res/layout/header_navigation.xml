@@ -95,6 +95,21 @@
                     sl:scale_textsize = "70"
                     />
 
+                <TextView
+                    android:id="@+id/header_navigation_textView_setToken"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:gravity="center"
+                    android:text="Show Push"
+                    android:clickable="true"
+                    android:onClick="onClick"
+                    sl:scale_height="80"
+                    sl:scale_left="0"
+                    sl:scale_top="1200"
+                    sl:scale_width="1100"
+                    sl:scale_textsize = "70"
+                    />
             </com.ssomai.android.scalablelayout.ScalableLayout>
 
         </LinearLayout>

@@ -23,7 +23,7 @@ public class Pref {
     private static final String PREF_KEY_USER_ID        = "userID";
     private static final String PREF_KEY_USER_PASSWORD  = "userPassword";
     private static final String PREF_KEY_COOKIE         = "cookie";
-
+    private static final String PREF_KEY_PUSHTOKEN         = "pushToken";
     /** 로그인 관련 Shared Preference 함수들 */
     public static void setKeepLogin(Context context, boolean keepLogin){
         if(context == null){
@@ -116,6 +116,25 @@ public class Pref {
                 .edit().putString(PREF_KEY_COOKIE, cookie).apply();
         Constant.cookie = cookie;
     }
+
+    public static void setPushToken(Context context, String pushToken){
+        if(context == null){
+            return;
+        }
+        context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
+                .edit().putString(PREF_KEY_PUSHTOKEN, pushToken).apply();
+        Constant.pushToken = pushToken;
+    }
+
+    public static String getPushtoken(Context context) {
+        if (context == null) {
+            return null;
+        }
+        String userKey = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE).
+                getString(PREF_KEY_PUSHTOKEN, DEFAULT_STRING_VALUE);
+        return userKey;
+    }
+
     public static boolean resetLogin(Context context){
         if(context == null){
             return false;

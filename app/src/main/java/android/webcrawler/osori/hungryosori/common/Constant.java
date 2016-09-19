@@ -17,6 +17,7 @@ public class Constant {
     public static String    userPassword;
     public static String    cookie;
     public static String    userNewPassword;
+    public static String    pushToken;
     /** Http 관련 상수 */
     public static final int     TIME_OUT_MILLIS = 20000;
     public static final String  DEFAULT_ENCODING = "UTF-8";
@@ -24,5 +25,4 @@ public class Constant {
     public static final String MESSAGE           = "message";
     public static final String MESSAGE_SUCCESS   = "Success";
     public static final String SERVER_URL        = "http://192.168.0.14:8000";
-
 }

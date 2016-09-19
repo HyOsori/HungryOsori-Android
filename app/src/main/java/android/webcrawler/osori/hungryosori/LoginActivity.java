@@ -50,6 +50,10 @@ public class LoginActivity extends FragmentActivity {
     public void onClick(View v) {
         Intent intent;
         switch (v.getId()) {
+            case R.id.login_button_find:
+                intent = new Intent(LoginActivity.this,FindPwActivity.class);
+                startActivity(intent);
+                break;
             case R.id.login_button_login:
                 email       = editText_mail.getText().toString().trim();
                 password    = editText_password.getText().toString().trim();
@@ -117,7 +121,6 @@ public class LoginActivity extends FragmentActivity {
             }else{
                 try {
                     JSONObject jsonObject = new JSONObject(result);
-
                     String message = jsonObject.getString(Constant.MESSAGE);
                     if(message.equals(Constant.MESSAGE_SUCCESS)){
                         userKey = jsonObject.getString("user_key");
@@ -142,6 +145,8 @@ public class LoginActivity extends FragmentActivity {
                     Pref.setKeepLogin(mContext, true);
                     Intent intent = new Intent(mContext, CrawlerActivity.class);
                     intent.addFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY);
+                    intent.addFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent.addFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                 }
             }else{
