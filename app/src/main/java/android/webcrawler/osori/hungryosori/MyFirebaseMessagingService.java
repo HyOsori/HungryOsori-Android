@@ -16,17 +16,21 @@ import org.json.JSONObject;
 /**
  * Created by kkm on 2016-08-29.
  */
+
+//fcm
+
 public class MyFirebaseMessagingService extends com.google.firebase.messaging.FirebaseMessagingService {
     private static final String TAG = "FirebaseMsgService";
 
     // [START receive_message]
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        //추가한것
+        remoteMessage.getData();
         sendNotification(remoteMessage.getData().get("message"));
     }
 
     private void sendNotification(String messageBody) {
+        //클릭했을때 StartActivity로 가게된다.//
         Intent intent = new Intent(this, StartActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
@@ -35,7 +39,7 @@ public class MyFirebaseMessagingService extends com.google.firebase.messaging.Fi
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("FCM Push Test")
+                .setContentTitle("알림: 새로운 푸쉬가 들어왔습니다.")
                 .setContentText(messageBody)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
