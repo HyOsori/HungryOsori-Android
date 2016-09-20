@@ -105,7 +105,7 @@ public class CrawlerListAdapter extends ArrayAdapter<CrawlerInfo> implements Vie
     {
         String crawlerID = getItem(position).getId();
 
-        String url = Constant.SERVER_URL + "/req_subscribe_crawler";
+        String url = Constant.SERVER_URL + "/subscriptions/";
 
         ParamModel params = new ParamModel();
 
@@ -148,8 +148,8 @@ public class CrawlerListAdapter extends ArrayAdapter<CrawlerInfo> implements Vie
                 try {
                     JSONObject jsonObject = new JSONObject(result);
 
-                    String message = jsonObject.getString(Constant.MESSAGE);
-                    if(message.equals(Constant.MESSAGE_SUCCESS)){
+                    int error = jsonObject.getInt("ErrorCode");
+                    if(error == 0){
                         return true;
                     }
                 }catch(Exception e){
@@ -172,6 +172,8 @@ public class CrawlerListAdapter extends ArrayAdapter<CrawlerInfo> implements Vie
 
                 CrawlerViewPagerAdapter.notifyMyCrawlerInfoListChanged();
                 CrawlerViewPagerAdapter.notifyAllCrawlerInfoListChanged();
+            }else{
+                ((ToggleButton)view).setChecked(false);
             }
             view.setClickable(true);
         }
@@ -181,7 +183,7 @@ public class CrawlerListAdapter extends ArrayAdapter<CrawlerInfo> implements Vie
     {
         String crawlerID = getItem(position).getId();
 
-        String url = Constant.SERVER_URL + "/req_unsubscribe_crawler";
+        String url = Constant.SERVER_URL + "/subscriptions/item/delete/";
 
         ParamModel params = new ParamModel();
 
@@ -224,8 +226,8 @@ public class CrawlerListAdapter extends ArrayAdapter<CrawlerInfo> implements Vie
                 try {
                     JSONObject jsonObject = new JSONObject(result);
 
-                    String message = jsonObject.getString(Constant.MESSAGE);
-                    if(message.equals(Constant.MESSAGE_SUCCESS)){
+                    int error = jsonObject.getInt("ErrorCode");
+                    if(error==0){
                         return true;
                     }
                 }catch(Exception e){
@@ -257,6 +259,8 @@ public class CrawlerListAdapter extends ArrayAdapter<CrawlerInfo> implements Vie
 
                 CrawlerViewPagerAdapter.notifyMyCrawlerInfoListChanged();
                 CrawlerViewPagerAdapter.notifyAllCrawlerInfoListChanged();
+            }else{
+                ((ToggleButton)view).setChecked(true);
             }
             view.setClickable(true);
         }

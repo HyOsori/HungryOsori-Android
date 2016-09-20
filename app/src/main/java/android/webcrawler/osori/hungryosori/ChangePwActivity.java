@@ -86,7 +86,7 @@ public class ChangePwActivity extends FragmentActivity {
 
     // 로그인 시도
     private void tryChange(){
-        String url = Constant.SERVER_URL + "/req_change_password";
+        String url = Constant.SERVER_URL + "/password_change/";
         ParamModel params = new ParamModel();
         params.setUrl(url);
         //조인 추가
@@ -123,18 +123,15 @@ public class ChangePwActivity extends FragmentActivity {
                 try{
                     JSONObject jsonObject = new JSONObject(result);
 
-                    String message = jsonObject.getString(Constant.MESSAGE);
-                    error = jsonObject.getInt("error");
-                    if(message.equals(Constant.MESSAGE_SUCCESS)){
+//                    String message = jsonObject.getString(Constant.MESSAGE);
+                    error = jsonObject.getInt("ErrorCode");
+                    if(error == 0){
                         return true;
                     }
                     else if(error == -1){
                         return false;
                     }
                     else if(error == -100){
-                        return false;
-                    }
-                    else if(error == -200){
                         return false;
                     }
 
@@ -160,9 +157,6 @@ public class ChangePwActivity extends FragmentActivity {
                         break;
                     case -100:
                         Toast.makeText(ChangePwActivity.this, "존재하지 않는 사용자", Toast.LENGTH_SHORT).show();
-                        break;
-                    case -200:
-                        Toast.makeText(ChangePwActivity.this, "비밀번호 불일치", Toast.LENGTH_SHORT).show();
                         break;
                 }
 

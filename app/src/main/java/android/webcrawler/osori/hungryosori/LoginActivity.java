@@ -83,13 +83,15 @@ public class LoginActivity extends FragmentActivity {
 
     // 로그인 시도
     private void tryLogin(){
-        String url = Constant.SERVER_URL + "/req_login";
+        String url = Constant.SERVER_URL + "/login/";
+        String pushToken = Pref.getPushtoken(this);
 
         ParamModel params = new ParamModel();
 
         params.setUrl(url);
         params.setParamStr("user_id", email);
         params.setParamStr("password", password);
+        params.setParamStr("token",pushToken);
 
         new TryLoginTask(this).execute(params);
     }
@@ -98,7 +100,7 @@ public class LoginActivity extends FragmentActivity {
     private class TryLoginTask extends AsyncTask<ParamModel, Void, Boolean> {
         private Context mContext;
         private String  userKey  = Pref.DEFAULT_STRING_VALUE;
-
+        private int error;
         public TryLoginTask(Context mContext){
             this.mContext = mContext;
         }
@@ -121,8 +123,9 @@ public class LoginActivity extends FragmentActivity {
             }else{
                 try {
                     JSONObject jsonObject = new JSONObject(result);
-                    String message = jsonObject.getString(Constant.MESSAGE);
-                    if(message.equals(Constant.MESSAGE_SUCCESS)){
+//                    String message = jsonObject.getString(Constant.MESSAGE);
+                    error = jsonObject.getInt("ErrorCode");
+                    if(error == 0){
                         userKey = jsonObject.getString("user_key");
                         return true;
                     }
