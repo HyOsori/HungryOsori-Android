@@ -83,15 +83,13 @@ public class LoginActivity extends FragmentActivity {
 
     // 로그인 시도
     private void tryLogin(){
-        String url = Constant.SERVER_URL + "/login/";
-        String pushToken = Pref.getPushtoken(this);
+        String url = Constant.SERVER_URL + "/user/";
 
+        String pushToken = Pref.getPushtoken(this);
+        url += "?user_id=" + email + "&password=" + password + "&token=" + pushToken;
         ParamModel params = new ParamModel();
 
         params.setUrl(url);
-        params.setParamStr("user_id", email);
-        params.setParamStr("password", password);
-        params.setParamStr("token",pushToken);
 
         new TryLoginTask(this).execute(params);
     }
@@ -104,7 +102,6 @@ public class LoginActivity extends FragmentActivity {
         public TryLoginTask(Context mContext){
             this.mContext = mContext;
         }
-
         @Override
         protected void onPreExecute() {
             // TODO Auto-generated method stub

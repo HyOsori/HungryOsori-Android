@@ -162,36 +162,21 @@ public class Http {
 
 
     private String sendLogin(ParamModel paramModel) {
-
         String result = null;
 
         try {
             final URL url = new URL(paramModel.getUrl());
 
-            String paramStr = paramModel.getParamStr();
-
             HttpURLConnection urlConnection = null;
-            OutputStream out = null;
             InputStream in = null;
             BufferedReader bReader = null;
 
             try {
                 urlConnection = (HttpURLConnection) url.openConnection();
 
-                urlConnection.setDoOutput(true);
-                urlConnection.setDoInput(true);
-                urlConnection.setConnectTimeout(Constant.TIME_OUT_MILLIS);
-                urlConnection.setReadTimeout(Constant.TIME_OUT_MILLIS);
-                urlConnection.setRequestMethod("POST");
-                urlConnection.setInstanceFollowRedirects(false);
+                urlConnection.setRequestMethod("GET");
 
-                out = new BufferedOutputStream(urlConnection.getOutputStream());
-
-                out.write(paramStr.getBytes(Constant.DEFAULT_ENCODING));
-                out.flush();
-
-                urlConnection.connect();
-
+                in = new BufferedInputStream(urlConnection.getInputStream());
                 /** 쿠키 값 읽어오기 */
                 String cookie = "";
                 Map map = urlConnection.getHeaderFields();
@@ -201,11 +186,8 @@ public class Http {
                         cookie += i.next() + ", ";
                     }
                 }
-
                 /** 쿠키 정보 저장 */
                 Pref.setCookie(mContext, cookie);
-
-                in = new BufferedInputStream(urlConnection.getInputStream());
 
                 bReader = new BufferedReader(new InputStreamReader(in, Constant.DEFAULT_ENCODING));
                 StringBuilder strBuilder = new StringBuilder();
@@ -223,7 +205,6 @@ public class Http {
                 try {
                     bReader.close();
                     in.close();
-                    out.close();
                     urlConnection.disconnect();
                 } catch (IOException e) {
                     // TODO Auto-generated catch block

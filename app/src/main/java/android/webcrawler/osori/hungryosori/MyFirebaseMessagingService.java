@@ -4,6 +4,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.PowerManager;
@@ -20,7 +21,7 @@ import org.json.JSONObject;
  */
 
 //fcm
-
+/*
 public class MyFirebaseMessagingService extends com.google.firebase.messaging.FirebaseMessagingService {
     private static final String TAG = "FirebaseMsgService";
 
@@ -40,7 +41,7 @@ public class MyFirebaseMessagingService extends com.google.firebase.messaging.Fi
         intent.addFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent.addFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NEW_TASK);
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code *//*, intent,
                 PendingIntent.FLAG_ONE_SHOT);
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
@@ -55,7 +56,96 @@ public class MyFirebaseMessagingService extends com.google.firebase.messaging.Fi
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+        notificationManager.notify(0 /* ID of notification *//*, notificationBuilder.build());
     }
 
+}*/
+
+public class MyFirebaseMessagingService extends com.google.firebase.messaging.FirebaseMessagingService {
+
+    private static final String TAG = "FirebaseMsgService";
+
+    // [START receive_message]
+    @Override
+    public void onMessageReceived(RemoteMessage remoteMessage) {
+        Log.d(TAG, "From: " + remoteMessage.getFrom());
+
+        // Check if message contains a data payload.
+        if (remoteMessage.getData().size() > 0) {
+
+            remoteMessage.getData();
+            Log.d(TAG, "Message data payload: " + remoteMessage.getData());
+            if (remoteMessage.getData().get("body") != null) {
+                sendNotification(remoteMessage.getData().get("title"), remoteMessage.getData().get("body"), remoteMessage.getData().get("clickurl"));
+            }
+            if (remoteMessage.getData().get("body") == null) {
+                sendNotification(remoteMessage.getData().get("title"), remoteMessage.getData().get("clickurl"));
+            }
+        }
+        // Check if message contains a notification payload.
+        if (remoteMessage.getNotification() != null) {
+
+            Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
+        }
+/*            sendNotification(remoteMessage.getNotification().getBody());
+        }
+*/
+    }
+
+    private void sendNotification(String messageTitle, String messageBody, String clickUrl) {
+/*        Intent intent = new Intent(this, StartActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this,0, intent,PendingIntent.FLAG_UPDATE_CURRENT);
+*/
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        Uri u = Uri.parse(clickUrl);
+        i.setData(u);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        long[] pattern = {500, 500, 500, 500, 500};
+
+        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+        NotificationCompat.Builder notificationBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(this)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle(messageTitle)
+                .setContentText(messageBody)
+                .setAutoCancel(true)
+                .setVibrate(pattern)
+                .setLights(Color.BLUE, 1, 1)
+                .setSound(defaultSoundUri)
+                .setContentIntent(pendingIntent);
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+    }
+    private void sendNotification(String messageTitle, String clickUrl) {
+/*        Intent intent = new Intent(this, StartActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this,0, intent,PendingIntent.FLAG_UPDATE_CURRENT);
+*/
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        Uri u = Uri.parse(clickUrl);
+        i.setData(u);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        long[] pattern = {500, 500, 500, 500, 500};
+
+        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+        NotificationCompat.Builder notificationBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(this)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle(messageTitle)
+                .setContentText("클릭하여 확인해주세요")
+                .setAutoCancel(true)
+                .setVibrate(pattern)
+                .setLights(Color.BLUE, 1, 1)
+                .setSound(defaultSoundUri)
+                .setContentIntent(pendingIntent);
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+    }
 }
