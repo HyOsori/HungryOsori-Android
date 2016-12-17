@@ -9,16 +9,15 @@ import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.webcrawler.osori.hungryosori.Adapter.CrawlerViewPagerAdapter;
 import android.webcrawler.osori.hungryosori.Common.Pref;
+import android.webcrawler.osori.hungryosori.CrawlerInfo.CrawlerInfos;
 import android.webcrawler.osori.hungryosori.Model.CrawlerInfo;
 import android.webcrawler.osori.hungryosori.Model.ParamModel;
 import android.webcrawler.osori.hungryosori.Common.Constant;
 import android.webcrawler.osori.hungryosori.Common.Http;
-import android.widget.Toast;
 import android.widget.ToggleButton;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -29,16 +28,11 @@ import java.util.ArrayList;
  */
 public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPageChangeListener {
 
-    public static ArrayList<CrawlerInfo> allCrawlerInfoList;
-    public static ArrayList<CrawlerInfo> myCrawlerInfoList;
-
-    private ArrayList<String> subscriptionIDs;
-
+    private CrawlerInfos crawlerInfos;
     private ViewPager viewPager;
     private CrawlerViewPagerAdapter viewPagerAdapter;
 
     private ToggleButton button_all, button_my;
-
     private NavigationView navigationView;
 
     @Override
@@ -46,6 +40,7 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crawler);
 
+        crawlerInfos = CrawlerInfos.getInstance();
         /** 객체 설정 */
         viewPager = (ViewPager) findViewById(R.id.crawler_viewPager);
         button_all = (ToggleButton) findViewById(R.id.crawler_button_all);
@@ -57,14 +52,9 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
         button_all.setTypeface(fontArial);
         button_my.setTypeface(fontArial);
 
-        /* 헤더 추가 */
+        /** 헤더 추가 */
         View header = LayoutInflater.from(this).inflate(R.layout.header_navigation, null);
         navigationView.addHeaderView(header);
-
-        /** 리스트 초기화 */
-        allCrawlerInfoList = new ArrayList<>();
-        myCrawlerInfoList = new ArrayList<>();
-        subscriptionIDs = new ArrayList<>();
 
         /** 서버에서 정보 가져오기 */
         getCrawlerInfo();
@@ -79,7 +69,6 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
      * Crawler 전체 정보를 가져오는 함수
      */
     private void getEntireList() {
-//        String url = Constant.SERVER_URL + "/req_entire_list";
         String url = Constant.SERVER_URL + "/crawlers/";
         ParamModel params = new ParamModel();
 
@@ -118,7 +107,6 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
                 try {
                     JSONObject jsonObject = new JSONObject(result);
 
-//                  String message = jsonObject.getString(Constant.MESSAGE);
                     int error = jsonObject.getInt("ErrorCode");
                     if (error==0) {
                         JSONArray jsonArray = jsonObject.getJSONArray("crawlers");
@@ -131,7 +119,7 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
                             String description = object.getString("created");
                             String title = object.getString("crawler_name");
 
-                            allCrawlerInfoList.add(new CrawlerInfo(id, title, description, "url", false));
+                            crawlerInfos.addCrawlerInfo(new CrawlerInfo(id, title, description, "url", false));
                         }
                         return true;
                     }
@@ -145,9 +133,14 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
         @Override
         protected void onPostExecute(Boolean success) {
             // TODO Auto-generated method stub
+            /************ 테스트 코드 ************/
+            crawlerInfos.addCrawlerInfo(new CrawlerInfo("1", "test1", "test1", "url", false));
+            crawlerInfos.addCrawlerInfo(new CrawlerInfo("2", "test2", "test2", "url", false));
+            crawlerInfos.addCrawlerInfo(new CrawlerInfo("3", "test3", "test3", "url", false));
+            crawlerInfos.addCrawlerInfo(new CrawlerInfo("4", "test4", "test4", "url", false));
+            crawlerInfos.addCrawlerInfo(new CrawlerInfo("5", "test5", "test5", "url", false));
             if (success) {
                 // 성공
-                CrawlerViewPagerAdapter.notifyAllCrawlerInfoListChanged();
             } else {
                 // 실패
             }
@@ -158,7 +151,6 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
      * 사용자가 구독 중인 CrawlerID를 가져오는 함수
      */
     private void getSubscriptionList() {
-//        String url = Constant.SERVER_URL + "/req_subscription_list";
         String url = Constant.SERVER_URL + "/subscriptions/item/";
         ParamModel params = new ParamModel();
 
@@ -170,11 +162,12 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
     }
 
     private class getSubscriptionListTask extends AsyncTask<ParamModel, Void, Boolean> {
-
+        private ArrayList<String> subscriptionIDs;
         private Context mContext;
 
         public getSubscriptionListTask(Context context) {
             mContext = context;
+            subscriptionIDs = new ArrayList<>();
         }
 
         @Override
@@ -196,7 +189,6 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
                 try {
                     JSONObject jsonObject = new JSONObject(result);
 
-//                    String message = jsonObject.getString(Constant.MESSAGE);
                     int error = jsonObject.getInt("ErrorCode");
                     if (error == 0) {
                         JSONArray jsonArray = jsonObject.getJSONArray("subscriptions");
@@ -220,21 +212,15 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
         @Override
         protected void onPostExecute(Boolean success) {
             // TODO Auto-generated method stub
+            /************ 테스트 코드 ************/
+            for (String id : subscriptionIDs) {
+                crawlerInfos.changeSubscription(id);
+            }
             if (success) {
                 // 성공
                 for (String id : subscriptionIDs) {
-                    for (CrawlerInfo crawlerInfo : allCrawlerInfoList) {
-                        if (crawlerInfo.getId().equals(id)) {
-                            crawlerInfo.setSubscription(true);
-                            myCrawlerInfoList.add(crawlerInfo);
-                            break;
-                        }
-                    }
+                    crawlerInfos.changeSubscription(id);
                 }
-                CrawlerViewPagerAdapter.notifyMyCrawlerInfoListChanged();
-                CrawlerViewPagerAdapter.notifyAllCrawlerInfoListChanged();
-            } else {
-                // 실패
             }
         }
     }
@@ -245,7 +231,7 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
 
         // ViewPager 어댑터 설정
         viewPager.setAdapter(viewPagerAdapter);
-        viewPager.setOnPageChangeListener(this);
+        viewPager.addOnPageChangeListener(this);
     }
 
     /* view pager 페이지가 바뀌면 호출된다 */
@@ -271,8 +257,7 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
 
 
     public void onClick(View v) {
-        Context mContext = getApplicationContext();
-        switch (v.getId()) {
+       switch (v.getId()) {
             case R.id.crawler_button_my:
                 viewPager.setCurrentItem(Constant.PAGE_MY);
                 break;
@@ -289,10 +274,11 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
                 }
                 break;
 
-            case R.id.header_navigation_textView_change_password:
-                Intent intent2 = new Intent(CrawlerActivity.this,ChangePwActivity.class);
-                startActivity(intent2);
+            case R.id.header_navigation_textView_change_password: {
+                Intent intent = new Intent(CrawlerActivity.this, ChangePwActivity.class);
+                startActivity(intent);
                 break;
+            }
 
        /*     case R.id.header_navigation_textView_setToken:
                 String token = Pref.getPushToken(mContext);

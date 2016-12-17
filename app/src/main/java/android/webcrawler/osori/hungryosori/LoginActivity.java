@@ -84,7 +84,7 @@ public class LoginActivity extends FragmentActivity {
     // 로그인 시도
     private void tryLogin(){
         String url = Constant.SERVER_URL + "/login/";
-        String pushToken = Pref.getPushtoken(this);
+        String pushToken = Pref.getPushToken(this);
 
         ParamModel params = new ParamModel();
 

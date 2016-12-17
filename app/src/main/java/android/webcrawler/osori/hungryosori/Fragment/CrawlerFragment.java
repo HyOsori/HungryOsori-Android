@@ -7,11 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webcrawler.osori.hungryosori.Adapter.CrawlerListAdapter;
-import android.webcrawler.osori.hungryosori.CrawlerActivity;
+import android.webcrawler.osori.hungryosori.CrawlerInfo.CrawlerInfos;
 import android.webcrawler.osori.hungryosori.R;
 import android.webcrawler.osori.hungryosori.Common.Constant;
 import android.widget.ListView;
-
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.process.BitmapProcessor;
 
@@ -26,13 +25,18 @@ public class CrawlerFragment extends Fragment{
     public CrawlerListAdapter listAdapter = null;
 
     public static CrawlerFragment newInstance(int pagePosition){
-        CrawlerFragment fragment = new CrawlerFragment();
+        if(pagePosition == Constant.PAGE_MY ||
+                pagePosition == Constant.PAGE_ALL) {
+            CrawlerFragment fragment = new CrawlerFragment();
 
-        Bundle bundle = new Bundle();
-        bundle.putInt("PAGE", pagePosition);
-        fragment.setArguments(bundle);
+            Bundle bundle = new Bundle();
+            bundle.putInt("PAGE", pagePosition);
+            fragment.setArguments(bundle);
 
-        return fragment;
+            return fragment;
+        }else {
+            return null;
+        }
     }
 
     public void onCreate(Bundle savedInstanceState){
@@ -60,10 +64,13 @@ public class CrawlerFragment extends Fragment{
 
         if(page == Constant.PAGE_MY) {
             listAdapter = new CrawlerListAdapter(getActivity(), R.layout.list_crawler, R.id.list_crawler_textView_title,
-                    CrawlerActivity.myCrawlerInfoList, options);
+                    CrawlerInfos.getInstance().getCrawlerInfoList(), options);
         }else if(page == Constant.PAGE_ALL){
             listAdapter = new CrawlerListAdapter(getActivity(), R.layout.list_crawler, R.id.list_crawler_textView_title,
-                    CrawlerActivity.allCrawlerInfoList, options);
+                    CrawlerInfos.getInstance().getCrawlerInfoList(), options);
+        }
+        if(listAdapter != null) {
+            CrawlerInfos.getInstance().attach(listAdapter);
         }
     }
 

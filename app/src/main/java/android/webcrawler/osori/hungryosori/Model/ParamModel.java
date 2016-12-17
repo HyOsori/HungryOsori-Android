@@ -44,6 +44,8 @@ public  class ParamModel {
                 result.append(URLEncoder.encode(pair.getValue(), Constant.DEFAULT_ENCODING));
             }catch (UnsupportedEncodingException e){
 
+            }catch (Exception e){
+
             }
         }
 

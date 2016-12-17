@@ -41,9 +41,9 @@ public class StartActivity extends FragmentActivity {
         /** 이미지 로더 등록 */
         initImageLoader(this);
 
+        Handler handler = new Handler();
         if(Constant.keepLogin) {
             /** 이미 로그인 된 경우 */
-            Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -53,11 +53,10 @@ public class StartActivity extends FragmentActivity {
             }, Constant.DELAY_TIME);
         }else{
             /** 로그인 되지 않은 경우에 로그인 페이지로 이동한다 */
-            Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    Intent intent = new Intent(StartActivity.this, LoginActivity.class);
+                    Intent intent = new Intent(StartActivity.this, CrawlerActivity.class);
                     startActivity(intent);
                 }
             }, Constant.DELAY_TIME);
