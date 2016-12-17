@@ -26,11 +26,10 @@ public class StartActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_start);
 
         FirebaseMessaging.getInstance().subscribeToTopic("test");
- //       FirebaseInstanceId.getInstance().getToken();
-
-        setContentView(R.layout.activity_start);
+ //     FirebaseInstanceId.getInstance().getToken();
 
         /** Preference 값을 저장 */
         Constant.keepLogin      = Pref.getKeepLogin(this);
