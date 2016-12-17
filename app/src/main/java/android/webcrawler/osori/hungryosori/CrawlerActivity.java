@@ -295,7 +295,7 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
                 break;
 
        /*     case R.id.header_navigation_textView_setToken:
-                String token = Pref.getPushtoken(mContext);
+                String token = Pref.getPushToken(mContext);
                 Toast.makeText(this,token,Toast.LENGTH_SHORT).show();
                 Log.d("MyFirebaseIIDService","Refreshed Token: "+ token );
                 tryRegPush();

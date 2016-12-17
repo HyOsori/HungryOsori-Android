@@ -13,7 +13,7 @@ import android.content.Context;
 public class Pref {
 
     /** 공통 상수값 */
-    private static final String SHARED_PREF_NAME = "hungryOsori.sharedPref";
+    private static final String SHARED_PREF_NAME        = "hungryOsori.sharedPref";
     public static final boolean DEFAULT_BOOLEAN_VALUE   = false;
     public static final String  DEFAULT_STRING_VALUE    = null;
 
@@ -97,16 +97,6 @@ public class Pref {
         return userKey;
     }
 
-    public static String getCookie(Context context)
-    {
-        if(context == null){
-            return null;
-        }
-        String cookie =  context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE).
-                getString(PREF_KEY_COOKIE, DEFAULT_STRING_VALUE);
-        return cookie;
-    }
-
     public static void setCookie(Context context, String cookie)
     {
         if(context == null){
@@ -115,6 +105,16 @@ public class Pref {
         context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
                 .edit().putString(PREF_KEY_COOKIE, cookie).apply();
         Constant.cookie = cookie;
+    }
+
+    public static String getCookie(Context context)
+    {
+        if(context == null){
+            return null;
+        }
+        String cookie =  context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE).
+                getString(PREF_KEY_COOKIE, DEFAULT_STRING_VALUE);
+        return cookie;
     }
 
     public static void setPushToken(Context context, String pushToken){
@@ -126,7 +126,7 @@ public class Pref {
         Constant.pushToken = pushToken;
     }
 
-    public static String getPushtoken(Context context) {
+    public static String getPushToken(Context context) {
         if (context == null) {
             return null;
         }
@@ -150,11 +150,11 @@ public class Pref {
         context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
                 .edit().putString(PREF_KEY_USER_PASSWORD, DEFAULT_STRING_VALUE).apply();
 
-        Constant.keepLogin      = Pref.getKeepLogin(context);
-        Constant.userKey        = Pref.getUserKey(context);
-        Constant.cookie         = Pref.getCookie(context);
-        Constant.userID         = Pref.getUserID(context);
-        Constant.userPassword   = Pref.getUserPassword(context);
+        Constant.keepLogin      = DEFAULT_BOOLEAN_VALUE;
+        Constant.userKey        = DEFAULT_STRING_VALUE;
+        Constant.cookie         = DEFAULT_STRING_VALUE;
+        Constant.userID         = DEFAULT_STRING_VALUE;
+        Constant.userPassword   = DEFAULT_STRING_VALUE;
 
         return true;
     }
