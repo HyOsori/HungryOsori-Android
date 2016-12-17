@@ -22,7 +22,6 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
  * ImageLoader 를 초기화 한다.
  */
 public class StartActivity extends FragmentActivity {
-    private final int DELAY_TIME = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +51,7 @@ public class StartActivity extends FragmentActivity {
                     Intent intent = new Intent(StartActivity.this, CrawlerActivity.class);
                     startActivity(intent);
                 }
-            }, DELAY_TIME);
+            }, Constant.DELAY_TIME);
         }else{
             /** 로그인 되지 않은 경우에 로그인 페이지로 이동한다 */
             Handler handler = new Handler();
@@ -62,7 +61,7 @@ public class StartActivity extends FragmentActivity {
                     Intent intent = new Intent(StartActivity.this, LoginActivity.class);
                     startActivity(intent);
                 }
-            }, DELAY_TIME);
+            }, Constant.DELAY_TIME);
         }
 
     }
