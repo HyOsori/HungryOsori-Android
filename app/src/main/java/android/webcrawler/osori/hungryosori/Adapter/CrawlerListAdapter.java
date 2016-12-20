@@ -46,6 +46,7 @@ public class CrawlerListAdapter extends ArrayAdapter<CrawlerInfo> implements Vie
     }
 
     public View getView(int position, View convertView, ViewGroup parent){
+
         View itemLayout = super.getView(position, convertView, parent);
         ViewHolder viewHolder = (ViewHolder)itemLayout.getTag();
 
@@ -158,10 +159,10 @@ public class CrawlerListAdapter extends ArrayAdapter<CrawlerInfo> implements Vie
             // TODO Auto-generated method stub
             if(success) {
                 // 성공
-                CrawlerInfos.getInstance().changeSubscription(id);
+                CrawlerInfos.getInstance().subscriptionCrawler(id);
             }else{
                 /************ 테스트 코드 ************/
-                CrawlerInfos.getInstance().changeSubscription(id);
+                CrawlerInfos.getInstance().subscriptionCrawler(id);
                 // ((ToggleButton)view).setChecked(false);
             }
             view.setClickable(true);
@@ -231,10 +232,10 @@ public class CrawlerListAdapter extends ArrayAdapter<CrawlerInfo> implements Vie
             // TODO Auto-generated method stub
             if(success) {
                 // 성공
-                CrawlerInfos.getInstance().changeSubscription(id);
+                CrawlerInfos.getInstance().unSubscriptionCrawler(id);
             }else{
                 /************ 테스트 코드 ************/
-                CrawlerInfos.getInstance().changeSubscription(id);
+                CrawlerInfos.getInstance().unSubscriptionCrawler(id);
                 // ((ToggleButton)view).setChecked(true);
             }
             view.setClickable(true);

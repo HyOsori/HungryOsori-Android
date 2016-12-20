@@ -56,11 +56,13 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
         View header = LayoutInflater.from(this).inflate(R.layout.header_navigation, null);
         navigationView.addHeaderView(header);
 
+        /** ViewPagerAdapter 설정 */
+        setViewPagerAdapter();
+
         /** 서버에서 정보 가져오기 */
         getCrawlerInfo();
     }
     private void getCrawlerInfo() {
-        setViewPagerAdapter();
         getEntireList();
         getSubscriptionList();
     }
@@ -212,14 +214,10 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
         @Override
         protected void onPostExecute(Boolean success) {
             // TODO Auto-generated method stub
-            /************ 테스트 코드 ************/
-            for (String id : subscriptionIDs) {
-                crawlerInfos.changeSubscription(id);
-            }
             if (success) {
                 // 성공
                 for (String id : subscriptionIDs) {
-                    crawlerInfos.changeSubscription(id);
+                    crawlerInfos.subscriptionCrawler(id);
                 }
             }
         }

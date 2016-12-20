@@ -62,13 +62,14 @@ public class CrawlerFragment extends Fragment{
                 })
                 .build();
 
-        if(page == Constant.PAGE_MY) {
+        if(page == Constant.PAGE_ALL) {
             listAdapter = new CrawlerListAdapter(getActivity(), R.layout.list_crawler, R.id.list_crawler_textView_title,
                     CrawlerInfos.getInstance().getCrawlerInfoList(), options);
-        }else if(page == Constant.PAGE_ALL){
+        }else if(page == Constant.PAGE_MY){
             listAdapter = new CrawlerListAdapter(getActivity(), R.layout.list_crawler, R.id.list_crawler_textView_title,
-                    CrawlerInfos.getInstance().getCrawlerInfoList(), options);
+                    CrawlerInfos.getInstance().getSubscriptionList(), options);
         }
+
         if(listAdapter != null) {
             CrawlerInfos.getInstance().attach(listAdapter);
         }
@@ -82,8 +83,6 @@ public class CrawlerFragment extends Fragment{
         if(listAdapter != null) {
             listView.setAdapter(listAdapter);                       // 어댑터 설정
         }
-
         return view;
     }
-
 }

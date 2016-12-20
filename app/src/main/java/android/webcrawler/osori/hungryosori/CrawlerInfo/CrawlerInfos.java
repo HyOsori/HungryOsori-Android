@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public class CrawlerInfos extends Subject{
     private static CrawlerInfos crawlerInfos        = null;
     private ArrayList<CrawlerInfo> crawlerInfoList  = new ArrayList<>();
+    private ArrayList<CrawlerInfo> subscriptionList = new ArrayList<>();
 
     private CrawlerInfos(){
     }
@@ -27,15 +28,22 @@ public class CrawlerInfos extends Subject{
         notifyObservers();
     }
 
-    public void removeCrawlerInfo(CrawlerInfo crawlerInfo){
-        crawlerInfoList.remove(crawlerInfo);
-        notifyObservers();
+    public void subscriptionCrawler(String id){
+        for (CrawlerInfo crawlerInfo : crawlerInfoList) {
+            if (crawlerInfo.getId().equals(id) && crawlerInfo.getSubscription() == false) {
+                crawlerInfo.setSubscription(true);
+                subscriptionList.add(crawlerInfo);
+                notifyObservers();
+                break;
+            }
+        }
     }
 
-    public void changeSubscription(String id){
+    public void unSubscriptionCrawler(String id){
         for (CrawlerInfo crawlerInfo : crawlerInfoList) {
-            if (crawlerInfo.getId().equals(id)) {
-                crawlerInfo.setSubscription(!crawlerInfo.getSubscription());
+            if (crawlerInfo.getId().equals(id) && crawlerInfo.getSubscription() == true) {
+                crawlerInfo.setSubscription(false);
+                subscriptionList.remove(crawlerInfo);
                 notifyObservers();
                 break;
             }
@@ -44,5 +52,9 @@ public class CrawlerInfos extends Subject{
 
     public ArrayList<CrawlerInfo> getCrawlerInfoList(){
         return this.crawlerInfoList;
+    }
+
+    public ArrayList<CrawlerInfo> getSubscriptionList(){
+        return this.subscriptionList;
     }
 }

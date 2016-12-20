@@ -15,10 +15,6 @@ public abstract class Subject {
         observers.add(adapter);
     }
 
-    public void detach(ArrayAdapter adapter){
-        observers.remove(adapter);
-    }
-
     public void notifyObservers(){
         for(ArrayAdapter o : observers){
             o.notifyDataSetChanged();
