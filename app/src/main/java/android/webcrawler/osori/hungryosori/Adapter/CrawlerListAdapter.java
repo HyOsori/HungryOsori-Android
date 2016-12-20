@@ -15,10 +15,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
-
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-
 import org.json.JSONObject;
 import java.util.List;
 
@@ -161,9 +159,7 @@ public class CrawlerListAdapter extends ArrayAdapter<CrawlerInfo> implements Vie
                 // 성공
                 CrawlerInfos.getInstance().subscriptionCrawler(id);
             }else{
-                /************ 테스트 코드 ************/
-                CrawlerInfos.getInstance().subscriptionCrawler(id);
-                // ((ToggleButton)view).setChecked(false);
+                ((ToggleButton)view).setChecked(false);
             }
             view.setClickable(true);
         }
@@ -234,9 +230,7 @@ public class CrawlerListAdapter extends ArrayAdapter<CrawlerInfo> implements Vie
                 // 성공
                 CrawlerInfos.getInstance().unSubscriptionCrawler(id);
             }else{
-                /************ 테스트 코드 ************/
-                CrawlerInfos.getInstance().unSubscriptionCrawler(id);
-                // ((ToggleButton)view).setChecked(true);
+                ((ToggleButton)view).setChecked(true);
             }
             view.setClickable(true);
         }

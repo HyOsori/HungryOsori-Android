@@ -135,12 +135,6 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
         @Override
         protected void onPostExecute(Boolean success) {
             // TODO Auto-generated method stub
-            /************ 테스트 코드 ************/
-            crawlerInfos.addCrawlerInfo(new CrawlerInfo("1", "test1", "test1", "url", false));
-            crawlerInfos.addCrawlerInfo(new CrawlerInfo("2", "test2", "test2", "url", false));
-            crawlerInfos.addCrawlerInfo(new CrawlerInfo("3", "test3", "test3", "url", false));
-            crawlerInfos.addCrawlerInfo(new CrawlerInfo("4", "test4", "test4", "url", false));
-            crawlerInfos.addCrawlerInfo(new CrawlerInfo("5", "test5", "test5", "url", false));
             if (success) {
                 // 성공
             } else {
