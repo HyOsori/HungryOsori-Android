@@ -56,7 +56,7 @@ public class StartActivity extends FragmentActivity {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    Intent intent = new Intent(StartActivity.this, CrawlerActivity.class);
+                    Intent intent = new Intent(StartActivity.this, StartActivity.class);
                     startActivity(intent);
                 }
             }, Constant.DELAY_TIME);
