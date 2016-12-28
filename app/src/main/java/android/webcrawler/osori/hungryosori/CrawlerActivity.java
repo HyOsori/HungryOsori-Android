@@ -159,7 +159,8 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
      */
     private void getSubscriptionList() {
 //        String url = Constant.SERVER_URL + "/req_subscription_list";
-        String url = Constant.SERVER_URL + "/subscriptions/item/";
+//        String url = Constant.SERVER_URL + "/subscriptions/item/";
+          String url = Constant.SERVER_URL+"/subscriptions/";
         ParamModel params = new ParamModel();
 
         params.setUrl(url);

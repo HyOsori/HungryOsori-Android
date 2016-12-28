@@ -65,7 +65,7 @@ public class FindPwActivity extends FragmentActivity {
 
     // 로그인 시도
     private void tryFind() {
-        String url = Constant.SERVER_URL + "/send_temp_password/";
+        String url = Constant.SERVER_URL + "/password/";
         ParamModel params = new ParamModel();
         params.setUrl(url);
         params.setParamStr("user_id", email);

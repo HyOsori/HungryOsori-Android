@@ -64,7 +64,7 @@ public class MyFirebaseMessagingService extends com.google.firebase.messaging.Fi
 public class MyFirebaseMessagingService extends com.google.firebase.messaging.FirebaseMessagingService {
 
     private static final String TAG = "FirebaseMsgService";
-
+    private static int msgid =0;
     // [START receive_message]
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -84,7 +84,6 @@ public class MyFirebaseMessagingService extends com.google.firebase.messaging.Fi
         }
         // Check if message contains a notification payload.
         if (remoteMessage.getNotification() != null) {
-
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
         }
 /*            sendNotification(remoteMessage.getNotification().getBody());
@@ -116,9 +115,9 @@ public class MyFirebaseMessagingService extends com.google.firebase.messaging.Fi
                 .setLights(Color.BLUE, 1, 1)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);
-
+        Log.d(TAG, " " + msgid);
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+        notificationManager.notify(msgid++  /* ID of notification */, notificationBuilder.build());
     }
     private void sendNotification(String messageTitle, String clickUrl) {
 /*        Intent intent = new Intent(this, StartActivity.class);
@@ -136,7 +135,7 @@ public class MyFirebaseMessagingService extends com.google.firebase.messaging.Fi
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
         NotificationCompat.Builder notificationBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(this)
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.drawable.icon_osori)
                 .setContentTitle(messageTitle)
                 .setContentText("클릭하여 확인해주세요")
                 .setAutoCancel(true)
@@ -144,8 +143,8 @@ public class MyFirebaseMessagingService extends com.google.firebase.messaging.Fi
                 .setLights(Color.BLUE, 1, 1)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);
-
+        Log.d(TAG, " " + msgid);
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+        notificationManager.notify(msgid++ /* ID of notification */, notificationBuilder.build());
     }
 }

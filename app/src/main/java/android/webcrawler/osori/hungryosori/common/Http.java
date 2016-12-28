@@ -106,6 +106,74 @@ public class Http {
         return result;
     }
 
+    public String sendPutMethod(ParamModel paramModel) {
+
+        String result = null;
+
+        try {
+            final URL url = new URL(paramModel.getUrl());
+
+            String paramStr = paramModel.getParamStr();
+
+            HttpURLConnection urlConnection = null;
+            OutputStream out = null;
+            InputStream in = null;
+            BufferedReader bReader = null;
+
+            try {
+                urlConnection = (HttpURLConnection) url.openConnection();
+
+                urlConnection.setDoOutput(true);
+                urlConnection.setDoInput(true);
+                urlConnection.setConnectTimeout(Constant.TIME_OUT_MILLIS);
+                urlConnection.setReadTimeout(Constant.TIME_OUT_MILLIS);
+                urlConnection.setRequestMethod("PUT");
+                if(Constant.cookie != null) {
+                    urlConnection.setRequestProperty("cookie", Constant.cookie);
+                }
+
+                if(paramStr.length() > 0) {
+                    out = new BufferedOutputStream(urlConnection.getOutputStream());
+                    out.write(paramStr.getBytes(Constant.DEFAULT_ENCODING));
+                    out.flush();
+                }
+
+                urlConnection.connect();
+
+                in = new BufferedInputStream(urlConnection.getInputStream());
+
+                bReader = new BufferedReader(new InputStreamReader(in, Constant.DEFAULT_ENCODING));
+                StringBuilder strBuilder = new StringBuilder();
+
+                String line;
+                while ((line = bReader.readLine()) != null) {
+                    strBuilder.append(line);
+                }
+
+                result = strBuilder.toString();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } finally {
+                try {
+                    bReader.close();
+                    in.close();
+                    out.close();
+                    urlConnection.disconnect();
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                } catch (NullPointerException e2) {
+                    // TODO: handle exception
+                    e2.printStackTrace();
+                }
+            }
+        } catch (MalformedURLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return result;
+    }
     public String sendGetMethod(ParamModel paramModel) {
 
         String result = null;
@@ -160,6 +228,60 @@ public class Http {
         return result;
     }
 
+
+    public String sendPasschange(ParamModel paramModel) {
+
+        String result = null;
+
+        try {
+            final URL url = new URL(paramModel.getUrl());
+
+            HttpURLConnection urlConnection = null;
+            InputStream in = null;
+            BufferedReader bReader = null;
+
+            try {
+                urlConnection = (HttpURLConnection) url.openConnection();
+
+                urlConnection.setRequestMethod("PUT");
+
+                if(Constant.cookie != null) {
+                    urlConnection.setRequestProperty("cookie", Constant.cookie);
+                }
+
+                in = new BufferedInputStream(urlConnection.getInputStream());
+
+                bReader = new BufferedReader(new InputStreamReader(in, Constant.DEFAULT_ENCODING));
+                StringBuilder strBuilder = new StringBuilder();
+
+                String line;
+                while ((line = bReader.readLine()) != null) {
+                    strBuilder.append(line);
+                }
+
+                result = strBuilder.toString();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } finally {
+                try {
+                    bReader.close();
+                    in.close();
+                    urlConnection.disconnect();
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                } catch (NullPointerException e2) {
+                    // TODO: handle exception
+                    e2.printStackTrace();
+                }
+            }
+        } catch (MalformedURLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return result;
+    }
 
     private String sendLogin(ParamModel paramModel) {
         String result = null;

@@ -86,7 +86,7 @@ public class ChangePwActivity extends FragmentActivity {
 
     // 로그인 시도
     private void tryChange(){
-        String url = Constant.SERVER_URL + "/password_change/";
+        String url = Constant.SERVER_URL + "/password/";
         ParamModel params = new ParamModel();
         params.setUrl(url);
         //조인 추가
@@ -115,7 +115,7 @@ public class ChangePwActivity extends FragmentActivity {
             // TODO Auto-generated method stub
             Http http = new Http(mContext);
 
-            String result = http.send(params[0], false);
+            String result = http.sendPutMethod(params[0]);
 
             if(result == null){
                 return false;
