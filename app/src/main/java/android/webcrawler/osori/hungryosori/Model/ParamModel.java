@@ -28,6 +28,7 @@ public  class ParamModel {
     }
 
     private String getQuery(){
+        if(params.size() == 0)  return null;
         StringBuilder result = new StringBuilder();
         boolean first = true;
 

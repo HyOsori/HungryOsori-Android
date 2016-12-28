@@ -7,6 +7,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
+import android.webcrawler.osori.hungryosori.Common.Http2;
+import android.webcrawler.osori.hungryosori.Common.HttpResult;
+import android.webcrawler.osori.hungryosori.Method.GetMethod;
 import android.webcrawler.osori.hungryosori.Model.ParamModel;
 import android.webcrawler.osori.hungryosori.Common.Constant;
 import android.webcrawler.osori.hungryosori.Common.Http;
@@ -83,7 +86,7 @@ public class LoginActivity extends FragmentActivity {
 
     // 로그인 시도
     private void tryLogin(){
-        String url = Constant.SERVER_URL + "/login/";
+        String url = Constant.SERVER_URL + "/user/";
         String pushToken = Pref.getPushToken(this);
 
         ParamModel params = new ParamModel();
@@ -100,7 +103,8 @@ public class LoginActivity extends FragmentActivity {
     private class TryLoginTask extends AsyncTask<ParamModel, Void, Boolean> {
         private Context mContext;
         private String  userKey  = Pref.DEFAULT_STRING_VALUE;
-        private int error;
+        private String  cookie   = Pref.DEFAULT_STRING_VALUE;
+
         public TryLoginTask(Context mContext){
             this.mContext = mContext;
         }
@@ -114,19 +118,19 @@ public class LoginActivity extends FragmentActivity {
         @Override
         protected Boolean doInBackground(ParamModel... params) {
             // TODO Auto-generated method stub
-            Http http = new Http(mContext);
-
-            String result = http.send(params[0], true);
+            Http2 http = new Http2(params[0]);
+            http.setMethod(GetMethod.getInstance());
+            HttpResult result = http.send();
 
             if(result == null){
                 return false;
             }else{
                 try {
-                    JSONObject jsonObject = new JSONObject(result);
-//                    String message = jsonObject.getString(Constant.MESSAGE);
-                    error = jsonObject.getInt("ErrorCode");
+                    JSONObject jsonObject = new JSONObject(result.getResponse());
+                    int error = jsonObject.getInt("ErrorCode");
                     if(error == 0){
                         userKey = jsonObject.getString("user_key");
+                        cookie  = result.getCookie();
                         return true;
                     }
                 }catch(Exception e){
@@ -146,6 +150,8 @@ public class LoginActivity extends FragmentActivity {
                     Pref.setUserID(mContext, LoginActivity.email);
                     Pref.setUserPassword(mContext, LoginActivity.password);
                     Pref.setKeepLogin(mContext, true);
+                    Pref.setCookie(mContext, cookie);
+
                     Intent intent = new Intent(mContext, CrawlerActivity.class);
                     intent.addFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY);
                     intent.addFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_CLEAR_TASK);

@@ -7,6 +7,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
+import android.webcrawler.osori.hungryosori.Common.Http2;
+import android.webcrawler.osori.hungryosori.Common.HttpResult;
+import android.webcrawler.osori.hungryosori.Method.PostMethod;
 import android.webcrawler.osori.hungryosori.Model.ParamModel;
 import android.webcrawler.osori.hungryosori.Common.Constant;
 import android.webcrawler.osori.hungryosori.Common.Http;
@@ -87,10 +90,10 @@ public class JoinActivity extends FragmentActivity {
 
         ParamModel params = new ParamModel();
         params.setUrl(url);
-        //조인 추가
         params.setParamStr("user_id", email);
         params.setParamStr("password", password);
         params.setParamStr("name", "Gunju");
+
         new TryJoinTask(this).execute(params);
     }
 
@@ -111,30 +114,24 @@ public class JoinActivity extends FragmentActivity {
         @Override
         protected Boolean doInBackground(ParamModel... params) {
             // TODO Auto-generated method stub
-            Http http = new Http(mContext);
+            Http2 http = new Http2(params[0]);
+            http.setMethod(PostMethod.getInstance());
 
-            String result = http.send(params[0], false);
-            if(result == null){
-                return false;
-            }else{
-                try{
-                    JSONObject jsonObject = new JSONObject(result);
-                    error = jsonObject.getInt("ErrorCode");
-                    if(error == 0){
-                        return true;
-                    }
-                    else if(error == -1) {
-                        return false;
-                    }
-                    else if(error == -100){
-                        return false;
-                    }
-                    else if(error == -200){
-                        return false;
-                    }
-                }catch(Exception e){
+            HttpResult result = http.send();
+
+            try {
+                JSONObject jsonObject = new JSONObject(result.getResponse());
+                error = jsonObject.getInt("ErrorCode");
+                if (error == 0) {
+                    return true;
+                } else if (error == -1) {
+                    return false;
+                } else if (error == -100) {
+                    return false;
+                } else if (error == -200) {
+                    return false;
                 }
-
+            } catch (Exception e) {
             }
             return false;
         }
@@ -161,4 +158,5 @@ public class JoinActivity extends FragmentActivity {
             }
         }
     }
+
 }
