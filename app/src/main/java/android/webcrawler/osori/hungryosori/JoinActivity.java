@@ -1,7 +1,6 @@
 package android.webcrawler.osori.hungryosori;
 
-import android.content.Context;
-import android.content.Intent;
+
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -12,7 +11,6 @@ import android.webcrawler.osori.hungryosori.Common.HttpResult;
 import android.webcrawler.osori.hungryosori.Method.PostMethod;
 import android.webcrawler.osori.hungryosori.Model.ParamModel;
 import android.webcrawler.osori.hungryosori.Common.Constant;
-import android.webcrawler.osori.hungryosori.Common.Http;
 import android.webcrawler.osori.hungryosori.Common.Lib;
 import android.widget.Button;
 import android.widget.EditText;
@@ -94,16 +92,12 @@ public class JoinActivity extends FragmentActivity {
         params.setParamStr("password", password);
         params.setParamStr("name", "Gunju");
 
-        new TryJoinTask(this).execute(params);
+        new TryJoinTask().execute(params);
     }
 
     // 회원가입 시도하는 AsyncTask
     private class TryJoinTask extends AsyncTask<ParamModel, Void, Boolean> {
-        Context mContext;
-        private int error;
-        public TryJoinTask(Context mContext){
-            this.mContext = mContext;
-        }
+       private int error;
 
         @Override
         protected void onPreExecute() {
@@ -155,6 +149,7 @@ public class JoinActivity extends FragmentActivity {
                         Toast.makeText(JoinActivity.this,"가입 오류: osori@hanynag.ac.kr 형태로 입력하십시오.",Toast.LENGTH_SHORT).show();
                         break;
                 }
+                Toast.makeText(JoinActivity.this,"가입 오류: 다시 시도해 주세요",Toast.LENGTH_SHORT).show();
             }
         }
     }

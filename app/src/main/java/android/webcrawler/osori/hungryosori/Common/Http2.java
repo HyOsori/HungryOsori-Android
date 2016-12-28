@@ -9,7 +9,7 @@ import android.webcrawler.osori.hungryosori.Model.ParamModel;
  */
 public class Http2{
 
-    private Method method = PostMethod.getInstance();
+    private Method method = PostMethod.getInstance();   // DEFAULT(POST)
     private ParamModel paramModel;
 
     public Http2(ParamModel paramModel){
@@ -21,11 +21,17 @@ public class Http2{
     }
 
     public void setCookie(boolean cookie){
-        method.setCookieSet(cookie);
+        if(method != null) {
+            method.setCookieSet(cookie);
+        }
     }
 
     public HttpResult send(){
-        return method.send(this.paramModel);
+        if(method != null) {
+            return method.send(this.paramModel);
+        }else{
+            return null;
+        }
     }
 
 

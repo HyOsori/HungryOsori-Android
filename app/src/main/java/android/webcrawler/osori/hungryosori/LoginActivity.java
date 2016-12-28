@@ -12,7 +12,6 @@ import android.webcrawler.osori.hungryosori.Common.HttpResult;
 import android.webcrawler.osori.hungryosori.Method.GetMethod;
 import android.webcrawler.osori.hungryosori.Model.ParamModel;
 import android.webcrawler.osori.hungryosori.Common.Constant;
-import android.webcrawler.osori.hungryosori.Common.Http;
 import android.webcrawler.osori.hungryosori.Common.Lib;
 import android.webcrawler.osori.hungryosori.Common.Pref;
 import android.widget.Button;
@@ -94,7 +93,7 @@ public class LoginActivity extends FragmentActivity {
         params.setUrl(url);
         params.setParamStr("user_id", email);
         params.setParamStr("password", password);
-        params.setParamStr("token",pushToken);
+        params.setParamStr("push_token",pushToken);
 
         new TryLoginTask(this).execute(params);
     }
@@ -122,21 +121,18 @@ public class LoginActivity extends FragmentActivity {
             http.setMethod(GetMethod.getInstance());
             HttpResult result = http.send();
 
-            if(result == null){
-                return false;
-            }else{
-                try {
-                    JSONObject jsonObject = new JSONObject(result.getResponse());
-                    int error = jsonObject.getInt("ErrorCode");
-                    if(error == 0){
-                        userKey = jsonObject.getString("user_key");
-                        cookie  = result.getCookie();
-                        return true;
-                    }
-                }catch(Exception e){
-
+            try {
+                JSONObject jsonObject = new JSONObject(result.getResponse());
+                int error = jsonObject.getInt("ErrorCode");
+                if (error == 0) {
+                    userKey = jsonObject.getString("user_key");
+                    cookie = result.getCookie();
+                    return true;
                 }
+            } catch (Exception e) {
+                return false;
             }
+
             return false;
         }
 

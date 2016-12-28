@@ -16,15 +16,8 @@ public class HttpResult {
         return response;
     }
 
-    public void setResponse(String response) {
-        this.response = response;
-    }
-
     public String getCookie() {
         return cookie;
     }
 
-    public void setCookie(String cookie) {
-        this.cookie = cookie;
-    }
 }

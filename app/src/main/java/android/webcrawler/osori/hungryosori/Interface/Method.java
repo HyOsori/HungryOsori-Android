@@ -34,11 +34,13 @@ public abstract class Method {
     }
 
     public abstract HttpResult send(ParamModel paramModel);
+
     protected void setCookie(){
         if (isCookieSet()) {
             urlConnection.setRequestProperty("cookie", Constant.cookie);
         }
     }
+
     protected String readResponseMessage(){
         StringBuilder strBuilder = new StringBuilder();
         InputStream in          = null;
