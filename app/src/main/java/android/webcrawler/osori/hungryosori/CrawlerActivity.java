@@ -84,7 +84,7 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
         ParamModel params = new ParamModel();
 
         params.setUrl(url);
-/*      params.setParamStr("user_id", Constant.userID);
+/*      params.setParamStr("user_id", Con stant.userID);
         params.setParamStr("user_key", Constant.userKey);
 */
         new getEntireListTask(this).execute(params);
@@ -125,7 +125,6 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
 
                         for (int i = 0; i < jsonArray.length(); ++i) {
                             JSONObject object = jsonArray.getJSONObject(i);
-
                             String id = object.getString("crawler_id");
 //                          String url = object.getString("thumbnail_url");
                             String description = object.getString("created");
@@ -189,7 +188,7 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
             // TODO Auto-generated method stub
             Http http = new Http(mContext);
 
-            String result = http.send(params[0], false);
+            String result = http.sendGetMethod(params[0]);
 
             if (result == null) {
                 return false;

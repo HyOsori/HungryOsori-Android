@@ -38,7 +38,6 @@ public class Http {
     }
 
     private String send(ParamModel paramModel) {
-
         String result = null;
 
         try {
