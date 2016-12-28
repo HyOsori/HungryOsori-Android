@@ -64,7 +64,7 @@ public class MyFirebaseMessagingService extends com.google.firebase.messaging.Fi
 public class MyFirebaseMessagingService extends com.google.firebase.messaging.FirebaseMessagingService {
 
     private static final String TAG = "FirebaseMsgService";
-    private static int msgid =0;
+    private static int msgId =0;
     // [START receive_message]
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -115,9 +115,9 @@ public class MyFirebaseMessagingService extends com.google.firebase.messaging.Fi
                 .setLights(Color.BLUE, 1, 1)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);
-        Log.d(TAG, " " + msgid);
+        Log.d(TAG, " " + msgId);
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(msgid++  /* ID of notification */, notificationBuilder.build());
+        notificationManager.notify(msgId++  /* ID of notification */, notificationBuilder.build());
     }
     private void sendNotification(String messageTitle, String clickUrl) {
 /*        Intent intent = new Intent(this, StartActivity.class);
@@ -143,8 +143,8 @@ public class MyFirebaseMessagingService extends com.google.firebase.messaging.Fi
                 .setLights(Color.BLUE, 1, 1)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);
-        Log.d(TAG, " " + msgid);
+        Log.d(TAG, " " + msgId);
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(msgid++ /* ID of notification */, notificationBuilder.build());
+        notificationManager.notify(msgId++ /* ID of notification */, notificationBuilder.build());
     }
 }
