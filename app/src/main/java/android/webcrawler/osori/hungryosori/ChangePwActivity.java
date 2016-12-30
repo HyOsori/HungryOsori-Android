@@ -8,9 +8,9 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.webcrawler.osori.hungryosori.Common.Pref;
+import android.webcrawler.osori.hungryosori.Method.PutMethod;
 import android.webcrawler.osori.hungryosori.Model.ParamModel;
 import android.webcrawler.osori.hungryosori.Common.Constant;
-import android.webcrawler.osori.hungryosori.Common.Http;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -62,7 +62,8 @@ public class ChangePwActivity extends FragmentActivity {
                 passwordNewChk = editText_passwordNewChk.getText().toString().trim();
 
                 /** 패스워드 체크 */
-                if(password.equals(passwordNew) && password.equals(Pref.getUserPassword())){
+                if(password.equals(passwordNew) == false &&
+                        password.equals(Pref.getUserPassword()) == true){
                     Toast.makeText(this,"올바르지 않은 비밀번호 입니다", Toast.LENGTH_SHORT).show();
                     break;
                 }
@@ -86,24 +87,20 @@ public class ChangePwActivity extends FragmentActivity {
 
     // 로그인 시도
     private void tryChange(){
-        String url = Constant.SERVER_URL + "/password_change/";
+        String url = Constant.SERVER_URL + "/password/";
+
         ParamModel params = new ParamModel();
         params.setUrl(url);
-        //조인 추가
-
         params.addParameter("user_id", email);
         params.addParameter("password", password);
         params.addParameter("new_password", passwordNew);
-        new TryChangeTask(this).execute(params);
+
+        new TryChangeTask().execute(params);
     }
 
     // 회원가입 시도하는 AsyncTask
     private class TryChangeTask extends AsyncTask<ParamModel, Void, Boolean> {
-        private Context mContext;
-        private int error;
-        public TryChangeTask(Context mContext){
-            this.mContext = mContext;
-        }
+        private int error = -1;
 
         @Override
         protected void onPreExecute() {
@@ -113,30 +110,22 @@ public class ChangePwActivity extends FragmentActivity {
         @Override
         protected Boolean doInBackground(ParamModel... params) {
             // TODO Auto-generated method stub
-            Http http = new Http(mContext);
+            String result = PutMethod.getInstance().send(params[0]);
 
-            String result = http.send(params[0], false);
+            try {
+                JSONObject jsonObject = new JSONObject(result);
 
-            if(result == null){
-                return false;
-            }else{
-                try{
-                    JSONObject jsonObject = new JSONObject(result);
-
-                    error = jsonObject.getInt("ErrorCode");
-                    if(error == 0){
-                        return true;
-                    }
-                    else if(error == -1){
-                        return false;
-                    }
-                    else if(error == -100){
-                        return false;
-                    }
-
-                }catch(Exception e){
-
+                error = jsonObject.getInt("ErrorCode");
+                if (error == 0) {
+                    return true;
+                } else if (error == -1) {
+                    return false;
+                } else if (error == -100) {
+                    return false;
                 }
+
+            } catch (Exception e) {
+
             }
             return false;
         }
@@ -145,10 +134,8 @@ public class ChangePwActivity extends FragmentActivity {
         protected void onPostExecute(Boolean success) {
             // TODO Auto-generated method stub
             if(success) {
-                // 회원가입 성공
                 Toast.makeText(ChangePwActivity.this,"비밀번호 변경 완료",Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(mContext, CrawlerActivity.class);
-                startActivity(intent);
+                finish();
             }else{
                 switch(error){
                     case -1:
@@ -157,9 +144,10 @@ public class ChangePwActivity extends FragmentActivity {
                     case -100:
                         Toast.makeText(ChangePwActivity.this, "존재하지 않는 사용자", Toast.LENGTH_SHORT).show();
                         break;
+                    default:
+                        Toast.makeText(ChangePwActivity.this, "변경 실패", Toast.LENGTH_SHORT).show();
+                        break;
                 }
-
-                // 회원가입 실패
             }
         }
     }

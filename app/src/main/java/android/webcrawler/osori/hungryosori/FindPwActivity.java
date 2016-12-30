@@ -9,9 +9,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
+import android.webcrawler.osori.hungryosori.Method.PostMethod;
 import android.webcrawler.osori.hungryosori.Model.ParamModel;
 import android.webcrawler.osori.hungryosori.Common.Constant;
-import android.webcrawler.osori.hungryosori.Common.Http;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -28,9 +28,6 @@ import org.json.JSONObject;
 public class FindPwActivity extends FragmentActivity {
 
     public static String email;
-    private static String password;
-    private static String passwordNew;
-
     private EditText editText_email;
 
     @Override
@@ -41,9 +38,7 @@ public class FindPwActivity extends FragmentActivity {
         editText_email = (EditText) findViewById(R.id.find_editText_email);
         /** 폰트 설정 */
         Typeface fontArial = Typeface.createFromAsset(getAssets(), "fonts/arial.ttf");
-
         editText_email.setTypeface(fontArial);
-
         ((Button) findViewById(R.id.find_button_submit)).setTypeface(fontArial);
      }
 
@@ -51,7 +46,6 @@ public class FindPwActivity extends FragmentActivity {
 
         switch (v.getId()) {
             case R.id.find_button_submit:
-
                 email = editText_email.getText().toString().trim();
                 /** 서버 연동 */
                 tryFind();
@@ -61,21 +55,19 @@ public class FindPwActivity extends FragmentActivity {
 
     // 로그인 시도
     private void tryFind() {
-        String url = Constant.SERVER_URL + "/send_temp_password/";
+        String url = Constant.SERVER_URL + "/password/";
+
         ParamModel params = new ParamModel();
         params.setUrl(url);
         params.addParameter("user_id", email);
-        new TryFindTask(this).execute(params);
+
+        new TryFindTask().execute(params);
     }
 
     // 회원가입 시도하는 AsyncTask
     private class TryFindTask extends AsyncTask<ParamModel, Void, Boolean> {
-        private Context mContext;
-        private int error;
 
-        public TryFindTask(Context mContext) {
-            this.mContext = mContext;
-        }
+        private int error = -1;
 
         @Override
         protected void onPreExecute() {
@@ -86,9 +78,7 @@ public class FindPwActivity extends FragmentActivity {
         @Override
         protected Boolean doInBackground(ParamModel... params) {
             // TODO Auto-generated method stub
-            Http http = new Http(mContext);
-
-            String result = http.send(params[0], false);
+             String result = PostMethod.getInstance().send(params[0]);
 
             if (result == null) {
                 return false;
@@ -96,9 +86,7 @@ public class FindPwActivity extends FragmentActivity {
                 try {
                     JSONObject jsonObject = new JSONObject(result);
                     error = jsonObject.getInt("ErrorCode");
-          //          passwordNew = jsonObject.getString("new_password");
                     if (error == 0) {
-            //            Log.d("New password","New password:" + passwordNew);
                         return true;
                     } else if (error == -1) {
                         return false;
@@ -116,7 +104,7 @@ public class FindPwActivity extends FragmentActivity {
             if (success) {
                 // 회원가입 성공
                 Toast.makeText(FindPwActivity.this, "비밀번호 변경 완료", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(mContext, LoginActivity.class);
+                Intent intent = new Intent(FindPwActivity.this, LoginActivity.class);
                 startActivity(intent);
             } else {
                 switch (error) {
