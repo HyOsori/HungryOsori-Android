@@ -12,19 +12,18 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /**
- * Created by kunju on 2016-12-28.
+ * Created by kunju on 2016-12-30.
  */
-public class PostMethod extends Method {
-    private static PostMethod instance = null;
+public class DeleteMethod extends Method{
+    private static DeleteMethod instance;
     private OkHttpClient httpClient;
 
-    private PostMethod(){
+    private DeleteMethod(){}
 
-    }
-
-    public static PostMethod getInstance(){
-        if(instance == null)
-            instance = new PostMethod();
+    public static DeleteMethod getInstance(){
+        if(instance == null){
+            instance = new DeleteMethod();
+        }
         return instance;
     }
 
@@ -57,7 +56,7 @@ public class PostMethod extends Method {
                     postData.add(pair.getKey(), pair.getValue());
                 }
             }
-            builder.post(postData.build());
+            builder.delete(postData.build());
         }
     }
 

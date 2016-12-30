@@ -130,7 +130,7 @@ public class JoinActivity extends FragmentActivity {
             // TODO Auto-generated method stub
             if(success) {
                 // 회원가입 성공
-                Toast.makeText(JoinActivity.this,"가입 성공. 로그인창으로 이동합니다",Toast.LENGTH_SHORT).show();
+                Toast.makeText(JoinActivity.this,"가입 성공. 로그인창으로 이동합니다\n메일을 확인해주세요.",Toast.LENGTH_SHORT).show();
                 finish();
             }else{
                 switch(error){

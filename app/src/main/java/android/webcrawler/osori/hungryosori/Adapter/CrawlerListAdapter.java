@@ -6,8 +6,8 @@ import android.os.AsyncTask;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webcrawler.osori.hungryosori.Common.Constant;
-import android.webcrawler.osori.hungryosori.Common.Http;
 import android.webcrawler.osori.hungryosori.CrawlerInfo.CrawlerInfos;
+import android.webcrawler.osori.hungryosori.Method.DeleteMethod;
 import android.webcrawler.osori.hungryosori.Method.PostMethod;
 import android.webcrawler.osori.hungryosori.Model.CrawlerInfo;
 import android.webcrawler.osori.hungryosori.Model.ParamModel;
@@ -163,26 +163,22 @@ public class CrawlerListAdapter extends ArrayAdapter<CrawlerInfo> implements Vie
     {
         String crawlerID = getItem(position).getId();
 
-        String url = Constant.SERVER_URL + "/subscriptions/item/delete/";
+        String url = Constant.SERVER_URL + "/subscription/";
 
         ParamModel params = new ParamModel();
-
         params.setUrl(url);
         params.addParameter("user_id", Constant.userID);
         params.addParameter("user_key", Constant.userKey);
         params.addParameter("crawler_id", crawlerID);
 
-        new unSubscribeCrawlerTask(getContext(), crawlerID, view).execute(params);
+        new unSubscribeCrawlerTask(crawlerID, view).execute(params);
     }
 
     private class unSubscribeCrawlerTask extends AsyncTask<ParamModel, Void, Boolean> {
-
-        private Context mContext;
         private String id;
         private View view;
 
-        public unSubscribeCrawlerTask(Context context, String id, View view){
-            this.mContext = context;
+        public unSubscribeCrawlerTask(String id, View view){
             this.id = id;
             this.view     = view;
         }
@@ -196,23 +192,17 @@ public class CrawlerListAdapter extends ArrayAdapter<CrawlerInfo> implements Vie
         @Override
         protected Boolean doInBackground(ParamModel... params) {
             // TODO Auto-generated method stub
-            Http http = new Http(mContext);
+            String result = DeleteMethod.getInstance().send(params[0]);
 
-            String result = http.send(params[0], false);
+            try {
+                JSONObject jsonObject = new JSONObject(result);
 
-            if(result == null){
-                return false;
-            }else{
-                try {
-                    JSONObject jsonObject = new JSONObject(result);
-
-                    int error = jsonObject.getInt("ErrorCode");
-                    if(error==0){
-                        return true;
-                    }
-                }catch(Exception e){
-
+                int error = jsonObject.getInt("ErrorCode");
+                if (error == 0) {
+                    return true;
                 }
+            } catch (Exception e) {
+
             }
             return false;
         }

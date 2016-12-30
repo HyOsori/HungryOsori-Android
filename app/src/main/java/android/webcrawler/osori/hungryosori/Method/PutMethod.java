@@ -1,30 +1,32 @@
 package android.webcrawler.osori.hungryosori.Method;
+
 import android.webcrawler.osori.hungryosori.Intercepter.AddCookiesInterceptor;
 import android.webcrawler.osori.hungryosori.Intercepter.ReceivedCookiesInterceptor;
 import android.webcrawler.osori.hungryosori.Interface.Method;
 import android.webcrawler.osori.hungryosori.Model.NameValuePair;
 import android.webcrawler.osori.hungryosori.Model.ParamModel;
+
 import java.io.IOException;
 import java.util.ArrayList;
+
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
 /**
- * Created by kunju on 2016-12-28.
+ * Created by kunju on 2016-12-30.
  */
-public class PostMethod extends Method {
-    private static PostMethod instance = null;
+public class PutMethod extends Method{
+    private static PutMethod instance;
     private OkHttpClient httpClient;
 
-    private PostMethod(){
+    private PutMethod(){}
 
-    }
-
-    public static PostMethod getInstance(){
-        if(instance == null)
-            instance = new PostMethod();
+    public static PutMethod getInstance(){
+        if(instance == null){
+            instance = new PutMethod();
+        }
         return instance;
     }
 
@@ -57,8 +59,7 @@ public class PostMethod extends Method {
                     postData.add(pair.getKey(), pair.getValue());
                 }
             }
-            builder.post(postData.build());
+            builder.put(postData.build());
         }
     }
-
 }

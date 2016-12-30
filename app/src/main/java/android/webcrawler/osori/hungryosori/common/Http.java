@@ -204,6 +204,7 @@ public class Http {
 
                 /** 쿠키 정보 저장 */
                // Pref.setCookie(mContext, cookie);
+               // Pref.setCookie(mContext, cookie);
 
                 in = new BufferedInputStream(urlConnection.getInputStream());
 
