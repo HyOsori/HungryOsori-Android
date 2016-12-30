@@ -35,7 +35,7 @@ public class StartActivity extends FragmentActivity {
         Pref.init(this);
         Constant.keepLogin      = Pref.getKeepLogin();
         Constant.userKey        = Pref.getUserKey();
-        // Constant.cookie         = Pref.getCookie();
+        Constant.cookie         = Pref.getCookie();
         Constant.userID         = Pref.getUserID();
         Constant.userPassword   = Pref.getUserPassword();
 

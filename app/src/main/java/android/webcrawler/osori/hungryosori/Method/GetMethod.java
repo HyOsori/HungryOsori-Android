@@ -1,17 +1,11 @@
 package android.webcrawler.osori.hungryosori.Method;
 import android.webcrawler.osori.hungryosori.Common.HttpResult;
-import android.webcrawler.osori.hungryosori.Common.Pref;
 import android.webcrawler.osori.hungryosori.Intercepter.AddCookiesInterceptor;
 import android.webcrawler.osori.hungryosori.Intercepter.ReceivedCookiesInterceptor;
 import android.webcrawler.osori.hungryosori.Interface.Method;
 import android.webcrawler.osori.hungryosori.Model.ParamModel;
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
-
-import okhttp3.Cookie;
-import okhttp3.CookieJar;
-import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;

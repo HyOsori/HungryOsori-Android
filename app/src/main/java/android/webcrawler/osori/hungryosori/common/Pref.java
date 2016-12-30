@@ -23,18 +23,18 @@ public class Pref {
     public static final String  DEFAULT_STRING_VALUE    = null;
 
     /** Shared Preference 키 값들 */
-    private static final String PREF_KEY_KEEP_LOGIN     = "keepLogin";
-    private static final String PREF_KEY_USER_KEY       = "userKey";
-    private static final String PREF_KEY_USER_ID        = "userID";
-    private static final String PREF_KEY_USER_PASSWORD  = "userPassword";
-    private static final String PREF_KEY_COOKIE         = "cookie";
-    private static final String PREF_KEY_PUSHTOKEN         = "pushToken";
+    private static final String PREF_KEY_KEEP_LOGIN         = "keepLogin";
+    private static final String PREF_KEY_USER_KEY           = "userKey";
+    private static final String PREF_KEY_USER_ID            = "userID";
+    private static final String PREF_KEY_USER_PASSWORD      = "userPassword";
+    private static final String PREF_KEY_COOKIE             = "cookie";
+    private static final String PREF_KEY_PUSHTOKEN          = "pushToken";
 
     public static void init(Context context){
         preference = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
     }
 
-    /** 로그인 관련 Shared Preference 함수들 */
+    /** Keep Login */
     public static void setKeepLogin(boolean keepLogin){
         if(preference != null) {
             preference.edit().putBoolean(PREF_KEY_KEEP_LOGIN, keepLogin).apply();
@@ -49,6 +49,7 @@ public class Pref {
         return checked;
     }
 
+    /** User Key */
     public static void setUserKey(String userKey){
         if(preference != null) {
             preference.edit().putString(PREF_KEY_USER_KEY, userKey).apply();
@@ -64,72 +65,70 @@ public class Pref {
         return userKey;
     }
 
+    /** User ID */
     public static void setUserID(String userID){
-        if(preference == null){
-            return;
+        if(preference != null){
+            preference.edit().putString(PREF_KEY_USER_ID, userID).apply();
+            Constant.userID = userID;
         }
-        preference.edit().putString(PREF_KEY_USER_ID, userID).apply();
-        Constant.userID = userID;
     }
 
     public static String getUserID() {
-        if(preference == null){
-            return null;
+        String userID = DEFAULT_STRING_VALUE;
+        if(preference != null){
+            userID = preference.getString(PREF_KEY_USER_ID, DEFAULT_STRING_VALUE);
         }
-        String userKey = preference.
-                getString(PREF_KEY_USER_ID, DEFAULT_STRING_VALUE);
-        return userKey;
+        return userID;
     }
 
+    /** Password */
     public static void setUserPassword(String userPassword){
-        if(preference == null){
-            return;
+        if(preference != null) {
+            preference.edit().putString(PREF_KEY_USER_PASSWORD, userPassword).apply();
+            Constant.userPassword = userPassword;
         }
-        preference.edit().putString(PREF_KEY_USER_PASSWORD, userPassword).apply();
-        Constant.userPassword = userPassword;
     }
 
     public static String getUserPassword() {
-        if(preference == null){
-            return null;
+        String userKey = DEFAULT_STRING_VALUE;
+        if(preference != null){
+            userKey = preference.getString(PREF_KEY_USER_PASSWORD, DEFAULT_STRING_VALUE);
         }
-        String userKey = preference.
-                getString(PREF_KEY_USER_PASSWORD, DEFAULT_STRING_VALUE);
         return userKey;
     }
 
+    /** Cookie */
     public static void setCookie(Set<String> cookie)
     {
-        if(preference == null){
-            return;
+        if(preference != null){
+            preference.edit().putStringSet(PREF_KEY_COOKIE, cookie).apply();
+            Constant.cookie = cookie;
         }
-        preference.edit().putStringSet(PREF_KEY_COOKIE, cookie).apply();
-        Constant.cookie = cookie;
     }
 
     public static Set<String> getCookie()
     {
-        if(preference == null){
-            return null;
+        Set<String> cookie = null;
+        if(preference != null){
+            cookie =  preference.getStringSet(PREF_KEY_COOKIE, null);
         }
-        Set<String> cookie =  preference.getStringSet(PREF_KEY_COOKIE, null);
         return cookie;
     }
 
+    /** Push Token */
     public static void setPushToken(String pushToken){
-        if(preference == null){
-            return;
+        if(preference != null){
+            preference.edit().putString(PREF_KEY_PUSHTOKEN, pushToken).apply();
+            Constant.pushToken = pushToken;
         }
-        preference.edit().putString(PREF_KEY_PUSHTOKEN, pushToken).apply();
-        Constant.pushToken = pushToken;
     }
 
     public static String getPushToken() {
-        if (preference == null) {
-            return null;
+        String pushToken = DEFAULT_STRING_VALUE;
+        if (preference != null) {
+            pushToken = preference.getString(PREF_KEY_PUSHTOKEN, DEFAULT_STRING_VALUE);
         }
-        String userKey = preference.getString(PREF_KEY_PUSHTOKEN, DEFAULT_STRING_VALUE);
-        return userKey;
+        return pushToken;
     }
 
     public static boolean resetLogin(){
@@ -137,7 +136,7 @@ public class Pref {
             return false;
         }
 
-        preference.edit().putString(PREF_KEY_COOKIE, DEFAULT_STRING_VALUE).apply();
+        preference.edit().putStringSet(PREF_KEY_COOKIE, null).apply();
         preference.edit().putBoolean(PREF_KEY_KEEP_LOGIN, DEFAULT_BOOLEAN_VALUE).apply();
         preference.edit().putString(PREF_KEY_USER_ID, DEFAULT_STRING_VALUE).apply();
         preference.edit().putString(PREF_KEY_USER_KEY, DEFAULT_STRING_VALUE).apply();

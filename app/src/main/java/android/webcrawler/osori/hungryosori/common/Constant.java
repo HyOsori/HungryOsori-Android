@@ -13,13 +13,13 @@ public class Constant {
     public static final int PAGE_ALL = 1;    // All page
 
     /** 로그인 관련 값 */
-    public static String    userKey;          // 사용자 Key
-    public static boolean   keepLogin;
-    public static String    userID;
-    public static String    userPassword;
-    public static Set<String> cookie;
-    public static String    userNewPassword;
-    public static String    pushToken;
+    public static String        userKey;          // 사용자 Key
+    public static boolean       keepLogin;
+    public static String        userID;
+    public static String        userPassword;
+    public static Set<String>   cookie;
+    public static String        userNewPassword;
+    public static String        pushToken;
 
     /** Http 관련 상수 */
     public static final int     TIME_OUT_MILLIS = 2000;
