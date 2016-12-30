@@ -60,7 +60,7 @@ public class Http {
                 urlConnection.setReadTimeout(Constant.TIME_OUT_MILLIS);
                 urlConnection.setRequestMethod("POST");
                 if(Constant.cookie != null) {
-                    urlConnection.setRequestProperty("cookie", Constant.cookie);
+                    //urlConnection.setRequestProperty("cookie", Constant.cookie);
                 }
 
                 if(paramStr.length() > 0) {
@@ -123,7 +123,7 @@ public class Http {
                 urlConnection.setRequestMethod("GET");
 
                 if(Constant.cookie != null) {
-                    urlConnection.setRequestProperty("cookie", Constant.cookie);
+                   // urlConnection.setRequestProperty("cookie", Constant.cookie);
                 }
 
                 in = new BufferedInputStream(urlConnection.getInputStream());
@@ -203,7 +203,7 @@ public class Http {
                 }
 
                 /** 쿠키 정보 저장 */
-                Pref.setCookie(mContext, cookie);
+               // Pref.setCookie(mContext, cookie);
 
                 in = new BufferedInputStream(urlConnection.getInputStream());
 

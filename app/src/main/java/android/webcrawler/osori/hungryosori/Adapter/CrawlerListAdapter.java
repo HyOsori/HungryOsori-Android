@@ -7,7 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webcrawler.osori.hungryosori.Common.Constant;
 import android.webcrawler.osori.hungryosori.Common.Http;
+import android.webcrawler.osori.hungryosori.Common.Http2;
+import android.webcrawler.osori.hungryosori.Common.HttpResult;
 import android.webcrawler.osori.hungryosori.CrawlerInfo.CrawlerInfos;
+import android.webcrawler.osori.hungryosori.Method.PostMethod;
 import android.webcrawler.osori.hungryosori.Model.CrawlerInfo;
 import android.webcrawler.osori.hungryosori.Model.ParamModel;
 import android.webcrawler.osori.hungryosori.R;
@@ -132,15 +135,17 @@ public class CrawlerListAdapter extends ArrayAdapter<CrawlerInfo> implements Vie
         @Override
         protected Boolean doInBackground(ParamModel... params) {
             // TODO Auto-generated method stub
-            Http http = new Http(mContext);
+            Http2 http = new Http2(params[0]);
+            http.setMethod(PostMethod.getInstance());
+            http.setCookie(true);
 
-            String result = http.send(params[0], false);
+            HttpResult httpResult = http.send();
 
-            if(result == null){
+            if(httpResult == null){
                 return false;
             }else{
                 try {
-                    JSONObject jsonObject = new JSONObject(result);
+                    JSONObject jsonObject = new JSONObject(httpResult.getResponse());
                     int error = jsonObject.getInt("ErrorCode");
                     if(error == 0){
                         return true;

@@ -5,12 +5,17 @@ package android.webcrawler.osori.hungryosori.Common;
  */
 
 import android.content.Context;
+import android.content.SharedPreferences;
+
+import java.util.Set;
 
 /**
  * Created by 고건주 on 2016-08-25.
  * Shared Preference 관련 함수들
  */
 public class Pref {
+
+    private static SharedPreferences preference = null;
 
     /** 공통 상수값 */
     private static final String SHARED_PREF_NAME        = "hungryOsori.sharedPref";
@@ -24,135 +29,123 @@ public class Pref {
     private static final String PREF_KEY_USER_PASSWORD  = "userPassword";
     private static final String PREF_KEY_COOKIE         = "cookie";
     private static final String PREF_KEY_PUSHTOKEN         = "pushToken";
-    /** 로그인 관련 Shared Preference 함수들 */
-    public static void setKeepLogin(Context context, boolean keepLogin){
-        if(context == null){
-            return;
-        }
-        context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
-                .edit().putBoolean(PREF_KEY_KEEP_LOGIN, keepLogin).apply();
-        Constant.keepLogin = keepLogin;
+
+    public static void init(Context context){
+        preference = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
     }
 
-    public static boolean getKeepLogin(Context context){
-        if(context == null){
-            return DEFAULT_BOOLEAN_VALUE;
+    /** 로그인 관련 Shared Preference 함수들 */
+    public static void setKeepLogin(boolean keepLogin){
+        if(preference != null) {
+            preference.edit().putBoolean(PREF_KEY_KEEP_LOGIN, keepLogin).apply();
+            Constant.keepLogin = keepLogin;
         }
-        boolean checked = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE).
-                getBoolean(PREF_KEY_KEEP_LOGIN, DEFAULT_BOOLEAN_VALUE);
+    }
+
+    public static boolean getKeepLogin(){
+        boolean checked = Pref.DEFAULT_BOOLEAN_VALUE;
+        if(preference != null)
+            checked = preference.getBoolean(PREF_KEY_KEEP_LOGIN, DEFAULT_BOOLEAN_VALUE);
         return checked;
     }
 
-    public static void setUserKey(Context context, String userKey){
-        if(context == null){
-            return;
+    public static void setUserKey(String userKey){
+        if(preference != null) {
+            preference.edit().putString(PREF_KEY_USER_KEY, userKey).apply();
+            Constant.userKey = userKey;
         }
-        context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
-                .edit().putString(PREF_KEY_USER_KEY, userKey).apply();
-        Constant.userKey = userKey;
     }
 
-    public static String getUserKey(Context context) {
-        if(context == null){
-            return null;
+    public static String getUserKey() {
+        String userKey = Pref.DEFAULT_STRING_VALUE;
+        if(preference != null) {
+            preference.getString(PREF_KEY_USER_KEY, DEFAULT_STRING_VALUE);
         }
-        String userKey = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE).
-                getString(PREF_KEY_USER_KEY, DEFAULT_STRING_VALUE);
         return userKey;
     }
 
-    public static void setUserID(Context context, String userID){
-        if(context == null){
+    public static void setUserID(String userID){
+        if(preference == null){
             return;
         }
-        context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
-                .edit().putString(PREF_KEY_USER_ID, userID).apply();
+        preference.edit().putString(PREF_KEY_USER_ID, userID).apply();
         Constant.userID = userID;
     }
 
-    public static String getUserID(Context context) {
-        if(context == null){
+    public static String getUserID() {
+        if(preference == null){
             return null;
         }
-        String userKey = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE).
+        String userKey = preference.
                 getString(PREF_KEY_USER_ID, DEFAULT_STRING_VALUE);
         return userKey;
     }
 
-    public static void setUserPassword(Context context, String userPassword){
-        if(context == null){
+    public static void setUserPassword(String userPassword){
+        if(preference == null){
             return;
         }
-        context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
-                .edit().putString(PREF_KEY_USER_PASSWORD, userPassword).apply();
+        preference.edit().putString(PREF_KEY_USER_PASSWORD, userPassword).apply();
         Constant.userPassword = userPassword;
     }
 
-    public static String getUserPassword(Context context) {
-        if(context == null){
+    public static String getUserPassword() {
+        if(preference == null){
             return null;
         }
-        String userKey = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE).
+        String userKey = preference.
                 getString(PREF_KEY_USER_PASSWORD, DEFAULT_STRING_VALUE);
         return userKey;
     }
 
-    public static void setCookie(Context context, String cookie)
+    public static void setCookie(Set<String> cookie)
     {
-        if(context == null){
+        if(preference == null){
             return;
         }
-        context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
-                .edit().putString(PREF_KEY_COOKIE, cookie).apply();
+        preference.edit().putStringSet(PREF_KEY_COOKIE, cookie).apply();
         Constant.cookie = cookie;
     }
 
-    public static String getCookie(Context context)
+    public static Set<String> getCookie()
     {
-        if(context == null){
+        if(preference == null){
             return null;
         }
-        String cookie =  context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE).
-                getString(PREF_KEY_COOKIE, DEFAULT_STRING_VALUE);
+        Set<String> cookie =  preference.getStringSet(PREF_KEY_COOKIE, null);
         return cookie;
     }
 
-    public static void setPushToken(Context context, String pushToken){
-        if(context == null){
+    public static void setPushToken(String pushToken){
+        if(preference == null){
             return;
         }
-        context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
-                .edit().putString(PREF_KEY_PUSHTOKEN, pushToken).apply();
+        preference.edit().putString(PREF_KEY_PUSHTOKEN, pushToken).apply();
         Constant.pushToken = pushToken;
     }
 
-    public static String getPushToken(Context context) {
-        if (context == null) {
+    public static String getPushToken() {
+        if (preference == null) {
             return null;
         }
-        String userKey = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE).
-                getString(PREF_KEY_PUSHTOKEN, DEFAULT_STRING_VALUE);
+        String userKey = preference.getString(PREF_KEY_PUSHTOKEN, DEFAULT_STRING_VALUE);
         return userKey;
     }
 
-    public static boolean resetLogin(Context context){
-        if(context == null){
+    public static boolean resetLogin(){
+        if(preference == null){
             return false;
         }
-        context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
-                .edit().putString(PREF_KEY_COOKIE, DEFAULT_STRING_VALUE).apply();
-        context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
-                .edit().putBoolean(PREF_KEY_KEEP_LOGIN, DEFAULT_BOOLEAN_VALUE).apply();
-        context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
-                .edit().putString(PREF_KEY_USER_ID, DEFAULT_STRING_VALUE).apply();
-        context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
-                .edit().putString(PREF_KEY_USER_KEY, DEFAULT_STRING_VALUE).apply();
-        context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
-                .edit().putString(PREF_KEY_USER_PASSWORD, DEFAULT_STRING_VALUE).apply();
+
+        preference.edit().putString(PREF_KEY_COOKIE, DEFAULT_STRING_VALUE).apply();
+        preference.edit().putBoolean(PREF_KEY_KEEP_LOGIN, DEFAULT_BOOLEAN_VALUE).apply();
+        preference.edit().putString(PREF_KEY_USER_ID, DEFAULT_STRING_VALUE).apply();
+        preference.edit().putString(PREF_KEY_USER_KEY, DEFAULT_STRING_VALUE).apply();
+        preference.edit().putString(PREF_KEY_USER_PASSWORD, DEFAULT_STRING_VALUE).apply();
 
         Constant.keepLogin      = DEFAULT_BOOLEAN_VALUE;
         Constant.userKey        = DEFAULT_STRING_VALUE;
-        Constant.cookie         = DEFAULT_STRING_VALUE;
+        Constant.cookie         = null;
         Constant.userID         = DEFAULT_STRING_VALUE;
         Constant.userPassword   = DEFAULT_STRING_VALUE;
 

@@ -56,13 +56,13 @@ public class ChangePwActivity extends FragmentActivity {
         switch (v.getId()) {
             case R.id.cng_button_submit:
 
-                email = Pref.getUserID(this);
+                email = Pref.getUserID();
                 password = editText_password.getText().toString().trim();
                 passwordNew = editText_passwordNew.getText().toString().trim();
                 passwordNewChk = editText_passwordNewChk.getText().toString().trim();
 
                 /** 패스워드 체크 */
-                if(password.equals(passwordNew) && password.equals(Pref.getUserPassword(this))){
+                if(password.equals(passwordNew) && password.equals(Pref.getUserPassword())){
                     Toast.makeText(this,"올바르지 않은 비밀번호 입니다", Toast.LENGTH_SHORT).show();
                     break;
                 }
@@ -123,7 +123,6 @@ public class ChangePwActivity extends FragmentActivity {
                 try{
                     JSONObject jsonObject = new JSONObject(result);
 
-//                    String message = jsonObject.getString(Constant.MESSAGE);
                     error = jsonObject.getInt("ErrorCode");
                     if(error == 0){
                         return true;

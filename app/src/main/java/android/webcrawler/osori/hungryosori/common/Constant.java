@@ -1,5 +1,7 @@
 package android.webcrawler.osori.hungryosori.Common;
 
+import java.util.Set;
+
 /**
  * Created by 고건주 on 2016-08-25.
  * 상수 값을 저장하는 클래스
@@ -15,7 +17,7 @@ public class Constant {
     public static boolean   keepLogin;
     public static String    userID;
     public static String    userPassword;
-    public static String    cookie;
+    public static Set<String> cookie;
     public static String    userNewPassword;
     public static String    pushToken;
 

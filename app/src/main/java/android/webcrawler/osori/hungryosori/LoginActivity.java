@@ -86,7 +86,7 @@ public class LoginActivity extends FragmentActivity {
     // 로그인 시도
     private void tryLogin(){
         String url = Constant.SERVER_URL + "/user/";
-        String pushToken = Pref.getPushToken(this);
+        String pushToken = Pref.getPushToken();
 
         ParamModel params = new ParamModel();
 
@@ -119,6 +119,7 @@ public class LoginActivity extends FragmentActivity {
             // TODO Auto-generated method stub
             Http2 http = new Http2(params[0]);
             http.setMethod(GetMethod.getInstance());
+            http.getCookie(true);
             HttpResult result = http.send();
 
             try {
@@ -126,7 +127,6 @@ public class LoginActivity extends FragmentActivity {
                 int error = jsonObject.getInt("ErrorCode");
                 if (error == 0) {
                     userKey = jsonObject.getString("user_key");
-                    cookie = result.getCookie();
                     return true;
                 }
             } catch (Exception e) {
@@ -142,11 +142,10 @@ public class LoginActivity extends FragmentActivity {
             if(success) {
                 // 로그인 성공
                 if(userKey != Pref.DEFAULT_STRING_VALUE) {
-                    Pref.setUserKey(mContext, userKey);
-                    Pref.setUserID(mContext, LoginActivity.email);
-                    Pref.setUserPassword(mContext, LoginActivity.password);
-                    Pref.setKeepLogin(mContext, true);
-                    Pref.setCookie(mContext, cookie);
+                    Pref.setUserKey(userKey);
+                    Pref.setUserID(LoginActivity.email);
+                    Pref.setUserPassword(LoginActivity.password);
+                    Pref.setKeepLogin(true);
 
                     Intent intent = new Intent(mContext, CrawlerActivity.class);
                     intent.addFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY);

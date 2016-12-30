@@ -19,6 +19,16 @@ import java.util.Map;
  */
 public abstract class Method {
     private     boolean cookieSet;
+    private     boolean cookieGet;
+
+    public boolean isCookieGet() {
+        return cookieGet;
+    }
+
+    public void setCookieGet(boolean cookieGet) {
+        this.cookieGet = cookieGet;
+    }
+
     protected   HttpURLConnection urlConnection;
 
     public Method(){
@@ -37,7 +47,7 @@ public abstract class Method {
 
     protected void setCookie(){
         if (isCookieSet()) {
-            urlConnection.setRequestProperty("cookie", Constant.cookie);
+            // urlConnection.setRequestProperty("cookie", Constant.cookie);
         }
     }
 

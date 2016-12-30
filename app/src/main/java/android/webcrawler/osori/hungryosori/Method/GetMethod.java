@@ -1,16 +1,27 @@
 package android.webcrawler.osori.hungryosori.Method;
 import android.webcrawler.osori.hungryosori.Common.HttpResult;
+import android.webcrawler.osori.hungryosori.Common.Pref;
+import android.webcrawler.osori.hungryosori.Intercepter.AddCookiesInterceptor;
+import android.webcrawler.osori.hungryosori.Intercepter.ReceivedCookiesInterceptor;
 import android.webcrawler.osori.hungryosori.Interface.Method;
 import android.webcrawler.osori.hungryosori.Model.ParamModel;
 import java.io.IOException;
-import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
+
+import okhttp3.Cookie;
+import okhttp3.CookieJar;
+import okhttp3.HttpUrl;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Created by kunju on 2016-12-28.
  */
 public class GetMethod extends Method{
     private static GetMethod instance = null;
+    private OkHttpClient httpClient;
 
     private GetMethod(){
 
@@ -24,30 +35,30 @@ public class GetMethod extends Method{
 
     @Override
     public HttpResult send(ParamModel paramModel) {
-        String response = null;
-        String cookie   = null;
+        httpClient          = new OkHttpClient().newBuilder().
+                addInterceptor(new ReceivedCookiesInterceptor()).
+                addInterceptor(new AddCookiesInterceptor()).
+                build();
+
+        Response response;
+        String responseBody = null;
         try {
             String urlString    = paramModel.getUrl();
             String paramString  = paramModel.getParamStr();
             if(paramString != null && paramString.length() > 0){
-                urlString += "?" + paramString;
+                 urlString += "?" + paramString;
             }
             final URL url = new URL(urlString);
 
-            urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setRequestMethod("GET");
-            setCookie();
-
-            response = readResponseMessage();
-            cookie   = readCookie();
+            Request  request = new Request.Builder().url(url).build();
+            response = httpClient.newCall(request).execute();
+            responseBody = response.body().string();
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-        }finally {
-            urlConnection.disconnect();
         }
-        HttpResult result = new HttpResult(response, cookie);
-        return result;
+        HttpResult httpResult = new HttpResult(responseBody, null);
+        return httpResult;
     }
 }
 

@@ -32,11 +32,12 @@ public class StartActivity extends FragmentActivity {
  //     FirebaseInstanceId.getInstance().getToken();
 
         /** Preference 값을 저장 */
-        Constant.keepLogin      = Pref.getKeepLogin(this);
-        Constant.userKey        = Pref.getUserKey(this);
-        Constant.cookie         = Pref.getCookie(this);
-        Constant.userID         = Pref.getUserID(this);
-        Constant.userPassword   = Pref.getUserPassword(this);
+        Pref.init(this);
+        Constant.keepLogin      = Pref.getKeepLogin();
+        Constant.userKey        = Pref.getUserKey();
+        // Constant.cookie         = Pref.getCookie();
+        Constant.userID         = Pref.getUserID();
+        Constant.userPassword   = Pref.getUserPassword();
 
         /** 이미지 로더 등록 */
         initImageLoader(this);

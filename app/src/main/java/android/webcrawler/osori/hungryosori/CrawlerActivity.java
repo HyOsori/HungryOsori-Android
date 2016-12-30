@@ -255,14 +255,16 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
     public void onClick(View v) {
        switch (v.getId()) {
             case R.id.crawler_button_my:
+                ((ToggleButton)v).setChecked(true);
                 viewPager.setCurrentItem(Constant.PAGE_MY);
                 break;
             case R.id.crawler_button_all:
+                ((ToggleButton)v).setChecked(true);
                 viewPager.setCurrentItem(Constant.PAGE_ALL);
                 break;
 
             case R.id.header_navigation_textView_logout:
-                if(Pref.resetLogin(this) == true) {
+                if(Pref.resetLogin() == true) {
                     Intent intent = new Intent(CrawlerActivity.this, LoginActivity.class);
                     intent.addFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     intent.addFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NEW_TASK);

@@ -19,7 +19,11 @@ public class Http2{
     public void setMethod(Method method) {
         this.method = method;
     }
-
+    public void getCookie(boolean cookie){
+        if(method != null){
+            method.setCookieGet(cookie);
+        }
+    }
     public void setCookie(boolean cookie){
         if(method != null) {
             method.setCookieSet(cookie);
