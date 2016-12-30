@@ -1,6 +1,5 @@
 package android.webcrawler.osori.hungryosori;
 
-
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,9 +12,7 @@ import android.webcrawler.osori.hungryosori.Common.Lib;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import org.json.JSONObject;
-
 
 /**
  * Created by 고건주&김규민 on 2016-08-18.
@@ -24,11 +21,12 @@ import org.json.JSONObject;
 
 public class JoinActivity extends FragmentActivity {
 
-    private static String email;
-    private static String password;
-    private static String rePassword;
+    private String email;
+    private String password;
+    private String rePassword;
+    private String name;
 
-    private EditText editText_mail, editText_password, editText_rePassword;
+    private EditText editText_mail, editText_password, editText_rePassword, editText_name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +36,7 @@ public class JoinActivity extends FragmentActivity {
         editText_mail = (EditText) findViewById(R.id.join_editText_email);
         editText_password = (EditText) findViewById(R.id.join_editText_password);
         editText_rePassword = (EditText) findViewById(R.id.join_editText_repassword);
+        editText_name       = (EditText) findViewById(R.id.join_editText_name);
 
         /** 폰트 설정 */
         Typeface fontArial = Typeface.createFromAsset(getAssets(), "fonts/arial.ttf");
@@ -54,6 +53,7 @@ public class JoinActivity extends FragmentActivity {
                 email = editText_mail.getText().toString().trim();
                 password = editText_password.getText().toString().trim();
                 rePassword = editText_rePassword.getText().toString().trim();
+                name = editText_name.getText().toString().trim();
 
                 /** 아이디가 올바른 이메일 형식인지 검사 */
                 if (!Lib.isValidEmail(email)) {
@@ -74,6 +74,13 @@ public class JoinActivity extends FragmentActivity {
                     Toast.makeText(this,"비밀번호 확인이 다릅니다.", Toast.LENGTH_SHORT).show();
                     break;
                 }
+
+                /** 이름 길이 확인 */
+                if(name.length() < Constant.NAME_LENGTH_MIN){
+                    Toast.makeText(this, "이름은 2자 이상 입력해주세요.", Toast.LENGTH_LONG).show();
+                    break;
+                }
+
                 /** 서버 연동 */
                 tryJoin();
                 break;
@@ -88,14 +95,14 @@ public class JoinActivity extends FragmentActivity {
         params.setUrl(url);
         params.addParameter("user_id", email);
         params.addParameter("password", password);
-        params.addParameter("name", "Gunju");
+        params.addParameter("name", name);
 
         new TryJoinTask().execute(params);
     }
 
     // 회원가입 시도하는 AsyncTask
     private class TryJoinTask extends AsyncTask<ParamModel, Void, Boolean> {
-       private int error;
+       private int error = -1;
 
         @Override
         protected void onPreExecute() {
@@ -135,7 +142,7 @@ public class JoinActivity extends FragmentActivity {
             }else{
                 switch(error){
                     case -1:
-                        Toast.makeText(JoinActivity.this,"가입 오류: 부적절한 입력 데이터",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(JoinActivity.this,"가입 오류",Toast.LENGTH_SHORT).show();
                         break;
                     case -100:
                         Toast.makeText(JoinActivity.this,"가입 오류: 이미 존재하는 계정",Toast.LENGTH_SHORT).show();
@@ -144,7 +151,6 @@ public class JoinActivity extends FragmentActivity {
                         Toast.makeText(JoinActivity.this,"가입 오류: osori@hanynag.ac.kr 형태로 입력하십시오.",Toast.LENGTH_SHORT).show();
                         break;
                 }
-                Toast.makeText(JoinActivity.this,"가입 오류: 다시 시도해 주세요",Toast.LENGTH_SHORT).show();
             }
         }
     }

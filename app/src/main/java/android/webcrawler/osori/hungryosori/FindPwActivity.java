@@ -80,21 +80,18 @@ public class FindPwActivity extends FragmentActivity {
             // TODO Auto-generated method stub
              String result = PostMethod.getInstance().send(params[0]);
 
-            if (result == null) {
-                return false;
-            } else {
-                try {
-                    JSONObject jsonObject = new JSONObject(result);
-                    error = jsonObject.getInt("ErrorCode");
-                    if (error == 0) {
-                        return true;
-                    } else if (error == -1) {
-                        return false;
-                    }
-                } catch (Exception e) {
-
+            try {
+                JSONObject jsonObject = new JSONObject(result);
+                error = jsonObject.getInt("ErrorCode");
+                if (error == 0) {
+                    return true;
+                } else if (error == -1) {
+                    return false;
                 }
+            } catch (Exception e) {
+
             }
+
             return false;
         }
 

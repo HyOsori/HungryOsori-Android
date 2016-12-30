@@ -1,6 +1,4 @@
 package android.webcrawler.osori.hungryosori;
-
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
@@ -54,6 +52,7 @@ public class LoginActivity extends FragmentActivity {
                 intent = new Intent(LoginActivity.this,FindPwActivity.class);
                 startActivity(intent);
                 break;
+
             case R.id.login_button_login:
                 email       = editText_mail.getText().toString().trim();
                 password    = editText_password.getText().toString().trim();
@@ -87,24 +86,17 @@ public class LoginActivity extends FragmentActivity {
         String pushToken = Pref.getPushToken();
 
         ParamModel params = new ParamModel();
-
         params.setUrl(url);
         params.addParameter("user_id", email);
         params.addParameter("password", password);
         params.addParameter("push_token", pushToken);
 
-        new TryLoginTask(this).execute(params);
+        new TryLoginTask().execute(params);
     }
 
     // 로그인을 시도하는 AsyncTask
     private class TryLoginTask extends AsyncTask<ParamModel, Void, Boolean> {
-        private Context mContext;
         private String  userKey  = Pref.DEFAULT_STRING_VALUE;
-
-
-        public TryLoginTask(Context mContext){
-            this.mContext = mContext;
-        }
 
         @Override
         protected void onPreExecute() {
@@ -141,7 +133,7 @@ public class LoginActivity extends FragmentActivity {
                     Pref.setUserPassword(password);
                     Pref.setKeepLogin(true);
 
-                    Intent intent = new Intent(mContext, CrawlerActivity.class);
+                    Intent intent = new Intent(LoginActivity.this, CrawlerActivity.class);
                     intent.addFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY);
                     intent.addFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     intent.addFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -149,7 +141,7 @@ public class LoginActivity extends FragmentActivity {
                 }
             }else{
                 // 로그인 실패
-                Toast.makeText(mContext, "로그인 실패", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "로그인 실패", Toast.LENGTH_SHORT).show();
             }
         }
     }

@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.webcrawler.osori.hungryosori.Common.Constant;
 import android.webcrawler.osori.hungryosori.Common.Pref;
-
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
@@ -35,9 +34,10 @@ public class StartActivity extends FragmentActivity {
         Pref.init(this);
         Constant.keepLogin      = Pref.getKeepLogin();
         Constant.userKey        = Pref.getUserKey();
-        // Constant.cookie         = Pref.getCookie();
+        Constant.cookie         = Pref.getCookie();
         Constant.userID         = Pref.getUserID();
         Constant.userPassword   = Pref.getUserPassword();
+        Constant.pushToken      = Pref.getPushToken();
 
         /** 이미지 로더 등록 */
         initImageLoader(this);

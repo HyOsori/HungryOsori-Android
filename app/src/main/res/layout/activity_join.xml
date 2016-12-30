@@ -32,6 +32,7 @@
         sl:scale_top = "30"
 
         >
+
         <EditText
             android:id = "@+id/join_editText_email"
             android:inputType = "textEmailAddress"
@@ -39,6 +40,22 @@
             android:layout_height="wrap_content"
             android:background="@drawable/edittext_white"
             android:hint= "@string/email"
+            android:paddingStart="10dp"
+            android:paddingLeft="10dp"
+            sl:scale_left = "25"
+            sl:scale_top = "10"
+            sl:scale_width = "50"
+            sl:scale_height = "10"
+            sl:scale_textsize = "5"
+            />
+
+        <EditText
+            android:id = "@+id/join_editText_name"
+            android:inputType = "textEmailAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edittext_white"
+            android:hint= "@string/name"
             android:paddingStart="10dp"
             android:paddingLeft="10dp"
             sl:scale_left = "25"
