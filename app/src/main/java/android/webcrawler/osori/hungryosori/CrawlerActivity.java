@@ -73,8 +73,8 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
      */
     private void getEntireList() {
         String url = Constant.SERVER_URL + "/crawlers/";
-        ParamModel params = new ParamModel();
 
+        ParamModel params = new ParamModel();
         params.setUrl(url);
 
         new getEntireListTask().execute(params);

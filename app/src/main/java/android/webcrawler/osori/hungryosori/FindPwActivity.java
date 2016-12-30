@@ -1,8 +1,4 @@
-//에러 뜨고 있음 :: 수정 해야 함.
-
 package android.webcrawler.osori.hungryosori;
-
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
@@ -27,7 +23,7 @@ import org.json.JSONObject;
 
 public class FindPwActivity extends FragmentActivity {
 
-    public static String email;
+    private String email;
     private EditText editText_email;
 
     @Override
@@ -53,7 +49,6 @@ public class FindPwActivity extends FragmentActivity {
         }
     }
 
-    // 로그인 시도
     private void tryFind() {
         String url = Constant.SERVER_URL + "/password/";
 
@@ -64,7 +59,6 @@ public class FindPwActivity extends FragmentActivity {
         new TryFindTask().execute(params);
     }
 
-    // 회원가입 시도하는 AsyncTask
     private class TryFindTask extends AsyncTask<ParamModel, Void, Boolean> {
 
         private int error = -1;
@@ -99,8 +93,7 @@ public class FindPwActivity extends FragmentActivity {
         protected void onPostExecute(Boolean success) {
             // TODO Auto-generated method stub
             if (success) {
-                // 회원가입 성공
-                Toast.makeText(FindPwActivity.this, "비밀번호 변경 완료", Toast.LENGTH_SHORT).show();
+                Toast.makeText(FindPwActivity.this, "비밀번호 변경 완료\n메일을 확인해주세요.", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(FindPwActivity.this, LoginActivity.class);
                 startActivity(intent);
             } else {
@@ -109,11 +102,8 @@ public class FindPwActivity extends FragmentActivity {
                         Toast.makeText(FindPwActivity.this, "변경 실패", Toast.LENGTH_SHORT).show();
                         break;
                 }
-
-                // 회원가입 실패
             }
         }
     }
-
 
 }

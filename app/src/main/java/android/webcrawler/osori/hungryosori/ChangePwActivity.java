@@ -1,7 +1,5 @@
 package android.webcrawler.osori.hungryosori;
 
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -25,29 +23,27 @@ import org.json.JSONObject;
 
 public class ChangePwActivity extends FragmentActivity {
 
-    public static String email;
-    private static String password;
-    private static String passwordNew;
-    private static String passwordNewChk;
+    public  String email;
+    private String password;
+    private String passwordNew;
+    private String passwordNewChk;
 
-    private EditText editText_mail, editText_password, editText_passwordNew, editText_passwordNewChk;
+    private EditText editText_password, editText_passwordNew, editText_passwordNewChk;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_pw);
 
         /** 객체 설정 */
-//
         editText_password = (EditText) findViewById(R.id.cng_editText_password);
         editText_passwordNew = (EditText) findViewById(R.id.cng_editText_passwordnew);
         editText_passwordNewChk = (EditText) findViewById(R.id.cng_editText_passwordnewchk);
+
         /** 폰트 설정 */
         Typeface fontArial = Typeface.createFromAsset(getAssets(), "fonts/arial.ttf");
-
         editText_password.setTypeface(fontArial);
         editText_passwordNew.setTypeface(fontArial);
         editText_passwordNewChk.setTypeface(fontArial);
-
         ((Button)findViewById(R.id.cng_button_submit)).setTypeface(fontArial);
     }
 
@@ -85,7 +81,6 @@ public class ChangePwActivity extends FragmentActivity {
         }
     }
 
-    // 로그인 시도
     private void tryChange(){
         String url = Constant.SERVER_URL + "/password/";
 
@@ -98,8 +93,7 @@ public class ChangePwActivity extends FragmentActivity {
         new TryChangeTask().execute(params);
     }
 
-    // 회원가입 시도하는 AsyncTask
-    private class TryChangeTask extends AsyncTask<ParamModel, Void, Boolean> {
+   private class TryChangeTask extends AsyncTask<ParamModel, Void, Boolean> {
         private int error = -1;
 
         @Override
@@ -144,13 +138,9 @@ public class ChangePwActivity extends FragmentActivity {
                     case -100:
                         Toast.makeText(ChangePwActivity.this, "존재하지 않는 사용자", Toast.LENGTH_SHORT).show();
                         break;
-                    default:
-                        Toast.makeText(ChangePwActivity.this, "변경 실패", Toast.LENGTH_SHORT).show();
-                        break;
                 }
             }
         }
     }
-
 
 }
