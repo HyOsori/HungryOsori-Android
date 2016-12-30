@@ -7,8 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webcrawler.osori.hungryosori.Common.Constant;
 import android.webcrawler.osori.hungryosori.Common.Http;
-import android.webcrawler.osori.hungryosori.Common.Http2;
-import android.webcrawler.osori.hungryosori.Common.HttpResult;
 import android.webcrawler.osori.hungryosori.CrawlerInfo.CrawlerInfos;
 import android.webcrawler.osori.hungryosori.Method.PostMethod;
 import android.webcrawler.osori.hungryosori.Model.CrawlerInfo;
@@ -107,21 +105,19 @@ public class CrawlerListAdapter extends ArrayAdapter<CrawlerInfo> implements Vie
         ParamModel params = new ParamModel();
 
         params.setUrl(url);
-        params.setParamStr("user_id", Constant.userID);
-        params.setParamStr("user_key", Constant.userKey);
-        params.setParamStr("crawler_id", crawlerID);
+        params.addParameter("user_id", Constant.userID);
+        params.addParameter("user_key", Constant.userKey);
+        params.addParameter("crawler_id", crawlerID);
 
-        new subscribeCrawlerTask(getContext(), crawlerID, view).execute(params);
+        new subscribeCrawlerTask(crawlerID, view).execute(params);
     }
 
     private class subscribeCrawlerTask extends AsyncTask<ParamModel, Void, Boolean> {
 
-        private Context mContext;
         private String id;
         private View view;
 
-        public subscribeCrawlerTask(Context context, String id, View view){
-            this.mContext = context;
+        public subscribeCrawlerTask(String id, View view){
             this.id       = id;
             this.view     = view;
         }
@@ -135,25 +131,18 @@ public class CrawlerListAdapter extends ArrayAdapter<CrawlerInfo> implements Vie
         @Override
         protected Boolean doInBackground(ParamModel... params) {
             // TODO Auto-generated method stub
-            Http2 http = new Http2(params[0]);
-            http.setMethod(PostMethod.getInstance());
-            http.setCookie(true);
+            String result = PostMethod.getInstance().send(params[0]);
 
-            HttpResult httpResult = http.send();
-
-            if(httpResult == null){
-                return false;
-            }else{
-                try {
-                    JSONObject jsonObject = new JSONObject(httpResult.getResponse());
-                    int error = jsonObject.getInt("ErrorCode");
-                    if(error == 0){
-                        return true;
-                    }
-                }catch(Exception e){
-
+            try {
+                JSONObject jsonObject = new JSONObject(result);
+                int error = jsonObject.getInt("ErrorCode");
+                if (error == 0) {
+                    return true;
                 }
+            } catch (Exception e) {
+
             }
+
             return false;
         }
 
@@ -179,9 +168,9 @@ public class CrawlerListAdapter extends ArrayAdapter<CrawlerInfo> implements Vie
         ParamModel params = new ParamModel();
 
         params.setUrl(url);
-        params.setParamStr("user_id", Constant.userID);
-        params.setParamStr("user_key", Constant.userKey);
-        params.setParamStr("crawler_id", crawlerID);
+        params.addParameter("user_id", Constant.userID);
+        params.addParameter("user_key", Constant.userKey);
+        params.addParameter("crawler_id", crawlerID);
 
         new unSubscribeCrawlerTask(getContext(), crawlerID, view).execute(params);
     }

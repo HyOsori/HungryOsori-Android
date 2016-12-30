@@ -91,9 +91,9 @@ public class ChangePwActivity extends FragmentActivity {
         params.setUrl(url);
         //조인 추가
 
-        params.setParamStr("user_id", email);
-        params.setParamStr("password", password);
-        params.setParamStr("new_password",passwordNew);
+        params.addParameter("user_id", email);
+        params.addParameter("password", password);
+        params.addParameter("new_password", passwordNew);
         new TryChangeTask(this).execute(params);
     }
 

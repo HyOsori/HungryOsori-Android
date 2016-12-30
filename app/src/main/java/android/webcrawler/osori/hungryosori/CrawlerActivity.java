@@ -1,7 +1,6 @@
 package android.webcrawler.osori.hungryosori;
 
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
@@ -12,8 +11,6 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.webcrawler.osori.hungryosori.Adapter.CrawlerViewPagerAdapter;
-import android.webcrawler.osori.hungryosori.Common.Http2;
-import android.webcrawler.osori.hungryosori.Common.HttpResult;
 import android.webcrawler.osori.hungryosori.Common.Pref;
 import android.webcrawler.osori.hungryosori.CrawlerInfo.CrawlerInfos;
 import android.webcrawler.osori.hungryosori.Method.GetMethod;
@@ -21,7 +18,6 @@ import android.webcrawler.osori.hungryosori.Method.PostMethod;
 import android.webcrawler.osori.hungryosori.Model.CrawlerInfo;
 import android.webcrawler.osori.hungryosori.Model.ParamModel;
 import android.webcrawler.osori.hungryosori.Common.Constant;
-import android.webcrawler.osori.hungryosori.Common.Http;
 import android.widget.ToggleButton;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -98,37 +94,32 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
         @Override
         protected Boolean doInBackground(ParamModel... params) {
             // TODO Auto-generated method stub
-            Http2 http = new Http2(params[0]);
-            http.setMethod(GetMethod.getInstance());
 
-            HttpResult httpResult = http.send();
+            String result = GetMethod.getInstance().send(params[0]);
 
-            if (httpResult == null) {
-                return false;
-            } else {
-                try {
-                    JSONObject jsonObject = new JSONObject(httpResult.getResponse());
+            try {
+                JSONObject jsonObject = new JSONObject(result);
 
-                    int error = jsonObject.getInt("ErrorCode");
-                    if (error==0) {
-                        JSONArray jsonArray = jsonObject.getJSONArray("crawlers");
+                int error = jsonObject.getInt("ErrorCode");
+                if (error == 0) {
+                    JSONArray jsonArray = jsonObject.getJSONArray("crawlers");
 
-                        for (int i = 0; i < jsonArray.length(); ++i) {
-                            JSONObject object = jsonArray.getJSONObject(i);
+                    for (int i = 0; i < jsonArray.length(); ++i) {
+                        JSONObject object = jsonArray.getJSONObject(i);
 
-                            String id = object.getString("crawler_id");
-                            String url = object.getString("thumbnail_url");
-                            String description = object.getString("description");
-                            String title = object.getString("title");
+                        String id = object.getString("crawler_id");
+                        String url = object.getString("thumbnail_url");
+                        String description = object.getString("description");
+                        String title = object.getString("title");
 
-                            entireCralwerInfos.add(new CrawlerInfo(id, title, description, url, false));
-                        }
-                        return true;
+                        entireCralwerInfos.add(new CrawlerInfo(id, title, description, url, false));
                     }
-                } catch (Exception e) {
-
+                    return true;
                 }
+            } catch (Exception e) {
+
             }
+
             return false;
         }
 
@@ -156,8 +147,8 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
         ParamModel params = new ParamModel();
 
         params.setUrl(url);
-        params.setParamStr("user_id", Constant.userID);
-        params.setParamStr("user_key", Constant.userKey);
+        params.addParameter("user_id", Constant.userID);
+        params.addParameter("user_key", Constant.userKey);
 
         new getSubscriptionListTask().execute(params);
     }
@@ -178,34 +169,28 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
         @Override
         protected Boolean doInBackground(ParamModel... params) {
             // TODO Auto-generated method stub
-            Http2 http = new Http2(params[0]);
-            http.setCookie(true);
-            http.setMethod(PostMethod.getInstance());
-            HttpResult httpResult = http.send();
+           String result = PostMethod.getInstance().send(params[0]);
 
-            if (httpResult == null) {
-                return false;
-            } else {
-                try {
-                    JSONObject jsonObject = new JSONObject(httpResult.getResponse());
+            try {
+                JSONObject jsonObject = new JSONObject(result);
 
-                    int error = jsonObject.getInt("ErrorCode");
-                    if (error == 0) {
-                        JSONArray jsonArray = jsonObject.getJSONArray("subscriptions");
+                int error = jsonObject.getInt("ErrorCode");
+                if (error == 0) {
+                    JSONArray jsonArray = jsonObject.getJSONArray("subscriptions");
 
-                        for (int i = 0; i < jsonArray.length(); ++i) {
-                            JSONObject object = jsonArray.getJSONObject(i);
+                    for (int i = 0; i < jsonArray.length(); ++i) {
+                        JSONObject object = jsonArray.getJSONObject(i);
 
-                            String subscriptionsID = object.getString("crawler_id");
-                            subscriptionIDs.add(subscriptionsID);
-                        }
-
-                        return true;
+                        String subscriptionsID = object.getString("crawler_id");
+                        subscriptionIDs.add(subscriptionsID);
                     }
-                } catch (Exception e) {
 
+                    return true;
                 }
+            } catch (Exception e) {
+
             }
+
             return false;
         }
 

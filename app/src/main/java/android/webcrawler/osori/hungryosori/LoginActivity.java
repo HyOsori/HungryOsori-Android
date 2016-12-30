@@ -7,8 +7,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
-import android.webcrawler.osori.hungryosori.Common.Http2;
-import android.webcrawler.osori.hungryosori.Common.HttpResult;
 import android.webcrawler.osori.hungryosori.Method.GetMethod;
 import android.webcrawler.osori.hungryosori.Model.ParamModel;
 import android.webcrawler.osori.hungryosori.Common.Constant;
@@ -28,8 +26,8 @@ import org.json.JSONObject;
 
 public class LoginActivity extends FragmentActivity {
 
-    public static String email;
-    public static String password;
+    private String email;
+    private String password;
     private EditText editText_mail, editText_password;
 
     @Override
@@ -91,9 +89,9 @@ public class LoginActivity extends FragmentActivity {
         ParamModel params = new ParamModel();
 
         params.setUrl(url);
-        params.setParamStr("user_id", email);
-        params.setParamStr("password", password);
-        params.setParamStr("push_token",pushToken);
+        params.addParameter("user_id", email);
+        params.addParameter("password", password);
+        params.addParameter("push_token", pushToken);
 
         new TryLoginTask(this).execute(params);
     }
@@ -102,7 +100,7 @@ public class LoginActivity extends FragmentActivity {
     private class TryLoginTask extends AsyncTask<ParamModel, Void, Boolean> {
         private Context mContext;
         private String  userKey  = Pref.DEFAULT_STRING_VALUE;
-        private String  cookie   = Pref.DEFAULT_STRING_VALUE;
+
 
         public TryLoginTask(Context mContext){
             this.mContext = mContext;
@@ -117,13 +115,9 @@ public class LoginActivity extends FragmentActivity {
         @Override
         protected Boolean doInBackground(ParamModel... params) {
             // TODO Auto-generated method stub
-            Http2 http = new Http2(params[0]);
-            http.setMethod(GetMethod.getInstance());
-            http.getCookie(true);
-            HttpResult result = http.send();
-
+            String result = GetMethod.getInstance().send(params[0]);
             try {
-                JSONObject jsonObject = new JSONObject(result.getResponse());
+                JSONObject jsonObject = new JSONObject(result);
                 int error = jsonObject.getInt("ErrorCode");
                 if (error == 0) {
                     userKey = jsonObject.getString("user_key");
@@ -143,8 +137,8 @@ public class LoginActivity extends FragmentActivity {
                 // 로그인 성공
                 if(userKey != Pref.DEFAULT_STRING_VALUE) {
                     Pref.setUserKey(userKey);
-                    Pref.setUserID(LoginActivity.email);
-                    Pref.setUserPassword(LoginActivity.password);
+                    Pref.setUserID(email);
+                    Pref.setUserPassword(password);
                     Pref.setKeepLogin(true);
 
                     Intent intent = new Intent(mContext, CrawlerActivity.class);

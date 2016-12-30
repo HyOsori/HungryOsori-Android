@@ -6,8 +6,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
-import android.webcrawler.osori.hungryosori.Common.Http2;
-import android.webcrawler.osori.hungryosori.Common.HttpResult;
 import android.webcrawler.osori.hungryosori.Method.PostMethod;
 import android.webcrawler.osori.hungryosori.Model.ParamModel;
 import android.webcrawler.osori.hungryosori.Common.Constant;
@@ -73,7 +71,7 @@ public class JoinActivity extends FragmentActivity {
 
                 /** 비밀번호 확인 */
                 if(!password.equals(rePassword)){
-                    Toast.makeText(this,"비밀번호 확인 틀렸습니다.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this,"비밀번호 확인이 다릅니다.", Toast.LENGTH_SHORT).show();
                     break;
                 }
                 /** 서버 연동 */
@@ -88,9 +86,9 @@ public class JoinActivity extends FragmentActivity {
 
         ParamModel params = new ParamModel();
         params.setUrl(url);
-        params.setParamStr("user_id", email);
-        params.setParamStr("password", password);
-        params.setParamStr("name", "Gunju");
+        params.addParameter("user_id", email);
+        params.addParameter("password", password);
+        params.addParameter("name", "Gunju");
 
         new TryJoinTask().execute(params);
     }
@@ -108,13 +106,10 @@ public class JoinActivity extends FragmentActivity {
         @Override
         protected Boolean doInBackground(ParamModel... params) {
             // TODO Auto-generated method stub
-            Http2 http = new Http2(params[0]);
-            http.setMethod(PostMethod.getInstance());
-
-            HttpResult result = http.send();
+            String result = PostMethod.getInstance().send(params[0]);
 
             try {
-                JSONObject jsonObject = new JSONObject(result.getResponse());
+                JSONObject jsonObject = new JSONObject(result);
                 error = jsonObject.getInt("ErrorCode");
                 if (error == 0) {
                     return true;

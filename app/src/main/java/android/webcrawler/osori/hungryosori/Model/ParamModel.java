@@ -1,7 +1,6 @@
 package android.webcrawler.osori.hungryosori.Model;
 
 import android.webcrawler.osori.hungryosori.Common.Constant;
-
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -11,10 +10,10 @@ import java.util.ArrayList;
  */
 public  class ParamModel {
     private String url;
-    ArrayList<NameValuePair> params = new ArrayList<>();
+    ArrayList<NameValuePair> parameters = new ArrayList<>();
 
-    public ArrayList<NameValuePair> getParams() {
-        return params;
+    public ArrayList<NameValuePair> getParameters() {
+        return parameters;
     }
 
     public String getUrl() {
@@ -28,16 +27,17 @@ public  class ParamModel {
     public String getParamStr() {
         return getQuery();
     }
-    public void setParamStr(String key, String value) {
-        params.add(new NameValuePair(key, value));
+
+    public void addParameter(String key, String value) {
+        parameters.add(new NameValuePair(key, value));
     }
 
     private String getQuery(){
-        if(params.size() == 0)  return null;
+        if(parameters.size() == 0)  return null;
         StringBuilder result = new StringBuilder();
         boolean first = true;
 
-        for (NameValuePair pair : params)
+        for (NameValuePair pair : parameters)
         {
             if (first)
                 first = false;

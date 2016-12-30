@@ -5,19 +5,15 @@ package android.webcrawler.osori.hungryosori;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.View;
-import android.webcrawler.osori.hungryosori.Common.Pref;
 import android.webcrawler.osori.hungryosori.Model.ParamModel;
 import android.webcrawler.osori.hungryosori.Common.Constant;
 import android.webcrawler.osori.hungryosori.Common.Http;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -68,7 +64,7 @@ public class FindPwActivity extends FragmentActivity {
         String url = Constant.SERVER_URL + "/send_temp_password/";
         ParamModel params = new ParamModel();
         params.setUrl(url);
-        params.setParamStr("user_id", email);
+        params.addParameter("user_id", email);
         new TryFindTask(this).execute(params);
     }
 

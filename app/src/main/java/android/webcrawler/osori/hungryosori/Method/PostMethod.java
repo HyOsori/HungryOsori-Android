@@ -38,7 +38,7 @@ public class PostMethod extends Method {
                 build();
 
         Request.Builder builder = new Request.Builder().url(paramModel.getUrl());
-        setParameter(paramModel.getParams(), builder);
+        setParameter(paramModel.getParameters(), builder);
 
         Request request = builder.build();
         try {
