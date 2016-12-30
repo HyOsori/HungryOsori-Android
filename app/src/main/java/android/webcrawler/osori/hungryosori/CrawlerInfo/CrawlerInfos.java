@@ -13,6 +13,16 @@ public class CrawlerInfos extends Subject{
     private ArrayList<CrawlerInfo> crawlerInfoList  = new ArrayList<>();
     private ArrayList<CrawlerInfo> subscriptionList = new ArrayList<>();
 
+    public boolean isInitialized() {
+        return initialized;
+    }
+
+    public void setInitialized(boolean initialized) {
+        this.initialized = initialized;
+    }
+
+    private boolean initialized = false;
+
     private CrawlerInfos(){
     }
 

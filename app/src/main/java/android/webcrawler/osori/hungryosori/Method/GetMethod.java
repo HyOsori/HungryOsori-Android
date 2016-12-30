@@ -29,7 +29,7 @@ public class GetMethod extends Method{
         try {
             String urlString    = paramModel.getUrl();
             String paramString  = paramModel.getParamStr();
-            if(paramString.length() > 0){
+            if(paramString != null && paramString.length() > 0){
                 urlString += "?" + paramString;
             }
             final URL url = new URL(urlString);

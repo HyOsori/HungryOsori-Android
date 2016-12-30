@@ -12,8 +12,12 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.webcrawler.osori.hungryosori.Adapter.CrawlerViewPagerAdapter;
+import android.webcrawler.osori.hungryosori.Common.Http2;
+import android.webcrawler.osori.hungryosori.Common.HttpResult;
 import android.webcrawler.osori.hungryosori.Common.Pref;
 import android.webcrawler.osori.hungryosori.CrawlerInfo.CrawlerInfos;
+import android.webcrawler.osori.hungryosori.Method.GetMethod;
+import android.webcrawler.osori.hungryosori.Method.PostMethod;
 import android.webcrawler.osori.hungryosori.Model.CrawlerInfo;
 import android.webcrawler.osori.hungryosori.Model.ParamModel;
 import android.webcrawler.osori.hungryosori.Common.Constant;
@@ -60,11 +64,12 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
         setViewPagerAdapter();
 
         /** 서버에서 정보 가져오기 */
-        getCrawlerInfo();
+        if(crawlerInfos.isInitialized() == false) {
+            getCrawlerInfo();
+        }
     }
     private void getCrawlerInfo() {
         getEntireList();
-        getSubscriptionList();
     }
 
     /**
@@ -75,39 +80,34 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
         ParamModel params = new ParamModel();
 
         params.setUrl(url);
-/*      params.setParamStr("user_id", Constant.userID);
-        params.setParamStr("user_key", Constant.userKey);
-*/
-        new getEntireListTask(this).execute(params);
+
+        new getEntireListTask().execute(params);
     }
 
 
     private class getEntireListTask extends AsyncTask<ParamModel, Void, Boolean> {
 
-        private Context mContext;
-
-        public getEntireListTask(Context context) {
-            mContext = context;
-        }
-
+        private ArrayList<CrawlerInfo> entireCralwerInfos;
         @Override
         protected void onPreExecute() {
             // TODO Auto-generated method stub
             super.onPreExecute();
+            entireCralwerInfos = new ArrayList<>();
         }
 
         @Override
         protected Boolean doInBackground(ParamModel... params) {
             // TODO Auto-generated method stub
-            Http http = new Http(mContext);
+            Http2 http = new Http2(params[0]);
+            http.setMethod(GetMethod.getInstance());
 
-            String result = http.sendGetMethod(params[0]);
+            HttpResult httpResult = http.send();
 
-            if (result == null) {
+            if (httpResult == null) {
                 return false;
             } else {
                 try {
-                    JSONObject jsonObject = new JSONObject(result);
+                    JSONObject jsonObject = new JSONObject(httpResult.getResponse());
 
                     int error = jsonObject.getInt("ErrorCode");
                     if (error==0) {
@@ -117,11 +117,11 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
                             JSONObject object = jsonArray.getJSONObject(i);
 
                             String id = object.getString("crawler_id");
-//                          String url = object.getString("thumbnail_url");
-                            String description = object.getString("created");
-                            String title = object.getString("crawler_name");
+                            String url = object.getString("thumbnail_url");
+                            String description = object.getString("description");
+                            String title = object.getString("title");
 
-                            crawlerInfos.addCrawlerInfo(new CrawlerInfo(id, title, description, "url", false));
+                            entireCralwerInfos.add(new CrawlerInfo(id, title, description, url, false));
                         }
                         return true;
                     }
@@ -136,7 +136,12 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
         protected void onPostExecute(Boolean success) {
             // TODO Auto-generated method stub
             if (success) {
-                // 성공
+                // 성공시 구독 정보를 가져온다.
+                for(CrawlerInfo c : entireCralwerInfos){
+                    crawlerInfos.addCrawlerInfo(c);
+                }
+                crawlerInfos.setInitialized(true);
+                getSubscriptionList();
             } else {
                 // 실패
             }
@@ -147,22 +152,20 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
      * 사용자가 구독 중인 CrawlerID를 가져오는 함수
      */
     private void getSubscriptionList() {
-        String url = Constant.SERVER_URL + "/subscriptions/item/";
+        String url = Constant.SERVER_URL + "/subscription/";
         ParamModel params = new ParamModel();
 
         params.setUrl(url);
         params.setParamStr("user_id", Constant.userID);
         params.setParamStr("user_key", Constant.userKey);
 
-        new getSubscriptionListTask(this).execute(params);
+        new getSubscriptionListTask().execute(params);
     }
 
     private class getSubscriptionListTask extends AsyncTask<ParamModel, Void, Boolean> {
         private ArrayList<String> subscriptionIDs;
-        private Context mContext;
 
-        public getSubscriptionListTask(Context context) {
-            mContext = context;
+        public getSubscriptionListTask() {
             subscriptionIDs = new ArrayList<>();
         }
 
@@ -175,15 +178,16 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
         @Override
         protected Boolean doInBackground(ParamModel... params) {
             // TODO Auto-generated method stub
-            Http http = new Http(mContext);
+            Http2 http = new Http2(params[0]);
+            http.setCookie(true);
+            http.setMethod(PostMethod.getInstance());
+            HttpResult httpResult = http.send();
 
-            String result = http.send(params[0], false);
-
-            if (result == null) {
+            if (httpResult == null) {
                 return false;
             } else {
                 try {
-                    JSONObject jsonObject = new JSONObject(result);
+                    JSONObject jsonObject = new JSONObject(httpResult.getResponse());
 
                     int error = jsonObject.getInt("ErrorCode");
                     if (error == 0) {
@@ -271,84 +275,7 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
                 startActivity(intent);
                 break;
             }
-
-       /*     case R.id.header_navigation_textView_setToken:
-                String token = Pref.getPushToken(mContext);
-                Toast.makeText(this,token,Toast.LENGTH_SHORT).show();
-                Log.d("MyFirebaseIIDService","Refreshed Token: "+ token );
-                tryRegPush();
-                break;
-                */
         }
     }
 
-/*    private void tryRegPush(){
-        String url = Constant.SERVER_URL + "/register_push_token";
-
-        ParamModel params = new ParamModel();
-        String pushToken = Pref.getPushtoken(this);
-        params.setUrl(url);
-        params.setParamStr("user_id", Constant.userID);
-        params.setParamStr("user_key", Constant.userKey);
-        params.setParamStr("token",pushToken);
-        new tryRegPushTask(this).execute(params);
-    }
-
-    private class tryRegPushTask extends AsyncTask<ParamModel, Void, Boolean> {
-
-        private Context mContext;
-        private int error;
-        public tryRegPushTask(Context context) {
-            this.mContext = context;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            // TODO Auto-generated method stub
-            super.onPreExecute();
-        }
-
-        @Override
-        protected Boolean doInBackground(ParamModel... params) {
-            // TODO Auto-generated method stub
-            Http http = new Http(mContext);
-            String result = http.send(params[0], false);
-            if (result == null) {
-                return false;
-            } else {
-                try {
-                    JSONObject jsonObject = new JSONObject(result);
-                    String message = jsonObject.getString(Constant.MESSAGE);
-                    error = jsonObject.getInt("error");
-
-                    if (message.equals(Constant.MESSAGE_SUCCESS)) {
-                        return true;
-                    }
-                    else{
-                        switch(error) {
-                            case -1:
-                                return false;
-                        }
-                    }
-                } catch (Exception e) {
-                }
-                return false;
-            }
-        }
-        @Override
-        protected void onPostExecute(Boolean success) {
-            // TODO Auto-generated method stub
-            if (success) {
-                Toast.makeText(mContext,"토큰 갱신 완료",Toast.LENGTH_SHORT).show();
-                // 성공
-            } else{
-                switch(error){
-                    case -1:
-                        Toast.makeText(mContext,"토큰 갱신 실패",Toast.LENGTH_SHORT).show();// 실패
-                        break;
-                }
-            }
-
-        }
-    }*/
 }

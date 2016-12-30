@@ -44,6 +44,8 @@ public class PostMethod extends Method {
             setCookie();
             setParameter(paramModel.getParamStr());
 
+            urlConnection.connect();
+
             response = readResponseMessage();
             cookie   = readCookie();
         } catch (IOException e) {
