@@ -13,8 +13,13 @@ public  class ParamModel {
     private String url;
     ArrayList<NameValuePair> params = new ArrayList<>();
 
+    public ArrayList<NameValuePair> getParams() {
+        return params;
+    }
+
     public String getUrl() {
         return url;
+
     }
     public void setUrl(String url) {
         this.url = url;

@@ -59,7 +59,7 @@ public class Pref {
     public static String getUserKey() {
         String userKey = Pref.DEFAULT_STRING_VALUE;
         if(preference != null) {
-            preference.getString(PREF_KEY_USER_KEY, DEFAULT_STRING_VALUE);
+            userKey = preference.getString(PREF_KEY_USER_KEY, DEFAULT_STRING_VALUE);
         }
         return userKey;
     }

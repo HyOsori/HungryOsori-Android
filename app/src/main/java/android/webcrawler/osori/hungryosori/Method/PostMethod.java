@@ -1,20 +1,24 @@
 package android.webcrawler.osori.hungryosori.Method;
 
-import android.webcrawler.osori.hungryosori.Common.Constant;
 import android.webcrawler.osori.hungryosori.Common.HttpResult;
+import android.webcrawler.osori.hungryosori.Intercepter.AddCookiesInterceptor;
+import android.webcrawler.osori.hungryosori.Intercepter.ReceivedCookiesInterceptor;
 import android.webcrawler.osori.hungryosori.Interface.Method;
+import android.webcrawler.osori.hungryosori.Model.NameValuePair;
 import android.webcrawler.osori.hungryosori.Model.ParamModel;
-import java.io.BufferedOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.util.ArrayList;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Created by kunju on 2016-12-28.
  */
 public class PostMethod extends Method {
     private static PostMethod instance = null;
+    private OkHttpClient httpClient;
 
     private PostMethod(){
 
@@ -28,54 +32,34 @@ public class PostMethod extends Method {
 
     @Override
     public HttpResult send(ParamModel paramModel) {
-        String response = null;
-        String cookie   = null;
+        String responseBody = null;
+
+        httpClient          = new OkHttpClient().newBuilder().
+                addInterceptor(new ReceivedCookiesInterceptor()).
+                addInterceptor(new AddCookiesInterceptor()).
+                build();
+
+        Request.Builder builder = new okhttp3.Request.Builder().url(paramModel.getUrl());
+        setParameter(paramModel.getParams(), builder);
+
+        Request request = builder.build();
         try {
-            String urlString    = paramModel.getUrl();
-            final URL url = new URL(urlString);
-
-            urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setDoOutput(true);
-            urlConnection.setDoInput(true);
-            urlConnection.setConnectTimeout(Constant.TIME_OUT_MILLIS);
-            urlConnection.setReadTimeout(Constant.TIME_OUT_MILLIS);
-            urlConnection.setRequestMethod("POST");
-
-            setCookie();
-            setParameter(paramModel.getParamStr());
-
-            urlConnection.connect();
-
-            response = readResponseMessage();
-            cookie   = readCookie();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }finally {
-            urlConnection.disconnect();
+            Response response = httpClient.newCall(request).execute();
+            responseBody = response.body().string();
+        }catch (IOException e){
         }
-        HttpResult result = new HttpResult(response, cookie);
-        return result;
+        return new HttpResult(responseBody, null);
     }
 
-    private void setParameter(String paramStr){
-        OutputStream out = null;
-        if(paramStr.length() > 0) {
-            try {
-                out = new BufferedOutputStream(urlConnection.getOutputStream());
-                out.write(paramStr.getBytes(Constant.DEFAULT_ENCODING));
-                out.flush();
-            }catch (IOException e){
-
-            }finally {
-                if(out != null){
-                    try{
-                        out.close();
-                    }catch (IOException e){
-
-                    }
+    private void setParameter(ArrayList<NameValuePair> parameters, Request.Builder builder){
+        if(parameters.size() > 0){
+            FormBody.Builder postData = new FormBody.Builder();
+            for(NameValuePair pair : parameters){
+                if(pair.getKey() != null && pair.getValue() != null) {
+                    postData.add(pair.getKey(), pair.getValue());
                 }
             }
+            builder.post(postData.build());
         }
     }
 
