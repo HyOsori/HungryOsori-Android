@@ -1,5 +1,4 @@
 package android.webcrawler.osori.hungryosori.Method;
-import android.webcrawler.osori.hungryosori.Common.HttpResult;
 import android.webcrawler.osori.hungryosori.Intercepter.AddCookiesInterceptor;
 import android.webcrawler.osori.hungryosori.Intercepter.ReceivedCookiesInterceptor;
 import android.webcrawler.osori.hungryosori.Interface.Method;
@@ -17,9 +16,7 @@ public class GetMethod extends Method{
     private static GetMethod instance = null;
     private OkHttpClient httpClient;
 
-    private GetMethod(){
-
-    }
+    private GetMethod(){}
 
     public static GetMethod getInstance(){
         if(instance == null)
@@ -44,7 +41,8 @@ public class GetMethod extends Method{
 
             Request  request = new Request.Builder().url(url).build();
             Response response = httpClient.newCall(request).execute();
-            return response.body().string();
+            if(response.isSuccessful())
+                return response.body().string();
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
