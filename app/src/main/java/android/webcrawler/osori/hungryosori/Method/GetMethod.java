@@ -28,14 +28,12 @@ public class GetMethod extends Method{
     }
 
     @Override
-    public HttpResult send(ParamModel paramModel) {
+    public String send(ParamModel paramModel) {
         httpClient          = new OkHttpClient().newBuilder().
                 addInterceptor(new ReceivedCookiesInterceptor()).
                 addInterceptor(new AddCookiesInterceptor()).
                 build();
 
-        Response response;
-        String responseBody = null;
         try {
             String urlString    = paramModel.getUrl();
             String paramString  = paramModel.getParamStr();
@@ -45,14 +43,14 @@ public class GetMethod extends Method{
             final URL url = new URL(urlString);
 
             Request  request = new Request.Builder().url(url).build();
-            response = httpClient.newCall(request).execute();
-            responseBody = response.body().string();
+            Response response = httpClient.newCall(request).execute();
+            return response.body().string();
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        HttpResult httpResult = new HttpResult(responseBody, null);
-        return httpResult;
+
+        return null;
     }
 }
 
