@@ -58,8 +58,8 @@ public class ChangePwActivity extends FragmentActivity {
                 passwordNewChk = editText_passwordNewChk.getText().toString().trim();
 
                 /** 패스워드 체크 */
-                if(password.equals(passwordNew) == false &&
-                        password.equals(Pref.getUserPassword()) == true){
+                if(password.equals(passwordNew) == true &&
+                        password.equals(Pref.getUserPassword()) == false){
                     Toast.makeText(this,"올바르지 않은 비밀번호 입니다", Toast.LENGTH_SHORT).show();
                     break;
                 }
@@ -129,6 +129,7 @@ public class ChangePwActivity extends FragmentActivity {
             // TODO Auto-generated method stub
             if(success) {
                 Toast.makeText(ChangePwActivity.this,"비밀번호 변경 완료",Toast.LENGTH_SHORT).show();
+                Pref.setUserPassword(passwordNew);
                 finish();
             }else{
                 switch(error){
