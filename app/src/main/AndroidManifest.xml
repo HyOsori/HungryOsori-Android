@@ -21,7 +21,6 @@
             android:theme="@android:style/Theme.NoTitleBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -41,10 +40,15 @@
         <!-- Crawler Activity -->
         <activity
             android:name=".CrawlerActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait">
+        </activity>
+
+        <!-- 비밀번호 변경 Activity -->
         <activity
             android:name=".ChangePwActivity"
             android:theme="@android:style/Theme.NoTitleBar" />
+
+        <!-- 비밀번호 찾기 Activity -->
         <activity android:name=".FindPwActivity"
             android:theme="@android:style/Theme.NoTitleBar" />
 
@@ -53,6 +57,7 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
         <service android:name=".MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
@@ -66,7 +71,6 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-
 
     </application>
 

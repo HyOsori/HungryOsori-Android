@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.webcrawler.osori.hungryosori.Common.Constant;
 import android.webcrawler.osori.hungryosori.Common.Pref;
-
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
@@ -22,47 +21,46 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
  * ImageLoader 를 초기화 한다.
  */
 public class StartActivity extends FragmentActivity {
-    private final int DELAY_TIME = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        FirebaseMessaging.getInstance().subscribeToTopic("test");
- //       FirebaseInstanceId.getInstance().getToken();
-
         setContentView(R.layout.activity_start);
 
+        FirebaseMessaging.getInstance().subscribeToTopic("test");
+ //     FirebaseInstanceId.getInstance().getToken();
+
         /** Preference 값을 저장 */
-        Constant.keepLogin      = Pref.getKeepLogin(this);
-        Constant.userKey        = Pref.getUserKey(this);
-        Constant.cookie         = Pref.getCookie(this);
-        Constant.userID         = Pref.getUserID(this);
-        Constant.userPassword   = Pref.getUserPassword(this);
+        Pref.init(this);
+        Constant.keepLogin      = Pref.getKeepLogin();
+        Constant.userKey        = Pref.getUserKey();
+        Constant.cookie         = Pref.getCookie();
+        Constant.userID         = Pref.getUserID();
+        Constant.userPassword   = Pref.getUserPassword();
+        Constant.pushToken      = Pref.getPushToken();
 
         /** 이미지 로더 등록 */
         initImageLoader(this);
 
+        Handler handler = new Handler();
         if(Constant.keepLogin) {
             /** 이미 로그인 된 경우 */
-            Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     Intent intent = new Intent(StartActivity.this, CrawlerActivity.class);
                     startActivity(intent);
                 }
-            }, DELAY_TIME);
+            }, Constant.DELAY_TIME);
         }else{
             /** 로그인 되지 않은 경우에 로그인 페이지로 이동한다 */
-            Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     Intent intent = new Intent(StartActivity.this, LoginActivity.class);
                     startActivity(intent);
                 }
-            }, DELAY_TIME);
+            }, Constant.DELAY_TIME);
         }
 
     }
