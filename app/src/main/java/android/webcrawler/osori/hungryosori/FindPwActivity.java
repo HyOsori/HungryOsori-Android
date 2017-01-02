@@ -61,7 +61,7 @@ public class FindPwActivity extends FragmentActivity {
 
     private class TryFindTask extends AsyncTask<ParamModel, Void, Boolean> {
 
-        private int error = -1;
+        public int error = -1;
 
         @Override
         protected void onPreExecute() {
