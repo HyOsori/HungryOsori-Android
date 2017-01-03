@@ -4,6 +4,7 @@ import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.View;
 import android.webcrawler.osori.hungryosori.Method.GetMethod;
 import android.webcrawler.osori.hungryosori.Model.ParamModel;
@@ -14,6 +15,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.iid.FirebaseInstanceId;
+
 import org.json.JSONObject;
 
 
@@ -37,6 +41,9 @@ public class LoginActivity extends FragmentActivity {
         editText_mail       = (EditText) findViewById(R.id.login_editText_email);
         editText_password   = (EditText) findViewById(R.id.login_editText_password);
 
+
+        String token = FirebaseInstanceId.getInstance().getToken();
+        Log.d("HI:", "Refreshed token: " + token);
         /** 폰트 설정 */
         Typeface fontArial = Typeface.createFromAsset(getAssets(), "fonts/arial.ttf");
         editText_mail.setTypeface(fontArial);

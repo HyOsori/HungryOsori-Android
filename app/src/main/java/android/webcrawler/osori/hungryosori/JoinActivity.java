@@ -102,7 +102,7 @@ public class JoinActivity extends FragmentActivity {
 
     // 회원가입 시도하는 AsyncTask
     private class TryJoinTask extends AsyncTask<ParamModel, Void, Boolean> {
-       private int error = -1;
+       public int error = -1;
 
         @Override
         protected void onPreExecute() {

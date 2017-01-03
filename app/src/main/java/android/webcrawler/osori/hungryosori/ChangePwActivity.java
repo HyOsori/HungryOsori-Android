@@ -94,7 +94,7 @@ public class ChangePwActivity extends FragmentActivity {
     }
 
    private class TryChangeTask extends AsyncTask<ParamModel, Void, Boolean> {
-        private int error = -1;
+        public int error = -1;
 
         @Override
         protected void onPreExecute() {

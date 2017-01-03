@@ -11,6 +11,7 @@ import com.google.firebase.iid.FirebaseInstanceIdService;
 /**
  * Created by kkm on 2016-08-29.
  */
+
 public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
 
     private static final String TAG = "MyFirebaseIIDService";
@@ -21,9 +22,8 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
         // Get updated InstanceID token.
         Context context = getApplicationContext();
         String token = FirebaseInstanceId.getInstance().getToken();
-        String prefToken = Pref.getPushToken();
         Log.d(TAG, "Refreshed token: " + token);
-                Pref.setPushToken(token);
-
+        Pref.setPushToken(token);
+        // sendRegistrationToServer(token);
     }
 }
