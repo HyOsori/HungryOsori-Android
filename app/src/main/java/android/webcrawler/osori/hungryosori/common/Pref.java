@@ -10,7 +10,7 @@ import android.content.SharedPreferences;
 import java.util.Set;
 
 /**
- * Created by 고건주 on 2016-08-25.
+ * Created by 고건주&김규민 on 2016-08-25.
  * Shared Preference 관련 함수들
  */
 public class Pref {
