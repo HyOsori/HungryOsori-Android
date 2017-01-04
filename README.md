@@ -16,6 +16,6 @@ Scalable Layout ( https://github.com/ssomai/ScalableLayout )
 Universal Image Loader ( https://github.com/nostra13/Android-Universal-Image-Loader ) 
 
 
-## 2017.01.03일 이후로 김규민(kkyumin)에게 Admin 권한 부여
+*2017.01.03일 이후로 김규민(kkyumin)에게 Admin 권한 부여
 
 개발자 : 고건주, 김규민
