@@ -17,49 +17,10 @@ import com.google.firebase.messaging.RemoteMessage;
 import org.json.JSONObject;
 
 /**
- * Created by kkm on 2016-08-29.
+ * OPENSOURCE: GOOGLE CDM : 김규민 modified
  */
 
 //fcm
-/*
-public class MyFirebaseMessagingService extends com.google.firebase.messaging.FirebaseMessagingService {
-    private static final String TAG = "FirebaseMsgService";
-
-    // [START receive_message]
-    @Override
-    public void onMessageReceived(RemoteMessage remoteMessage) {
-        Log.d(TAG, "onMessageReceived");
-        remoteMessage.getData();
-        sendNotification(remoteMessage.getData().get("data_message"));
-    }
-
-    private void sendNotification(String messageBody) {
-        //클릭했을때 StartActivity로 가게된다.//
-        Intent intent = new Intent(this, StartActivity.class);
-
-//        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"));
-        intent.addFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        intent.addFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NEW_TASK);
-
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code *//*, intent,
-                PendingIntent.FLAG_ONE_SHOT);
-
-        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("알림: 새로운 푸쉬가 들어왔습니다.")
-                .setContentText(messageBody)
-                .setAutoCancel(true)
-                .setSound(defaultSoundUri)
-                .setContentIntent(pendingIntent);
-
-        NotificationManager notificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-        notificationManager.notify(0 /* ID of notification *//*, notificationBuilder.build());
-    }
-
-}*/
 
 public class MyFirebaseMessagingService extends com.google.firebase.messaging.FirebaseMessagingService {
 
@@ -82,13 +43,7 @@ public class MyFirebaseMessagingService extends com.google.firebase.messaging.Fi
                 sendNotification(remoteMessage.getData().get("title"), remoteMessage.getData().get("clickurl"));
             }
         }
-        // Check if message contains a notification payload.
-        if (remoteMessage.getNotification() != null) {
-            Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
-        }
-/*            sendNotification(remoteMessage.getNotification().getBody());
-        }
-*/
+
     }
 
     private void sendNotification(String messageTitle, String messageBody, String clickUrl) {

@@ -10,7 +10,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /**
- * Created by kunju on 2016-12-28.
+ * Created by kunju&kkm on 2016-12-28.
  */
 public class GetMethod extends Method{
     private static GetMethod instance = null;

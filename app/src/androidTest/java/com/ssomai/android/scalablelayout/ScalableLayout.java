@@ -23,7 +23,7 @@ import android.widget.ImageView.ScaleType;
 import android.widget.TextView;
 
 import java.util.logging.Logger;
-
+/*오픈소스*/
 public class ScalableLayout extends FrameLayout {
     private static final float Default_Scale_Base_Width = 100f;
     private static final float Default_Scale_Base_Height = 100f;
