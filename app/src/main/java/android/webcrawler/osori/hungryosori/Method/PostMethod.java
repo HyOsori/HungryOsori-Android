@@ -38,11 +38,12 @@ public class PostMethod extends Method {
 
         Request.Builder builder = new Request.Builder().url(paramModel.getUrl());
         setParameter(paramModel.getParameters(), builder);
-
+        String result = "";
         Request request = builder.build();
         try {
             Response response = httpClient.newCall(request).execute();
             if(response.isSuccessful())
+//                result = response.body().string();
                 return response.body().string();
         }catch (IOException e){
         }

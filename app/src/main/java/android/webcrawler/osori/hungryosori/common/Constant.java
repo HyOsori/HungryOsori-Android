@@ -24,5 +24,5 @@ public class Constant {
 
     /** Http 관련 상수 */
     public static final String  DEFAULT_ENCODING = "UTF-8";
-    public static final String SERVER_URL        = "http://52.78.113.6:8000";
+    public static final String SERVER_URL        = "http://211.249.63.209:120/api";
 }
