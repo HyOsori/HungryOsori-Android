@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.webcrawler.osori.hungryosori.Method.GetMethod;
+import android.webcrawler.osori.hungryosori.Method.PostMethod;
 import android.webcrawler.osori.hungryosori.Model.ParamModel;
 import android.webcrawler.osori.hungryosori.Common.Constant;
 import android.webcrawler.osori.hungryosori.Common.Lib;
@@ -89,12 +90,12 @@ public class LoginActivity extends FragmentActivity {
 
     // 로그인 시도
     private void tryLogin(){
-        String url = Constant.SERVER_URL + "/user/";
+        String url = Constant.SERVER_URL + "/signin/";
         String pushToken = Pref.getPushToken();
 
         ParamModel params = new ParamModel();
         params.setUrl(url);
-        params.addParameter("user_id", email);
+        params.addParameter("email", email);
         params.addParameter("password", password);
         params.addParameter("push_token", pushToken);
 
@@ -114,12 +115,13 @@ public class LoginActivity extends FragmentActivity {
         @Override
         protected Boolean doInBackground(ParamModel... params) {
             // TODO Auto-generated method stub
-            String result = GetMethod.getInstance().send(params[0]);
+//            String result = GetMethod.getInstance().send(params[0]);
+            String result = PostMethod.getInstance().send(params[0]);
             try {
                 JSONObject jsonObject = new JSONObject(result);
                 int error = jsonObject.getInt("ErrorCode");
                 if (error == 0) {
-                    userKey = jsonObject.getString("user_key");
+                    userKey = jsonObject.getString("token");
                     return true;
                 }
             } catch (Exception e) {

@@ -89,13 +89,14 @@ public class JoinActivity extends FragmentActivity {
 
     // 로그인 시도
     private void tryJoin(){
-        String url = Constant.SERVER_URL + "/users/";
+        String url = Constant.SERVER_URL + "/signup/";
 
         ParamModel params = new ParamModel();
         params.setUrl(url);
-        params.addParameter("user_id", email);
+        params.addParameter("email", email);
         params.addParameter("password", password);
         params.addParameter("name", name);
+        params.addParameter("sign_up_type", "email");
 
         new TryJoinTask().execute(params);
     }
