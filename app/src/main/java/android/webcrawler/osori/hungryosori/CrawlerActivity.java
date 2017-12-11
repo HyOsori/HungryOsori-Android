@@ -94,8 +94,8 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
         @Override
         protected Boolean doInBackground(ParamModel... params) {
             // TODO Auto-generated method stub
-
-            String result = GetMethod.getInstance().send(params[0]);
+            String token = Pref.getUserKey();
+            String result = GetMethod.getInstance().send(params[0], token);
 
             try {
                 JSONObject jsonObject = new JSONObject(result);
