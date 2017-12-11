@@ -50,6 +50,8 @@ public class GetMethod extends Method{
 
         return null;
     }
+//    Overloading send method
+//    This is used to add authorization at header for getting whole crawler list
     public String send(ParamModel paramModel, String token) {
         httpClient          = new OkHttpClient().newBuilder().
                 addInterceptor(new ReceivedCookiesInterceptor()).
