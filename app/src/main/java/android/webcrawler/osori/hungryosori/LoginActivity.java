@@ -13,6 +13,7 @@ import android.webcrawler.osori.hungryosori.Common.Constant;
 import android.webcrawler.osori.hungryosori.Common.Lib;
 import android.webcrawler.osori.hungryosori.Common.Pref;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,6 +33,7 @@ public class LoginActivity extends FragmentActivity {
     private String email;
     private String password;
     private EditText editText_mail, editText_password;
+    private CheckBox keepLogin_checkBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,7 @@ public class LoginActivity extends FragmentActivity {
         /** 객체 설정 */
         editText_mail       = (EditText) findViewById(R.id.login_editText_email);
         editText_password   = (EditText) findViewById(R.id.login_editText_password);
+        keepLogin_checkBox  = (CheckBox) findViewById(R.id.keeplogin_checkBox);
 
 
         String token = FirebaseInstanceId.getInstance().getToken();
@@ -51,6 +54,8 @@ public class LoginActivity extends FragmentActivity {
         editText_password.setTypeface(fontArial);
         ((TextView)findViewById(R.id.login_button_join)).setTypeface(fontArial);
         ((Button)findViewById(R.id.login_button_login)).setTypeface(fontArial);
+        ((CheckBox)findViewById(R.id.keeplogin_checkBox)).setTypeface(fontArial);
+
     }
 
     public void onClick(View v) {
@@ -137,10 +142,17 @@ public class LoginActivity extends FragmentActivity {
             if(success) {
                 // 로그인 성공
                 if(userKey != Pref.DEFAULT_STRING_VALUE) {
-                    Pref.setUserKey(userKey);
-                    Pref.setUserID(email);
-                    Pref.setUserPassword(password);
-                    Pref.setKeepLogin(true);
+                    if(keepLogin_checkBox.isChecked()) {
+                        Pref.setUserKey(userKey);
+                        Pref.setUserID(email);
+                        Pref.setUserPassword(password);
+                        Pref.setKeepLogin(true);
+                    } else{
+                        Pref.setUserKey(userKey);
+                        Pref.setUserID(email);
+                        Pref.setUserPassword(password);
+                        Pref.setKeepLogin(false);
+                    }
 
                     Intent intent = new Intent(LoginActivity.this, CrawlerActivity.class);
                     intent.addFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY);
