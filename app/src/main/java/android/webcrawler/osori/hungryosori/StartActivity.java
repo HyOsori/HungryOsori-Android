@@ -2,17 +2,25 @@ package android.webcrawler.osori.hungryosori;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.webcrawler.osori.hungryosori.Common.Constant;
 import android.webcrawler.osori.hungryosori.Common.Pref;
+import android.webcrawler.osori.hungryosori.Method.PostMethod;
+import android.webcrawler.osori.hungryosori.Model.ParamModel;
+import android.widget.Toast;
+
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+
+import org.json.JSONObject;
 
 /**
  * Created by 고건주 on 2016-08-18.
@@ -43,13 +51,15 @@ public class StartActivity extends FragmentActivity {
         initImageLoader(this);
 
         Handler handler = new Handler();
+
         if(Constant.keepLogin) {
             /** 이미 로그인 된 경우 */
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    Intent intent = new Intent(StartActivity.this, CrawlerActivity.class);
-                    startActivity(intent);
+                    tryLogin();
+                    //Intent intent = new Intent(StartActivity.this, CrawlerActivity.class);
+                    //startActivity(intent);
                 }
             }, Constant.DELAY_TIME);
         }else{
@@ -82,4 +92,82 @@ public class StartActivity extends FragmentActivity {
         // Initialize ImageLoader with configuration.
         ImageLoader.getInstance().init(config.build());
     }
+
+    // 로그인 시도
+    private void tryLogin(){
+        String url = Constant.SERVER_URL + "/signin/";
+        String pushToken = Pref.getPushToken();
+
+        ParamModel params = new ParamModel();
+        params.setUrl(url);
+        params.addParameter("email", Constant.userID);
+        params.addParameter("password", Constant.userPassword);
+        params.addParameter("push_token", Constant.pushToken);
+
+        new StartActivity.TryLoginTask().execute(params);
+    }
+
+    // 로그인을 시도하는 AsyncTask
+    private class TryLoginTask extends AsyncTask<ParamModel, Void, Boolean> {
+        private String  userKey  = Pref.DEFAULT_STRING_VALUE;
+
+        @Override
+        protected void onPreExecute() {
+            // TODO Auto-generated method stub
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Boolean doInBackground(ParamModel... params) {
+            // TODO Auto-generated method stub
+//            String result = GetMethod.getInstance().send(params[0]);
+            String result = PostMethod.getInstance().send(params[0]);
+            try {
+                JSONObject jsonObject = new JSONObject(result);
+                int error = jsonObject.getInt("ErrorCode");
+                if (error == 0) {
+                    userKey = jsonObject.getString("token");
+                    return true;
+                }
+            } catch (Exception e) {
+                return false;
+            }
+
+            return false;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean success) {
+            // TODO Auto-generated method stub
+            if(success) {
+                // 로그인 성공
+                if(userKey != Pref.DEFAULT_STRING_VALUE) {
+                    //지워도 될듯
+//                    Pref.setUserKey(userKey);
+//                    Pref.setUserID(Constant.userID);
+//                    Pref.setUserPassword(Constant.userPassword);
+//                    Pref.setKeepLogin(true);
+                    //*******************************************
+                    Log.d("login", ": success");
+                    Intent intent = new Intent(StartActivity.this, CrawlerActivity.class);
+                    intent.addFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY);
+                    intent.addFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent.addFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                }
+            }else{
+                // 로그인 실패
+                Log.d("login", ": fail");
+                Intent intent = new Intent(StartActivity.this, AutoFailActivity.class);
+                intent.addFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY);
+                intent.addFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.addFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                Toast.makeText(StartActivity.this, "로그인 실패: ", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
 }
+
+

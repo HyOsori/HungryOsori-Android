@@ -28,7 +28,7 @@ import org.json.JSONObject;
  * 로그인 페이지 액티비티
  */
 
-public class LoginActivity extends FragmentActivity {
+public class LoginActivity extends FragmentActivity{
 
     private String email;
     private String password;
@@ -44,6 +44,7 @@ public class LoginActivity extends FragmentActivity {
         editText_mail       = (EditText) findViewById(R.id.login_editText_email);
         editText_password   = (EditText) findViewById(R.id.login_editText_password);
         keepLogin_checkBox  = (CheckBox) findViewById(R.id.keeplogin_checkBox);
+
 
 
         String token = FirebaseInstanceId.getInstance().getToken();
