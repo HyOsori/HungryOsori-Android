@@ -156,7 +156,6 @@ public class LoginActivity extends FragmentActivity{
                     }
 
                     Intent intent = new Intent(LoginActivity.this, CrawlerActivity.class);
-                    intent.addFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY);
                     intent.addFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     intent.addFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);

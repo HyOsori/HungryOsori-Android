@@ -58,7 +58,6 @@ public class AutoFailActivity extends AppCompatActivity implements View.OnClickL
                 break;
             case R.id.go_login_button:
                 intent = new Intent(AutoFailActivity.this, LoginActivity.class);
-                intent.addFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY);
                 intent.addFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 intent.addFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
@@ -124,7 +123,6 @@ public class AutoFailActivity extends AppCompatActivity implements View.OnClickL
                     //*******************************************
                     Log.d("login success", ": autoFail");
                     Intent intent = new Intent(AutoFailActivity.this, CrawlerActivity.class);
-                    intent.addFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY);
                     intent.addFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     intent.addFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);

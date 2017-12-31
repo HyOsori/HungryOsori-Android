@@ -150,7 +150,6 @@ public class StartActivity extends FragmentActivity {
                     //*******************************************
                     Log.d("login", ": success");
                     Intent intent = new Intent(StartActivity.this, CrawlerActivity.class);
-                    intent.addFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY);
                     intent.addFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     intent.addFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
@@ -159,7 +158,6 @@ public class StartActivity extends FragmentActivity {
                 // 로그인 실패
                 Log.d("login", ": fail");
                 Intent intent = new Intent(StartActivity.this, AutoFailActivity.class);
-                intent.addFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY);
                 intent.addFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 intent.addFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
