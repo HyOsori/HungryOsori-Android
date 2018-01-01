@@ -26,7 +26,7 @@ import java.util.ArrayList;
 /**
  * Created by 고건주,김규민 on 2016-08-25.
  */
-public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPageChangeListener {
+public class    CrawlerActivity extends FragmentActivity implements ViewPager.OnPageChangeListener {
 
     private CrawlerInfos crawlerInfos;
     private ViewPager viewPager;
@@ -71,6 +71,7 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
     /**
      * Crawler 전체 정보를 가져오는 함수
      */
+
     private void getEntireList() {
         String url = Constant.SERVER_URL + "/crawlers/";
 
@@ -142,6 +143,7 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
     /**
      * 사용자가 구독 중인 CrawlerID를 가져오는 함수
      */
+
     private void getSubscriptionList() {
         String url = Constant.SERVER_URL + "/subscription/";
         ParamModel params = new ParamModel();
@@ -206,6 +208,7 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
         }
     }
 
+
     private void setViewPagerAdapter() {
         // ViewPager 어댑터 생성
         viewPagerAdapter = new CrawlerViewPagerAdapter(getSupportFragmentManager());
@@ -216,6 +219,7 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
     }
 
     /* view pager 페이지가 바뀌면 호출된다 */
+    @Override
     public void onPageSelected(int position) {
         if (position == Constant.PAGE_MY) {
             button_my.setChecked(true);
@@ -235,7 +239,6 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
     public void onPageScrolled(int arg0, float arg1, int arg2) {
         // TODO Auto-generated method stub
     }
-
 
     public void onClick(View v) {
        switch (v.getId()) {

@@ -105,8 +105,12 @@ public class CrawlerListAdapter extends ArrayAdapter<CrawlerInfo> implements Vie
         ParamModel params = new ParamModel();
 
         params.setUrl(url);
+
         params.addParameter("user_id", Constant.userID);
         params.addParameter("user_key", Constant.userKey);
+        //id, key대신 token
+        //params.addParameter("push_token", Constant.pushToken);
+
         params.addParameter("crawler_id", crawlerID);
 
         new subscribeCrawlerTask(crawlerID, view).execute(params);
@@ -167,8 +171,13 @@ public class CrawlerListAdapter extends ArrayAdapter<CrawlerInfo> implements Vie
 
         ParamModel params = new ParamModel();
         params.setUrl(url);
+
+
         params.addParameter("user_id", Constant.userID);
         params.addParameter("user_key", Constant.userKey);
+        //id, key대신 token
+        //params.addParameter("push_token", Constant.pushToken);
+
         params.addParameter("crawler_id", crawlerID);
 
         new unSubscribeCrawlerTask(crawlerID, view).execute(params);
