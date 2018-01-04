@@ -10,43 +10,39 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/backGroundColorBasic"
-        sl:scale_base_width="400"
         sl:scale_base_height="100"
-        >
+        sl:scale_base_width="400">
 
         <ImageView
             android:id="@+id/list_crawler_imageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            sl:scale_left = "10"
-            sl:scale_top = "10"
-            sl:scale_width = "80"
-            sl:scale_height = "80"
-            />
+            sl:scale_height="80"
+            sl:scale_left="10"
+            sl:scale_top="10"
+            sl:scale_width="80" />
 
         <TextView
             android:id="@+id/list_crawler_textView_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
-            sl:scale_left = "100"
-            sl:scale_top = "10"
-            sl:scale_width = "200"
-            sl:scale_height = "40"
-            sl:scale_textsize = "15"
-            />
+            sl:scale_height="40"
+            sl:scale_left="100"
+            sl:scale_textsize="15"
+            sl:scale_top="10"
+            sl:scale_width="200" />
 
         <TextView
             android:id="@+id/list_crawler_textView_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
-            sl:scale_left = "100"
-            sl:scale_top = "50"
-            sl:scale_width = "200"
-            sl:scale_height = "40"
-            sl:scale_textsize = "15"
-            />
+            sl:scale_height="40"
+            sl:scale_left="100"
+            sl:scale_textsize="15"
+            sl:scale_top="50"
+            sl:scale_width="200" />
 
 
         <ToggleButton
@@ -54,15 +50,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/togglebtn_mint_square"
-            android:textOff= "구독"
-            android:textOn = "구독 해제"
             android:textColor="@color/white"
-            sl:scale_left = "310"
-            sl:scale_top = "10"
-            sl:scale_width = "80"
-            sl:scale_height = "80"
-            sl:scale_textsize = "15"
-            />
+            android:textOff="구독"
+            android:textOn="구독 해제"
+            sl:scale_height="80"
+            sl:scale_left="310"
+            sl:scale_textsize="15"
+            sl:scale_top="10"
+            sl:scale_width="80" />
 
     </com.ssomai.android.scalablelayout.ScalableLayout>
 

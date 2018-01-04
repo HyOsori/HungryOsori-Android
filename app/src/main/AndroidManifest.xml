@@ -72,7 +72,8 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".AutoFailActivity"></activity>
+        <activity android:name=".AutoFailActivity" />
+        <activity android:name=".KeywordActivity"></activity>
     </application>
 
 </manifest>
