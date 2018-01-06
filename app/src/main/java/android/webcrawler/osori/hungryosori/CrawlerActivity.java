@@ -1,6 +1,8 @@
 package android.webcrawler.osori.hungryosori;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
@@ -268,4 +270,29 @@ public class    CrawlerActivity extends FragmentActivity implements ViewPager.On
         }
     }
 
+    /* 예상치 못한 로그아웃 방지 */
+    @Override
+    public void onBackPressed(){
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setMessage("로그아웃 하시겠습니까?");
+
+        // 왼쪽
+        alert.setNegativeButton("예", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finishAffinity();
+            }
+        });
+
+        // 오른쪽
+        alert.setPositiveButton("아니오", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Do Nothing
+            }
+        });
+        alert.setTitle("로그아웃");
+        AlertDialog alert_view = alert.create();
+        alert_view.show();
+    }
 }
