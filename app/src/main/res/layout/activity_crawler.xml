@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:sl="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_crawler_drawerLayout"
@@ -45,10 +45,10 @@
                 android:background="@drawable/menubtn_mint_square"
                 android:checked="false"
                 android:onClick="onClick"
+                android:textAlignment="center"
+                android:textColor="@color/white"
                 android:textOff="전체"
                 android:textOn="전체"
-                android:textColor = "@color/white"
-                android:textAlignment="center"
                 sl:scale_height="100"
                 sl:scale_left="250"
                 sl:scale_textsize="30"
@@ -74,4 +74,4 @@
         android:background="@color/white"
         android:fitsSystemWindows="true" />
 
-</android.support.v4.widget.DrawerLayout>
+</LinearLayout>

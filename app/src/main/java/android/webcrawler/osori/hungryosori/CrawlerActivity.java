@@ -28,7 +28,7 @@ import java.util.ArrayList;
 /**
  * Created by 고건주,김규민 on 2016-08-25.
  */
-public class    CrawlerActivity extends FragmentActivity implements ViewPager.OnPageChangeListener {
+public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPageChangeListener {
 
     private CrawlerInfos crawlerInfos;
     private ViewPager viewPager;
@@ -54,9 +54,6 @@ public class    CrawlerActivity extends FragmentActivity implements ViewPager.On
         button_all.setTypeface(fontArial);
         button_my.setTypeface(fontArial);
 
-        /** 헤더 추가 */
-        View header = LayoutInflater.from(this).inflate(R.layout.header_navigation, null);
-        navigationView.addHeaderView(header);
 
         /** ViewPagerAdapter 설정 */
         setViewPagerAdapter();
@@ -253,20 +250,6 @@ public class    CrawlerActivity extends FragmentActivity implements ViewPager.On
                 viewPager.setCurrentItem(Constant.PAGE_ALL);
                 break;
 
-            case R.id.header_navigation_textView_logout:
-                if(Pref.resetLogin() == true) {
-                    Intent intent = new Intent(CrawlerActivity.this, LoginActivity.class);
-                    intent.addFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    intent.addFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                }
-                break;
-
-            case R.id.header_navigation_textView_change_password: {
-                Intent intent = new Intent(CrawlerActivity.this, ChangePwActivity.class);
-                startActivity(intent);
-                break;
-            }
         }
     }
 
