@@ -153,7 +153,6 @@ public class    CrawlerActivity extends FragmentActivity implements ViewPager.On
         params.setUrl(url);
         params.addParameter("user_id", Constant.userID);
         params.addParameter("user_key", Constant.userKey);
-
         new getSubscriptionListTask().execute(params);
     }
 

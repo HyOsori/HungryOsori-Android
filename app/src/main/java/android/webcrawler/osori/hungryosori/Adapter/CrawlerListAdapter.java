@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webcrawler.osori.hungryosori.Common.Constant;
+import android.webcrawler.osori.hungryosori.Common.Pref;
 import android.webcrawler.osori.hungryosori.CrawlerInfo.CrawlerInfos;
 import android.webcrawler.osori.hungryosori.Method.DeleteMethod;
 import android.webcrawler.osori.hungryosori.Method.PostMethod;
@@ -100,18 +101,19 @@ public class CrawlerListAdapter extends ArrayAdapter<CrawlerInfo> implements Vie
     {
         String crawlerID = getItem(position).getId();
 
-        String url = Constant.SERVER_URL + "/subscriptions/";
+        String url = Constant.SERVER_URL + "/subscription/";
 
         ParamModel params = new ParamModel();
 
         params.setUrl(url);
 
-        params.addParameter("user_id", Constant.userID);
-        params.addParameter("user_key", Constant.userKey);
+        //params.addParameter("user_id", Constant.userID);
+        //params.addParameter("user_key", Constant.userKey);
+        params.addParameter("crawler_id", crawlerID);
         //id, key대신 token
         //params.addParameter("push_token", Constant.pushToken);
 
-        params.addParameter("crawler_id", crawlerID);
+
 
         new subscribeCrawlerTask(crawlerID, view).execute(params);
     }
@@ -135,7 +137,8 @@ public class CrawlerListAdapter extends ArrayAdapter<CrawlerInfo> implements Vie
         @Override
         protected Boolean doInBackground(ParamModel... params) {
             // TODO Auto-generated method stub
-            String result = PostMethod.getInstance().send(params[0]);
+            String token = Pref.getUserKey();
+            String result = PostMethod.getInstance().send(params[0], token);
 
             try {
                 JSONObject jsonObject = new JSONObject(result);

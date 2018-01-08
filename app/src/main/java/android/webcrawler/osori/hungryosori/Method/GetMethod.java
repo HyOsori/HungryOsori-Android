@@ -66,8 +66,7 @@ public class GetMethod extends Method{
             }
             final URL url = new URL(urlString);
 
-            Request  request = new Request.Builder()
-                    .url(url)
+            Request  request = new Request.Builder().url(url)
                     .header("Authorization" , "Token " + token)
                     .build();
             Response response = httpClient.newCall(request).execute();

@@ -5,6 +5,7 @@ import android.webcrawler.osori.hungryosori.Interface.Method;
 import android.webcrawler.osori.hungryosori.Model.NameValuePair;
 import android.webcrawler.osori.hungryosori.Model.ParamModel;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
@@ -41,6 +42,36 @@ public class PostMethod extends Method {
         String result = "";
         Request request = builder.build();
         try {
+            Response response = httpClient.newCall(request).execute();
+            if(response.isSuccessful())
+//                result = response.body().string();
+                return response.body().string();
+        }catch (IOException e){
+        }
+        return null;
+    }
+
+    public String send(ParamModel paramModel, String token) {
+
+        httpClient          = new OkHttpClient().newBuilder().
+                addInterceptor(new ReceivedCookiesInterceptor()).
+                addInterceptor(new AddCookiesInterceptor()).
+                build();
+
+
+        try {
+            String urlString    = paramModel.getUrl();
+            String paramString  = paramModel.getParamStr();
+            if(paramString != null && paramString.length() > 0){
+                urlString += "?" + paramString;
+            }
+            final URL url = new URL(urlString);
+
+            Request.Builder builder = new Request.Builder().url(paramModel.getUrl());
+            setParameter(paramModel.getParameters(), builder);
+            String result = "";
+            Request request = builder.url(url).header("Authorization" , "Token " + token).build();
+
             Response response = httpClient.newCall(request).execute();
             if(response.isSuccessful())
 //                result = response.body().string();
