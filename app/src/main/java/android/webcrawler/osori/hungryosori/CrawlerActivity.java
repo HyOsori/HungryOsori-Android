@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.webcrawler.osori.hungryosori.Adapter.CrawlerViewPagerAdapter;
@@ -95,8 +96,10 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
         protected Boolean doInBackground(ParamModel... params) {
             // TODO Auto-generated method stub
             String token = Pref.getUserKey();
+            //String token = Pref.getPushToken();
             String result = GetMethod.getInstance().send(params[0], token);
-
+            Log.e("token_activity", token);
+            Log.e("result_activity", result);
             try {
                 JSONObject jsonObject = new JSONObject(result);
 
@@ -262,6 +265,7 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
         alert.setNegativeButton("예", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                Pref.resetLogin();
                 finishAffinity();
             }
         });

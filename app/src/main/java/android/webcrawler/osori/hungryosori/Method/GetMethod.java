@@ -1,4 +1,5 @@
 package android.webcrawler.osori.hungryosori.Method;
+import android.util.Log;
 import android.webcrawler.osori.hungryosori.Intercepter.AddCookiesInterceptor;
 import android.webcrawler.osori.hungryosori.Intercepter.ReceivedCookiesInterceptor;
 import android.webcrawler.osori.hungryosori.Interface.Method;
@@ -69,6 +70,7 @@ public class GetMethod extends Method{
             Request  request = new Request.Builder().url(url)
                     .header("Authorization" , "Token " + token)
                     .build();
+            Log.e("request_getMeth", request.toString());
             Response response = httpClient.newCall(request).execute();
             if(response.isSuccessful())
                 return response.body().string();

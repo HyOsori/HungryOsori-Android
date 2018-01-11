@@ -3,6 +3,7 @@ package android.webcrawler.osori.hungryosori.Adapter;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webcrawler.osori.hungryosori.Common.Constant;
@@ -20,6 +21,8 @@ import android.widget.ToggleButton;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import org.json.JSONObject;
+
+import java.net.URLEncoder;
 import java.util.List;
 
 /**
@@ -100,21 +103,18 @@ public class CrawlerListAdapter extends ArrayAdapter<CrawlerInfo> implements Vie
     private void subscribeCrawler(int position, View view)
     {
         String crawlerID = getItem(position).getId();
+        String crawlerID_en = "";
+        try{
+            crawlerID_en = URLEncoder.encode(crawlerID, "utf-8");
+        }catch (Exception e){
 
+        }
         String url = Constant.SERVER_URL + "/subscription/";
 
         ParamModel params = new ParamModel();
 
         params.setUrl(url);
-
-        //params.addParameter("user_id", Constant.userID);
-        //params.addParameter("user_key", Constant.userKey);
-        params.addParameter("crawler_id", crawlerID);
-        //id, key대신 token
-        //params.addParameter("push_token", Constant.pushToken);
-
-
-
+        params.addParameter("crawler_id", crawlerID_en);
         new subscribeCrawlerTask(crawlerID, view).execute(params);
     }
 
@@ -138,16 +138,19 @@ public class CrawlerListAdapter extends ArrayAdapter<CrawlerInfo> implements Vie
         protected Boolean doInBackground(ParamModel... params) {
             // TODO Auto-generated method stub
             String token = Pref.getUserKey();
+            //String token = Pref.getPushToken();
             String result = PostMethod.getInstance().send(params[0], token);
 
+            Log.e("sub_doInBack_token", token);
             try {
                 JSONObject jsonObject = new JSONObject(result);
                 int error = jsonObject.getInt("ErrorCode");
+                Log.e("sub_doInBackground", "errorCode: "+error);
                 if (error == 0) {
                     return true;
                 }
             } catch (Exception e) {
-
+                Log.e("sub_doInBackground", e.toString());
             }
 
             return false;
@@ -158,6 +161,7 @@ public class CrawlerListAdapter extends ArrayAdapter<CrawlerInfo> implements Vie
             // TODO Auto-generated method stub
             if(success) {
                 // 성공
+                Log.e("subscribeCrawlerTask", "onPostExecute: success");
                 CrawlerInfos.getInstance().subscriptionCrawler(id);
             }else{
                 ((ToggleButton)view).setChecked(false);
@@ -176,8 +180,6 @@ public class CrawlerListAdapter extends ArrayAdapter<CrawlerInfo> implements Vie
         params.setUrl(url);
 
 
-        params.addParameter("user_id", Constant.userID);
-        params.addParameter("user_key", Constant.userKey);
         //id, key대신 token
         //params.addParameter("push_token", Constant.pushToken);
 
@@ -204,6 +206,7 @@ public class CrawlerListAdapter extends ArrayAdapter<CrawlerInfo> implements Vie
         @Override
         protected Boolean doInBackground(ParamModel... params) {
             // TODO Auto-generated method stub
+            String token = Pref.getUserKey();
             String result = DeleteMethod.getInstance().send(params[0]);
 
             try {
@@ -224,6 +227,7 @@ public class CrawlerListAdapter extends ArrayAdapter<CrawlerInfo> implements Vie
             // TODO Auto-generated method stub
             if(success) {
                 // 성공
+
                 CrawlerInfos.getInstance().unSubscriptionCrawler(id);
             }else{
                 ((ToggleButton)view).setChecked(true);

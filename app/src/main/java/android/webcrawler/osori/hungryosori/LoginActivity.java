@@ -34,6 +34,7 @@ public class LoginActivity extends FragmentActivity{
     private String password;
     private EditText editText_mail, editText_password;
     private CheckBox keepLogin_checkBox;
+    private String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +48,7 @@ public class LoginActivity extends FragmentActivity{
 
 
 
-        String token = FirebaseInstanceId.getInstance().getToken();
+        token = FirebaseInstanceId.getInstance().getToken();
         Log.d("HI:", "Refreshed token: " + token);
         /** 폰트 설정 */
         Typeface fontArial = Typeface.createFromAsset(getAssets(), "fonts/arial.ttf");
@@ -97,6 +98,7 @@ public class LoginActivity extends FragmentActivity{
     // 로그인 시도
     private void tryLogin(){
         String url = Constant.SERVER_URL + "/signin/";
+        //userkey token
         String pushToken = Pref.getPushToken();
 
         ParamModel params = new ParamModel();
@@ -128,6 +130,7 @@ public class LoginActivity extends FragmentActivity{
                 int error = jsonObject.getInt("ErrorCode");
                 if (error == 0) {
                     userKey = jsonObject.getString("token");
+                    Log.e("userKey", userKey);
                     return true;
                 }
             } catch (Exception e) {
@@ -147,11 +150,13 @@ public class LoginActivity extends FragmentActivity{
                         Pref.setUserKey(userKey);
                         Pref.setUserID(email);
                         Pref.setUserPassword(password);
+                        Pref.setPushToken(token);
                         Pref.setKeepLogin(true);
                     } else{
                         Pref.setUserKey(userKey);
                         Pref.setUserID(email);
                         Pref.setUserPassword(password);
+                        Pref.setPushToken(token);
                         Pref.setKeepLogin(false);
                     }
 
