@@ -42,7 +42,7 @@ public class PostMethod extends Method {
         setParameter(paramModel.getParameters(), builder);
         String result = "";
         Request request = builder.build();
-        
+
         try {
             Response response = httpClient.newCall(request).execute();
             if(response.isSuccessful())

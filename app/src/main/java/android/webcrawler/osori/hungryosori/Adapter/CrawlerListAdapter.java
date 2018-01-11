@@ -207,7 +207,7 @@ public class CrawlerListAdapter extends ArrayAdapter<CrawlerInfo> implements Vie
         protected Boolean doInBackground(ParamModel... params) {
             // TODO Auto-generated method stub
             String token = Pref.getUserKey();
-            String result = DeleteMethod.getInstance().send(params[0]);
+            String result = DeleteMethod.getInstance().send(params[0], token);
 
             try {
                 JSONObject jsonObject = new JSONObject(result);

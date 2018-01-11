@@ -57,9 +57,13 @@ public class StartActivity extends FragmentActivity {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    tryLogin();
+                    //tryLogin();
                     //Intent intent = new Intent(StartActivity.this, CrawlerActivity.class);
                     //startActivity(intent);
+                    Intent intent = new Intent(StartActivity.this, CrawlerActivity.class);
+                    intent.addFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent.addFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
                 }
             }, Constant.DELAY_TIME);
         }else{
@@ -148,7 +152,7 @@ public class StartActivity extends FragmentActivity {
 //                    Pref.setUserPassword(Constant.userPassword);
 //                    Pref.setKeepLogin(true);
                     //*******************************************
-                    Log.d("login", ": success");
+                    addPushToken();
                     Intent intent = new Intent(StartActivity.this, CrawlerActivity.class);
                     intent.addFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     intent.addFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -164,6 +168,60 @@ public class StartActivity extends FragmentActivity {
                 Toast.makeText(StartActivity.this, "로그인 실패: ", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    private void addPushToken() {
+        String url = Constant.SERVER_URL + "/push_token/";
+
+        ParamModel params = new ParamModel();
+        params.setUrl(url);
+        params.addParameter("push_token", Pref.getPushToken());
+
+        new StartActivity.addPushTokenTask().execute(params);
+    }
+
+    private class addPushTokenTask extends AsyncTask<ParamModel, Void, Boolean> {
+        public addPushTokenTask() {
+        }
+
+        @Override
+        protected void onPreExecute() {
+            // TODO Auto-generated method stub
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Boolean doInBackground(ParamModel... params) {
+            // TODO Auto-generated method stub
+            String token = Pref.getUserKey();
+            //String token = Pref.getPushToken();
+            String result = PostMethod.getInstance().send(params[0], token);
+
+            try {
+                JSONObject jsonObject = new JSONObject(result);
+                int error = jsonObject.getInt("ErrorCode");
+                Log.e("doinback", "errorCode: " + error);
+                if (error == 0) {
+                    return true;
+                }
+            } catch (Exception e) {
+                Log.e("logout_doinback_catch", e.toString());
+            }
+
+            return false;
+        }
+        @Override
+        protected void onPostExecute(Boolean success) {
+            // TODO Auto-generated method stub
+            if(success) {
+                // 성공
+                Log.e("success", "onPostExecute: success");
+            }else{
+
+            }
+
+        }
+
     }
 
 }

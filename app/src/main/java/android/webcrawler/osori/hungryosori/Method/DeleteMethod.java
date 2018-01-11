@@ -1,4 +1,5 @@
 package android.webcrawler.osori.hungryosori.Method;
+import android.util.Log;
 import android.webcrawler.osori.hungryosori.Intercepter.AddCookiesInterceptor;
 import android.webcrawler.osori.hungryosori.Intercepter.ReceivedCookiesInterceptor;
 import android.webcrawler.osori.hungryosori.Interface.Method;
@@ -42,41 +43,38 @@ public class DeleteMethod extends Method{
         Request request = builder.build();
         try {
             Response response = httpClient.newCall(request).execute();
+            Log.e("delete_respnose", response.body().string());
+            if(response.isSuccessful())
+                return response.body().string();
+            else{
+                Log.e("response error code", response.code()+"");
+                Log.e("response error message", response.message());
+            }
+        }catch (IOException e){
+
+        }
+        return null;
+    }
+
+    public String send(ParamModel paramModel, String token) {
+
+        httpClient          = new OkHttpClient().newBuilder().
+                addInterceptor(new ReceivedCookiesInterceptor()).
+                addInterceptor(new AddCookiesInterceptor()).
+                build();
+
+        Request.Builder builder = new Request.Builder().url(paramModel.getUrl());
+        setParameter(paramModel.getParameters(), builder);
+
+        Request request = builder.header("Authorization" , "Token " + token).build();
+        try {
+            Response response = httpClient.newCall(request).execute();
             if(response.isSuccessful())
                 return response.body().string();
         }catch (IOException e){
         }
         return null;
     }
-//
-//    public String send(ParamModel paramModel, String token) {
-//
-//        httpClient          = new OkHttpClient().newBuilder().
-//                addInterceptor(new ReceivedCookiesInterceptor()).
-//                addInterceptor(new AddCookiesInterceptor()).
-//                build();
-//
-//
-//        try {
-//            String urlString    = paramModel.getUrl();
-//            String paramString  = paramModel.getParamStr();
-//            if(paramString != null && paramString.length() > 0){
-//                urlString += "?" + paramString;
-//            }
-//            final URL url = new URL(urlString);
-//
-//            Request.Builder builder = new Request.Builder().url(paramModel.getUrl());
-//            setParameter(paramModel.getParameters(), builder);
-//
-//            Request request = builder.url(url).header("Authorization" , "Token " + token).build();
-//
-//            Response response = httpClient.newCall(request).execute();
-//            if(response.isSuccessful())
-//                return response.body().string();
-//        }catch (IOException e){
-//        }
-//        return null;
-//    }
 
     private void setParameter(ArrayList<NameValuePair> parameters, Request.Builder builder){
         if(parameters != null){
