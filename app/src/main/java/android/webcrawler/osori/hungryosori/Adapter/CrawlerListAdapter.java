@@ -97,6 +97,7 @@ public class CrawlerListAdapter extends ArrayAdapter<CrawlerInfo> implements Vie
                 }
                 break;
             }
+
         }
     }
 

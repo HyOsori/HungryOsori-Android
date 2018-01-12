@@ -43,7 +43,7 @@ public class DeleteMethod extends Method{
         Request request = builder.build();
         try {
             Response response = httpClient.newCall(request).execute();
-            Log.e("delete_respnose", response.body().string());
+
             if(response.isSuccessful())
                 return response.body().string();
             else{
@@ -69,8 +69,15 @@ public class DeleteMethod extends Method{
         Request request = builder.header("Authorization" , "Token " + token).build();
         try {
             Response response = httpClient.newCall(request).execute();
+            Log.e("response error code", response.code()+"");
+            Log.e("response error message", response.message());
+            //Log.e("delete_respnose", response.body().string());
             if(response.isSuccessful())
                 return response.body().string();
+            else{
+                Log.e("response error code", response.code()+"");
+                Log.e("response error message", response.message());
+            }
         }catch (IOException e){
         }
         return null;

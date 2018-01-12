@@ -62,6 +62,7 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
 
         /** 서버에서 정보 가져오기 */
         if (crawlerInfos.isInitialized() == false) {
+            Log.e("on creat", "work2");
             getCrawlerInfo();
         }
     }
@@ -79,6 +80,7 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
 
         ParamModel params = new ParamModel();
         params.setUrl(url);
+        Log.e("getEntireList", "work2");
 
         new getEntireListTask().execute(params);
     }
@@ -101,8 +103,6 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
             String token = Pref.getUserKey();
             //String token = Pref.getPushToken();
             String result = GetMethod.getInstance().send(params[0], token);
-            Log.e("token_activity", token);
-            Log.e("result_activity", result);
             try {
                 JSONObject jsonObject = new JSONObject(result);
 
