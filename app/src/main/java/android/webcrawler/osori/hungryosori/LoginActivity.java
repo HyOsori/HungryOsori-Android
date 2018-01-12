@@ -159,7 +159,7 @@ public class LoginActivity extends FragmentActivity{
                         Pref.setPushToken(token);
                         Pref.setKeepLogin(false);
                     }
-                    addPushToken();
+                    //addPushToken();
 
                     Intent intent = new Intent(LoginActivity.this, CrawlerActivity.class);
                     intent.addFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_CLEAR_TASK);

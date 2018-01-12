@@ -337,7 +337,7 @@ public class CrawlerActivity extends FragmentActivity implements ViewPager.OnPag
             if(success) {
                 // 성공
                 Log.e("logout_success", "onPostExecute: success");
-                deleteToken();
+                //deleteToken();
             }else{
 
             }
