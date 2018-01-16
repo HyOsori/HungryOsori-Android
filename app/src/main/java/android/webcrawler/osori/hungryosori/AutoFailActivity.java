@@ -1,5 +1,6 @@
 package android.webcrawler.osori.hungryosori;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
@@ -18,7 +19,7 @@ import android.widget.Toast;
 
 import org.json.JSONObject;
 
-public class AutoFailActivity extends AppCompatActivity implements View.OnClickListener {
+public class AutoFailActivity extends Activity implements View.OnClickListener {
     private Button goLogin_btn;
     private Button login_btn;
     @Override

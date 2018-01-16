@@ -221,7 +221,6 @@ public class LoginActivity extends FragmentActivity{
             }else{
 
             }
-
         }
 
     }

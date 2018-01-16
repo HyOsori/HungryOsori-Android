@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webcrawler.osori.hungryosori.Adapter.CrawlerListAdapter;
+import android.webcrawler.osori.hungryosori.Adapter.CrawlerMyListAdapter;
 import android.webcrawler.osori.hungryosori.CrawlerInfo.CrawlerInfos;
 import android.webcrawler.osori.hungryosori.R;
 import android.webcrawler.osori.hungryosori.Common.Constant;
@@ -23,6 +24,7 @@ public class CrawlerFragment extends Fragment{
     private ListView listView;
     private DisplayImageOptions options;
     public CrawlerListAdapter listAdapter = null;
+    public CrawlerMyListAdapter myListAdapter = null;
 
     public static CrawlerFragment newInstance(int pagePosition){
         if(pagePosition == Constant.PAGE_MY ||
@@ -65,14 +67,16 @@ public class CrawlerFragment extends Fragment{
         if(page == Constant.PAGE_ALL) {
             listAdapter = new CrawlerListAdapter(getActivity(), R.layout.list_crawler, R.id.list_crawler_textView_title,
                     CrawlerInfos.getInstance().getCrawlerInfoList(), options);
+            CrawlerInfos.getInstance().attach(listAdapter);
         }else if(page == Constant.PAGE_MY){
-            listAdapter = new CrawlerListAdapter(getActivity(), R.layout.list_crawler, R.id.list_crawler_textView_title,
+            myListAdapter = new CrawlerMyListAdapter(getActivity(), R.layout.mylist_crawler, R.id.list_crawler_textView_title,
                     CrawlerInfos.getInstance().getSubscriptionList(), options);
+            CrawlerInfos.getInstance().attach(myListAdapter);
         }
 
-        if(listAdapter != null) {
-            CrawlerInfos.getInstance().attach(listAdapter);
-        }
+//        if(listAdapter != null) {
+//            CrawlerInfos.getInstance().attach(listAdapter);
+//        }
     }
 
     // 프레그먼트의 뷰를 생성한다
@@ -82,6 +86,9 @@ public class CrawlerFragment extends Fragment{
         listView = (ListView)view.findViewById(R.id.fragment_crawler_listView);
         if(listAdapter != null) {
             listView.setAdapter(listAdapter);                       // 어댑터 설정
+        }
+        if(myListAdapter != null){
+            listView.setAdapter(myListAdapter);
         }
         return view;
     }

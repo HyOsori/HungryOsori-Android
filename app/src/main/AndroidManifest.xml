@@ -53,6 +53,17 @@
             android:name=".FindPwActivity"
             android:theme="@android:style/Theme.NoTitleBar" />
 
+        <!--자동로그인 실패 Activity-->
+        <activity
+            android:name=".AutoFailActivity"
+            android:theme="@android:style/Theme.NoTitleBar"/>
+
+        <!--키워드 설정 Activity-->
+        <activity
+            android:name=".KeywordActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar"/>
+
         <service android:name=".MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -72,8 +83,8 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".AutoFailActivity" />
-        <activity android:name=".KeywordActivity"></activity>
+        <!--<activity android:name=".AutoFailActivity" />-->
+        <!--<activity android:name=".KeywordActivity"></activity>-->
     </application>
 
 </manifest>

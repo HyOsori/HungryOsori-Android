@@ -1,5 +1,6 @@
 package android.webcrawler.osori.hungryosori;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
 import android.support.v7.app.AlertDialog;
@@ -17,7 +18,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class KeywordActivity extends AppCompatActivity {
+public class KeywordActivity extends Activity {
 
     private static final int LAYOUT = R.layout.activity_keyword;
     private ActivityKeywordBinding keyWordBinding;
